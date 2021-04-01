@@ -18,7 +18,7 @@ public class UserVO {
 	private String url;
 	private String rcvyn;
 	private String nick;
-	private Long scor;
+	private double scor;
 	private String img;
 	private Date regdt;
 	private Date upddt;

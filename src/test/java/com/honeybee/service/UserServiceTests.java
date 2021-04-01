@@ -66,11 +66,11 @@ public class UserServiceTests {
 	@Test
 	public void testUpdate() {
 		UserVO user = service.get("kams2");
-		
+
 		if(user == null) {
 			return;
 		}
-		
+    
 		user.setCid("U00124");
 		log.info("MODIFY RESULT: " + service.modify(user));
 		

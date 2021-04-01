@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.honeybee.domain.FreeVO;
+import com.honeybee.domain.MeetVO;
 import com.honeybee.mapper.FreeMapper;
 
 import lombok.AllArgsConstructor;
@@ -41,5 +42,12 @@ public class FreeServiceImpl implements FreeService {
 	public List<FreeVO> getList() {
 		return mapper.getList();
 	}
+	
+	@Override
+	public List<FreeVO> getMyList(String id) {
+		return mapper.getMyList(id);
+	}
 
+
+	
 }
