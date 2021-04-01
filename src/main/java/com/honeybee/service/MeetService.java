@@ -17,7 +17,5 @@ public interface MeetService {
 	public List<MeetVO> getList();
 	
 	public List<MeetVO> getMyList(String id);
-	
-
 
 }

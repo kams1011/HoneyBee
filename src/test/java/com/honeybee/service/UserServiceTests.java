@@ -66,6 +66,7 @@ public class UserServiceTests {
 	@Test
 	public void testUpdate() {
 		UserVO user = service.get("kams2");
+
 		if(user == null) {
 			return;
 		}

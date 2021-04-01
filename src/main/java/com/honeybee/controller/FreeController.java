@@ -20,28 +20,39 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class FreeController {
 	
-	private FreeService service;
+	private FreeService fservice;
 	
 	@GetMapping("/list")
 	public void list(Model model) {
 		log.info("list");
-		model.addAttribute("list", service.getList());
+		model.addAttribute("list", fservice.getList());
+	}
+	
+	@GetMapping("/reg")
+	public void register() {
+		
 	}
 	
 	@PostMapping("/reg")
 	public String register(FreeVO vo, RedirectAttributes rttr) {
 		log.info("register: " + vo);
-		service.register(vo);
+		fservice.register(vo);
 		rttr.addFlashAttribute("result", vo.getFno());
 		
 		return "redirect:/free/list";
+	}
+	
+	@GetMapping({ "/get", "/modify" })
+	public void get(@RequestParam("fno") Long fno, Model model) {
+		log.info("/get or modify");
+		model.addAttribute("free", fservice.get(fno));
 	}
 	
 	@PostMapping("/modify")
 	public String modify(FreeVO vo, RedirectAttributes rttr) {
 		log.info("modify: " + vo);
 		
-		if (service.modify(vo))
+		if (fservice.modify(vo))
 			rttr.addFlashAttribute("result", "success");
 		
 		return "redirect:/free/list";
@@ -51,7 +62,7 @@ public class FreeController {
 	public String remove(@RequestParam("fno") Long fno, RedirectAttributes rttr) {
 		
 		log.info("remove..." + fno);
-		if (service.remove(fno))
+		if (fservice.remove(fno))
 			rttr.addFlashAttribute("result", "success");
 		
 		return "redirect:/free/list";
