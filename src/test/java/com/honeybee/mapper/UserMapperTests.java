@@ -7,6 +7,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.honeybee.domain.UserVO;
 import com.honeybee.mapper.UserMapper;
@@ -49,27 +53,27 @@ public class UserMapperTests {
 //	}
 	
 	
-	@Test
-	public void testUpdate() {
-		UserVO user = new UserVO();
-		user.setId("kams");
-		user.setCid("U002");
-		user.setPwd("pwd34");
-		user.setName("구희승");
-		user.setBirth("19931011");
-		user.setSex(2);
-		user.setEmail("kams1011@gmail.com");
-		user.setTelno("01012304124");
-		user.setUrl("www.daum.net");
-		user.setRcvyn("N");
-		user.setNick("Ohayo");
-		user.setScor(1L);
-		user.setImg("dodogeorhfqwer");
-		mapper.update(user);
-	}
+//	@Test
+//	public void testUpdate() {
+//		UserVO user = new UserVO();
+//		user.setId("kams");
+//		user.setCid("U002");
+//		user.setPwd("pwd34");
+//		user.setName("구희승");
+//		user.setBirth("19931011");
+//		user.setSex(2);
+//		user.setEmail("kams1011@gmail.com");
+//		user.setTelno("01012304124");
+//		user.setUrl("www.daum.net");
+//		user.setRcvyn("N");
+//		user.setNick("Ohayo");
+//		user.setScor(1L);
+//		user.setImg("dodogeorhfqwer");
+//		mapper.update(user);
+//	}
 	
 	
-	
+
 	
 
 //	@Test

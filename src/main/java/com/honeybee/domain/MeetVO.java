@@ -6,29 +6,28 @@ import lombok.Data;
 
 @Data
 public class MeetVO {
-	
-	private long gno; //¸ğÀÓ¹øÈ£
-	private String cid; //¸ğÀÓÄ«Å×°í¸®
-	private String cid2; //¸ğÁı»óÅÂ
-	private String id; //È¸¿øID
-	private String title; //¸ğÀÓÁ¦¸ñ
-	private String smry; //¸ğÀÓ¿ä¾à³»¿ë
-	private String content; //¸ğÀÓ»ó¼¼³»¿ë(NCLUB)
-	private String startDt; //¸ğÀÓ½ÃÀÛÀÏÀÚ
-	private String endDt; //¸ğÀÓÁ¾·áÀÏÀÚ
-	private String recsDt; //¸ğÀÓ¸ğÁı½ÃÀÛÀÏÀÚ
-	private String receDt; //¸ğÀÓ¸ğÁıÁ¾·áÀÏÀÚ
-	private int recNo; //¸ğÁıÀÎ¿ø
-	private int currNo; //ÇöÀçÀÎ¿ø
-	private int cnclNo; //Ãë¼ÒÀÎ¿ø
-	private int hit; //Á¶È¸¼ö
-	private int thumb; //Âò¼ö
-	private String charge; //À¯¹«·á±¸ºĞ
-	private String onoff; //¿Â¿ÀÇÁ¶óÀÎ ¿©ºÎ
-	private String place; //¸ğÀÓÀå¼Ò
-	private String link; //¸µÅ©
-	private String img; //´ëÇ¥ÀÌ¹Ì¤Ó
-	private Date regDt; //¸ğÀÓ°³¼³ÀÏÀÚ
-	private Date updDt; //¸ğÀÓ¼öÁ¤ÀÏÀÚ
-	private Date delDt; //¸ğÀÓ»èÁ¦ÀÏÀÚ
+	private long mno; //ï¿½ï¿½ï¿½Ó¹ï¿½È£
+	private String cid; //ï¿½ï¿½ï¿½ï¿½Ä«ï¿½×°ï¿½
+	private String cid2; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String id; //È¸ï¿½ï¿½ID
+	private String title; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String smry; //ï¿½ï¿½ï¿½Ó¿ï¿½à³»ï¿½ï¿½
+	private String content; //ï¿½ï¿½ï¿½Ó»ó¼¼³ï¿½ï¿½ï¿½(NCLUB)
+	private String startDt; //ï¿½ï¿½ï¿½Ó½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String endDt; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String recsDt; //ï¿½ï¿½ï¿½Ó¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String receDt; //ï¿½ï¿½ï¿½Ó¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private int recNo; //ï¿½ï¿½ï¿½ï¿½ï¿½Î¿ï¿½
+	private int currNo; //ï¿½ï¿½ï¿½ï¿½ï¿½Î¿ï¿½
+	private int cnclNo; //ï¿½ï¿½ï¿½ï¿½Î¿ï¿½
+	private int hit; //ï¿½ï¿½È¸ï¿½ï¿½
+	private int thumb; //ï¿½ï¿½ï¿½
+	private String charge; //ï¿½ï¿½ï¿½ï¿½ï¿½á±¸ï¿½ï¿½
+	private String onoff; //ï¿½Â¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	private String place; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String link; //ï¿½ï¿½Å©
+	private String img; //ï¿½ï¿½Ç¥ï¿½Ì¹Ì¤ï¿½
+	private Date regDt; //ï¿½ï¿½ï¿½Ó°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private Date updDt; //ï¿½ï¿½ï¿½Ó¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private Date delDt; //ï¿½ï¿½ï¿½Ó»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 }
