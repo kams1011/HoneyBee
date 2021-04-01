@@ -16,8 +16,8 @@
 			select seq_free.nextval from dual
 		</selectKey>
 		
-		insert into FREE (fno, id, title, content)
-		values (#{fno}, #{id}, #{title}, #{content})
+		insert into FREE (fno, title, content)
+		values (#{fno}, #{title}, #{content})
 	</insert>
 	
 	<!-- READ -->

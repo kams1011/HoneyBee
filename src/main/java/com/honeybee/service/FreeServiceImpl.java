@@ -29,6 +29,7 @@ public class FreeServiceImpl implements FreeService {
 
 	@Override
 	public boolean modify(FreeVO vo) {
+		log.info("modify........." + vo);
 		return mapper.update(vo) == 1;
 	}
 
