@@ -15,5 +15,7 @@ public interface FreeService {
 	public boolean remove(Long fno);
 	
 	public List<FreeVO> getList();
+	
+	public List<FreeVO> getMyList(String id);
 
 }
