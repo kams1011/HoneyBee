@@ -30,9 +30,9 @@ public class MeetMapperTests {
 		meet.setCid("02");
 		meet.setCid2("01");
 		meet.setId("idididid");
-		meet.setTitle("�̰��� ���� �׽�Ʈ�Դϴ�.");
-		meet.setSmry("�̰��� ���� ���Ӹ� ���� �׽�Ʈ�Դϴ�.");
-		meet.setContent("�̰��� ���� �����Դϴ�. ���� �����Դϴ�. ���� �����Դϴ�. ���� �����Դϴ�.");
+		meet.setTitle("�̰�� ��� �׽�Ʈ�Դϴ�.");
+		meet.setSmry("�̰�� ���� ���Ӹ� ���� �׽�Ʈ�Դϴ�.");
+		meet.setContent("�̰�� ���� �����Դϴ�. ���� �����Դϴ�. ���� �����Դϴ�. ���� �����Դϴ�.");
 		meet.setStartDt("202103310730");
 		meet.setEndDt("202103310930");
 		meet.setRecsDt("202103161200");
@@ -44,7 +44,7 @@ public class MeetMapperTests {
 		meet.setThumb(10);
 		meet.setCharge("N");
 		meet.setOnoff("OFF");
-		meet.setPlace("���� ������ ȫ�� ��¼����¼��");
+		meet.setPlace("���� ���� ȫ�� ��¼����¼��");
 		meet.setLink("www.naver.com");
 		meet.setImg("IMG");
 		
@@ -58,9 +58,9 @@ public class MeetMapperTests {
 		meet.setCid("02");
 		meet.setCid2("01");
 		meet.setId("idididid");
-		meet.setTitle("�̰��� ���� �׽�Ʈ�Դϴ�.");
-		meet.setSmry("�̰��� ���� ���Ӹ� ���� �׽�Ʈ�Դϴ�.");
-		meet.setContent("�̰��� ���� �����Դϴ�. ���� �����Դϴ�. ���� �����Դϴ�. ���� �����Դϴ�.");
+		meet.setTitle("�̰�� ��� �׽�Ʈ�Դϴ�.");
+		meet.setSmry("�̰�� ���� ���Ӹ� ���� �׽�Ʈ�Դϴ�.");
+		meet.setContent("�̰�� ���� �����Դϴ�. ���� �����Դϴ�. ���� �����Դϴ�. ���� �����Դϴ�.");
 		meet.setStartDt("202103310730");
 		meet.setEndDt("202103310930");
 		meet.setRecsDt("202103161200");
@@ -72,7 +72,7 @@ public class MeetMapperTests {
 		meet.setThumb(10);
 		meet.setCharge("N");
 		meet.setOnoff("OFF");
-		meet.setPlace("���� ������ ȫ�� ��¼����¼��");
+		meet.setPlace("���� ���� ȫ�� ��¼����¼��");
 		meet.setLink("www.naver.com");
 		meet.setImg("IMG");
 		
@@ -95,9 +95,9 @@ public class MeetMapperTests {
 		MeetVO meet = new MeetVO();
 		meet.setMno(21L);
 		
-		meet.setTitle("������ �����Դϴ�");
-		meet.setSmry("������ ���Ӹ� �����Դϴ�");
-		meet.setContent("������ �����Դϴ�.");
+		meet.setTitle("����� ����Դϴ�");
+		meet.setSmry("����� ���Ӹ� �����Դϴ�");
+		meet.setContent("����� �����Դϴ�.");
 		meet.setStartDt("202103312222");
 		meet.setEndDt("222222222222");
 		meet.setRecsDt("222222222222");
@@ -109,7 +109,7 @@ public class MeetMapperTests {
 		meet.setLink("wwww");
 		meet.setImg("www");
 		
-		log.info("���� �� ����  : " + mapper.update(meet));
+		log.info("�� �� ����  : " + mapper.update(meet));
 	}
 	
 	

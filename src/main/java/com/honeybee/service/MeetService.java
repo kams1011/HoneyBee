@@ -19,5 +19,4 @@ public interface MeetService {
 	public List<MeetVO> getMyList(String id);
 	
 
-
 }
