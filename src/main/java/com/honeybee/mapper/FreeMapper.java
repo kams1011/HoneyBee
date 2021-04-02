@@ -19,4 +19,6 @@ public interface FreeMapper {
 	
 	// DELETE
 	public int delete(Long fno);
+	
+	public List<FreeVO> getMyList(String id);
 }
