@@ -35,8 +35,8 @@ public class FreeServiceImpl implements FreeService {
 	}
 
 	@Override
-	public boolean remove(Long fno) {
-		return mapper.delete(fno) == 1;
+	public boolean remove(FreeVO vo) {
+		return mapper.delete(vo) == 1;
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class FreeServiceImpl implements FreeService {
 	}
 	
 	@Override
-	public List<FreeVO> getMyList(String id) {
+	public FreeVO getMyList(String id) {
 		return mapper.getMyList(id);
 	}
 

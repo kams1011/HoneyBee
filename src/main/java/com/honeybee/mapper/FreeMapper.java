@@ -18,7 +18,7 @@ public interface FreeMapper {
 	public int update(FreeVO vo);
 	
 	// DELETE
-	public int delete(Long fno);
+	public int delete(FreeVO vo);
 	
-	public List<FreeVO> getMyList(String id);
+	public FreeVO getMyList(String id);
 }

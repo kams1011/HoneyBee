@@ -12,10 +12,10 @@ public interface FreeService {
 	
 	public boolean modify(FreeVO vo);
 	
-	public boolean remove(Long fno);
+	public boolean remove(FreeVO vo);
 	
 	public List<FreeVO> getList();
 	
-	public List<FreeVO> getMyList(String id);
+	public FreeVO getMyList(String id);
 
 }

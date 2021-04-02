@@ -58,12 +58,13 @@ public class FreeController {
 		return "redirect:/free/list";
 	}
 	
-	@PostMapping("/del")
-	public String remove(@RequestParam("fno") Long fno, RedirectAttributes rttr) {
+	@RequestMapping("/del")
+	public String remove(FreeVO vo, RedirectAttributes rttr) {
 		
-		log.info("remove..." + fno);
-		if (fservice.remove(fno))
-			rttr.addFlashAttribute("result", "success");
+		log.info("remove..." + vo);
+		
+		if (vo.getDeldt() == null)
+			fservice.remove(vo);
 		
 		return "redirect:/free/list";
 	}

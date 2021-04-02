@@ -56,7 +56,10 @@ public class FreeMapperTests {
 	
 	@Test
 	public void testDelete() {
-		log.info("DELETE COUNT: " + mapper.delete(2L));
+		FreeVO vo = mapper.read(5L);
+		if (vo == null) return;
+		
+		mapper.delete(vo);
 	}
 	
 }

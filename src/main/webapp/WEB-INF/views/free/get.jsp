@@ -34,6 +34,7 @@
         <div class="content">
             <c:out value="${free.content}" />
         </div>
+        <button data-oper="list" class="lstBtn">목록</button>
         <button data-oper="modify" class="modBtn">수정</button>
         <button data-oper="delete" class="delBtn">삭제</button>
         <form id='operForm' action="/free/modify" method="get">
@@ -109,7 +110,14 @@
 		});
 		
 		$("button[data-oper='delete']").on("click", function(e) {
-			/*  삭제 버튼 클릭 시, deldt 컬럼에 일자 저장. 해당 row는 view에서 hidden 처리*/
-		})
-	})
+			operForm.attr("action", "/free/del");
+			operForm.submit();
+		});
+		
+		$("button[data-oper='list']").on("click", function(e) {
+			operForm.find("#fno").remove();
+			operForm.attr("action", "/free/list");
+			operForm.submit();
+		});
+	});
 </script>

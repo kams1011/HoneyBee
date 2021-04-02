@@ -75,6 +75,8 @@
 	$(document).ready(function() {
 		$("#reg").on("click", function() {
 			self.location = "/free/reg";
-		})
-	})
+		});
+		
+		
+	});
 </script>
