@@ -53,11 +53,16 @@ public class MeetServiceImpl implements MeetService {
 	}
 	
 	@Override
-	public List<MeetVO> getMyList(String id) {
+	public MeetVO getMyList(String id) {
 		log.info("getlist.............");
 		return mapper.getMyList(id);
 	}
 	
-
+	@Override
+	public List<MeetVO> getListTest(String id) {
+		log.info("getlist.............");
+		return mapper.getListTest(id);
+	}
+	
 
 }

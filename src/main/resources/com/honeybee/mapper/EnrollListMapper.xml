@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.honeybee.mapper.EnrollListMapper">
+
+
+	<select id="getEnrollList"
+		resultType="com.honeybee.domain.EnrollListVO">
+	<![CDATA[
+		SELECT code_table.cname FROM CODE_TABLE, ENROLL_LIST WHERE code_table.cid=enroll_list.cid2
+	]]>
+	</select>
+	
+
+	</mapper>

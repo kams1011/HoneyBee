@@ -195,7 +195,6 @@
       MNO,
       CID,
       CID2,
-      ID,
       TITLE,
       SMRY,
       to_char(CONTENT) AS CONTENT,
@@ -220,4 +219,36 @@
       where id = #{id}
   ]]>
 </select>
+
+<select id="getListTest" resultType="com.honeybee.domain.MeetVO">
+  <![CDATA[
+    select 
+      MNO,
+      CID,
+      CID2,
+      TITLE,
+      SMRY,
+      to_char(CONTENT) AS CONTENT,
+      STARTDT,
+      ENDDT,
+      RECSDT,
+      RECEDT,
+      RECNO,
+      CURRNO,
+      CNCLNO,
+      HIT,
+      THUMB,
+      CHARGE,
+      ONOFF,
+      PLACE,
+      LINK,
+      IMG,
+      REGDT,
+      UPDDT,
+      DELDT
+      from MEET
+      where id = #{id}
+  ]]>
+</select>
+
 </mapper>
