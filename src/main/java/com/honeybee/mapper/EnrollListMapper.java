@@ -9,4 +9,10 @@ public interface EnrollListMapper {
 
 	
 	public List<EnrollListVO> getEnrollList();
+	
+	public List<EnrollListVO> getEnrollStatus(String id);
+	
+	public List<EnrollListVO> getEnrollTitle(String id);
+	
+	
 }

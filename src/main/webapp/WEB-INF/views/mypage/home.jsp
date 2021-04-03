@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@include file="../include/header.jsp"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 
@@ -116,7 +117,7 @@ li {
 	display: inline-block;
 }
 
-.mypage-bottom-right {
+.mypage-thumb {
 	height: 500px;
 	width: 300px;
 	display: inline-block;
@@ -164,7 +165,7 @@ li {
 	color: rgba(133, 39, 39, 0.973);
 }
 
-.mypage-bottom-right-name {
+.mypage-thumb-name {
 	position: absolute;
 	top: 0px;
 	border-bottom: 1px solid black;
@@ -234,7 +235,7 @@ a:hover {
 			<table border="1" width="50%" height="200" cellspacing="5">
 				<thead>
 					<tr>
-						<th colspan="2"><c:out value="${user.nick}" /></th>
+						<th colspan="2">${user.nick}</th>
 					</tr>
 				</thead>
 
@@ -268,11 +269,20 @@ a:hover {
 		<div class="user-enroll-list-name">모임신청목록</div>
 		<div class="user-enroll-list">
 			<table>
-				<td>승인완료</td>
+				<c:forEach items="${enrollStatus}" var="enrollStatus"
+					varStatus="status">
+					<tr>
+						<td><c:out value="${enrollStatus.CName}" /></td>
+						<td><fmt:formatDate pattern="yyyy-MM-dd"
+								value="${meet[status.index].regDt}" /></td>
+					<tr>
+						<td colspan="3"><c:out value="${meet[status.index].title}" /></td>
+					</tr>
+
+					</tr>
+				</c:forEach>
 				<td></td>
-				<td>날짜</td>
 				<tr>
-					<td colspan="3">모임이름</td>
 
 				</tr>
 				<!-- 두번째 줄 끝 -->
@@ -288,9 +298,9 @@ a:hover {
 		<span class="meeting-post">
 			<table>
 				<c:forEach items="${meet}" var="tes">
-						<td></td>
-						<td></td>
-						<td><c:out value="${tes.regDt}"/> </td>
+					<td></td>
+					<td></td>
+					<td><fmt:formatDate pattern="yyyy-MM-dd" value="${tes.regDt}" /></td>
 					<tr>
 						<td colspan="3"><c:out value="${tes.title}" /></td>
 					</tr>
@@ -298,17 +308,43 @@ a:hover {
 
 			</table>
 		</span>
-		<div class="mypage-bottom-right-name">모임 찜목록</div>
-		<div class="mypage-bottom-right">
+		<div class="mypage-thumb-name">
+			모임 찜 목록
+		</div>
+		<div class="mypage-thumb">
 			<table>
+			<c:forEach items="${thumbList}" var="thumbList" varStatus="status">
 				<th></th>
 				<th></th>
 				<th></th>
-				<th>날짜</th>
+				<th><fmt:formatDate pattern="yyyy-MM-dd"
+								value="${thumbRegDate[status.index].regDt}" /></th>
 				<tr>
 					<!-- 두번째 줄 시작 -->
-					<td colspan="3">모임이름</td>
+					<td colspan="3"><c:out value="${thumbList.title}" /> <br></td>
 				</tr>
+					</c:forEach>
+				<!-- 두번째 줄 끝 -->
+			</table>
+
+		</div>
+	</div>
+		<div>
+			모임 찜 목록
+		</div>
+		<div class="mypage-subscribe">
+			<table>
+			<c:forEach items="${thumbList}" var="thumbList" varStatus="status">
+				<th></th>
+				<th></th>
+				<th></th>
+				<th><fmt:formatDate pattern="yyyy-MM-dd"
+								value="${thumbRegDate[status.index].regDt}" /></th>
+				<tr>
+					<!-- 두번째 줄 시작 -->
+					<td colspan="3"><c:out value="${thumbList.title}" /> <br></td>
+				</tr>
+					</c:forEach>
 				<!-- 두번째 줄 끝 -->
 			</table>
 

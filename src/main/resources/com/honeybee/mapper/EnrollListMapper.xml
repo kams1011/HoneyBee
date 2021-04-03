@@ -6,12 +6,24 @@
 <mapper namespace="com.honeybee.mapper.EnrollListMapper">
 
 
-	<select id="getEnrollList"
-		resultType="com.honeybee.domain.EnrollListVO">
+	<select id="getEnrollList" resultType="com.honeybee.domain.EnrollListVO">
 	<![CDATA[
-		SELECT code_table.cname FROM CODE_TABLE, ENROLL_LIST WHERE code_table.cid=enroll_list.cid2
+		SELECT * from ENROLL_LIST
 	]]>
 	</select>
-	
 
-	</mapper>
+
+	<select id="getEnrollStatus" resultType="com.honeybee.domain.CodeTableVO">
+	<![CDATA[
+		select cname from code_table where cid in (select cid2 from enroll_list where id=#{id})
+	]]>
+	</select>
+
+	<select id="getEnrollTitle" resultType="com.honeybee.domain.MeetVO">
+	<![CDATA[
+		select title from meet where mno in (select mno from enroll_list where id=#{id})
+	]]>
+	</select>
+
+
+</mapper>
