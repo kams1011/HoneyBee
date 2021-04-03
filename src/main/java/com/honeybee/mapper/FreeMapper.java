@@ -23,7 +23,8 @@ public interface FreeMapper {
 	
 	public FreeVO getMyList(String id);
 	
+	// Paging
 	public List<FreeVO> getListWithPaging(Criteria cri);
-	
 	public int getTotalCount(Criteria cri);
+	
 }

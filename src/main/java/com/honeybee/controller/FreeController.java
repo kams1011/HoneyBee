@@ -61,10 +61,7 @@ public class FreeController {
 		if (service.modify(vo))
 			rttr.addFlashAttribute("result", "success");
 		
-		rttr.addAttribute("pageNum", cri.getPageNum());
-		rttr.addAttribute("amount", cri.getAmount());
-		
-		return "redirect:/free/list";
+		return "redirect:/free/list" + cri.getListLink();
 	}
 	
 	@RequestMapping("/del")
@@ -75,10 +72,7 @@ public class FreeController {
 		if (vo.getDeldt() == null)
 			service.remove(vo);
 		
-		rttr.addAttribute("pageNum", cri.getPageNum());
-		rttr.addAttribute("amount", cri.getAmount());
-		
-		return "redirect:/free/list";
+		return "redirect:/free/list" + cri.getListLink();
 	}
 
 }
