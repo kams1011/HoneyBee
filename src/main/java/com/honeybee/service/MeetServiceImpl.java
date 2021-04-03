@@ -64,5 +64,12 @@ public class MeetServiceImpl implements MeetService {
 		return mapper.getListTest(id);
 	}
 	
+	@Override
+	public List<MeetVO> getNick(String id) {
+		log.info("getNick.............");
+		return mapper.getNick(id);
+	}
+	
+	
 
 }

@@ -22,5 +22,7 @@ public interface MeetMapper {
 	public MeetVO getMyList(String id);
 	
 	public List<MeetVO> getListTest(String id);
+	
+	public List<MeetVO> getNick(String id);
 
 }

@@ -59,7 +59,9 @@ public class MypageController {
 	@GetMapping("/regCenter")
 	public void regCenter(Model model) {
 		log.info("list");
-		model.addAttribute("list", mservice.getMyList("HOHO995@naver.com"));
+		log.info(mservice.getNick("HOHO995@naver.com"));
+		model.addAttribute("meet", mservice.getListTest("HOHO995@naver.com"));
+		model.addAttribute("nick", mservice.getNick("HOHO995@naver.com"));
 	}
 
 	@GetMapping("/home")

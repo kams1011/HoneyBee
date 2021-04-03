@@ -251,4 +251,10 @@
   ]]>
 </select>
 
+
+<select id="getNick" resultType="com.honeybee.domain.CodeTableVO">
+select code_table.cname from code_table, meet where (meet.cid=code_table.cid) and (id=#{id})
+</select>
+
+
 </mapper>

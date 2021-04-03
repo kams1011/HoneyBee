@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class ThumbVO {
 
-		private Long thumbno;
-		private String id;
-		private Long mno;
+		private Long thumbno;  //찜 seq
+		private String id; //회원 id
+		private Long mno; //모임게시물 번호
 	
 }

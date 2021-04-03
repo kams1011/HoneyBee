@@ -19,5 +19,7 @@ public interface MeetService {
 	public MeetVO getMyList(String id);
 	
 	public List<MeetVO> getListTest(String id);
+	
+	public List<MeetVO> getNick(String id);
 
 }
