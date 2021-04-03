@@ -196,6 +196,34 @@ a:hover {
 	color: blue;
 	text-decoration: underline;
 }
+
+.mypage-subscribe {
+
+	height: 500px;
+	width: 300px;
+	display: inline-block;
+}
+
+.mypage-subscribe-name {
+	top: 0px;
+	border-bottom: 1px solid black;
+	text-align: left;
+	width: 300px;
+	margin-left: 680px;
+	margin-bottom: 8px;
+	font-weight: bold;
+	color: rgba(133, 39, 39, 0.973);
+}
+
+
+
+
+
+
+
+
+
+
 </style>
 </head>
 <body>
@@ -292,7 +320,7 @@ a:hover {
 		<div class="meeting-post-name">
 			모임개설목록
 			<button>
-				<a href="registercenter">더보기</a>
+				<a href="/mypage/regCenter">더보기</a>
 			</button>
 		</div>
 		<span class="meeting-post">
@@ -329,20 +357,18 @@ a:hover {
 
 		</div>
 	</div>
-		<div>
-			모임 찜 목록
+		<div class="mypage-subscribe-name">
+			구독목록
 		</div>
 		<div class="mypage-subscribe">
 			<table>
-			<c:forEach items="${thumbList}" var="thumbList" varStatus="status">
+			<c:forEach items="${subscribeList}" var="subscribe" varStatus="status">
 				<th></th>
 				<th></th>
 				<th></th>
-				<th><fmt:formatDate pattern="yyyy-MM-dd"
-								value="${thumbRegDate[status.index].regDt}" /></th>
-				<tr>
+				<th>
 					<!-- 두번째 줄 시작 -->
-					<td colspan="3"><c:out value="${thumbList.title}" /> <br></td>
+				<tr><td colspan="3"><c:out value="${subscribe.nick}" /> <br></td>
 				</tr>
 					</c:forEach>
 				<!-- 두번째 줄 끝 -->

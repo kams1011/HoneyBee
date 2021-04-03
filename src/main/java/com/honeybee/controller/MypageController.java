@@ -12,6 +12,7 @@ import com.honeybee.domain.UserVO;
 import com.honeybee.service.EnrollListService;
 import com.honeybee.service.FreeService;
 import com.honeybee.service.MeetService;
+import com.honeybee.service.SubscribeService;
 import com.honeybee.service.ThumbService;
 import com.honeybee.service.UserService;
 
@@ -29,7 +30,7 @@ public class MypageController {
 	private FreeService fservice;
 	private EnrollListService eservice;
 	private ThumbService tservice;
-	
+	private SubscribeService sservice;
 	
 	
 	
@@ -70,12 +71,15 @@ public class MypageController {
 		log.info("-----------------------------------");
 		log.info(tservice.getThumbList("HOHO995@naver.com"));
 		log.info(tservice.getThumbRegDate("HOHO995@naver.com"));
+		log.info("---------------가나다라마바사-----------");
+		log.info(sservice.getSubscribeList("HOHO995@naver.com"));
 		model.addAttribute("meet", mservice.getListTest("HOHO995@naver.com"));
 		model.addAttribute("user", service.getMyList("HOHO995@naver.com"));
 		model.addAttribute("enrollStatus", eservice.getEnrollStatus("HOHO995@naver.com"));
 		model.addAttribute("enrollTitle", eservice.getEnrollTitle("HOHO995@naver.com"));
 		model.addAttribute("thumbList", tservice.getThumbList("HOHO995@naver.com"));
 		model.addAttribute("thumbRegDate", tservice.getThumbRegDate("HOHO995@naver.com"));
+		model.addAttribute("subscribeList", sservice.getSubscribeList("HOHO995@naver.com"));
 	}
 
 	@RequestMapping("/register")
