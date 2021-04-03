@@ -32,7 +32,7 @@
                 <tr>
                     <td class="freeBno"><c:out value="${free.fno}" /></td>
                     <td class="title">
-                        <a href='/free/get?fno=<c:out value="${free.fno}"/>'><c:out value="${free.title}"></c:out></a>
+                        <a class='move' href='<c:out value="${free.fno}"/>'><c:out value="${free.title}" /></a>
                     </td>
                     <td><c:out value="${free.id}"/></td>
                     <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${free.regdt}"/></td>
@@ -57,24 +57,43 @@
             <button id="reg" type="button">글쓰기</button>
         </div>
         <div class="paging">
-            <a href="#" class="btn">&lt;</a>
-            <a href="#" class="num ">1</a>
-            <a href="#" class="num on">2</a>
-            <a href="#" class="num">3</a>
-            <a href="#" class="num">4</a>
-            <a href="#" class="num">5</a>
-            <a href="#" class="num">6</a>
-            <a href="#" class="num">7</a>
-            <a href="#" class="btn">&gt;</a>
+            <c:if test="${pageMaker.prev }">
+            	<li class="pageBtn prev"><a href="${ pageMaker.startPage -1 }" class="btn">&lt;</a></li>
+            </c:if>
+            <c:forEach var="num" begin="${ pageMaker.startPage }" end="${ pageMaker.endPage }">
+            	<li class='pageBtn page'><a href="${num}" class="num  ${pageMaker.cri.pageNum == num ? 'on' : '' }">${num}</a></li>
+            </c:forEach>
+            <c:if test="${pageMaker.next }">
+            	<li class="pageBtn next"><a href="${ pageMaker.endPage + 1 }" class="btn">&gt;</a></li>
+            </c:if>
         </div>
     </div>
     <%@include file="../include/footer.jsp" %>
+    
+    <form id='actionForm' action="/free/list" method="get">
+    	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+    	<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+    </form>
 
     
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#reg").on("click", function() {
 			self.location = "/free/reg";
+		});
+		
+		var actionForm = $("#actionForm");
+		$(".pageBtn a").on("click", function(e) {
+			e.preventDefault();
+			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+			actionForm.submit();
+		});
+		
+		$(".move").on("click", function(e) {
+			e.preventDefault();
+			actionForm.append("<input type='hidden' name='fno' value='"  + $(this).attr("href") + "'>");
+			actionForm.attr("action", "/free/get");
+			actionForm.submit();
 		});
 		
 		

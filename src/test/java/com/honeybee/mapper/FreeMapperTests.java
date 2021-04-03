@@ -1,11 +1,14 @@
 package com.honeybee.mapper;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.honeybee.domain.Criteria;
 import com.honeybee.domain.FreeVO;
 
 import lombok.Setter;
@@ -60,6 +63,16 @@ public class FreeMapperTests {
 		if (vo == null) return;
 		
 		mapper.delete(vo);
+	}
+	
+	@Test
+	public void testPaging() {
+		Criteria cri = new Criteria();
+		cri.setPageNum(3);
+		cri.setAmount(10);
+		
+		List<FreeVO> list = mapper.getListWithPaging(cri);
+		list.forEach(vo -> log.info(vo.getFno()));
 	}
 	
 }

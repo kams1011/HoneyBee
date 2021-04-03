@@ -39,6 +39,8 @@
         <button data-oper="delete" class="delBtn">삭제</button>
         <form id='operForm' action="/free/modify" method="get">
         	<input type='hidden' id="fno" name="fno" value='<c:out value="${free.fno}" />'>
+        	<input type='hidden' name="pageNum" value='<c:out value="${cri.pageNum}" />'>
+        	<input type='hidden' name="amount" value='<c:out value="${cri.amount}" />'>
         </form>
         
         <hr class="solid">
@@ -70,7 +72,7 @@
                                                 <a class="btn float-right text-green"><i class="fa fa-thumbs-up"></i> 13</a>
                                             </p>
                                             <span>
-                                                김'칫'국이 올바른 표현입니다. 꼬우면 국립국어원에 물어보세요.
+                                                김'칫'국이 올바른 표현입니다.
                                             </span>
                                             <a href="#"><small class="float-right">답글</small></a>
                                         </div>
