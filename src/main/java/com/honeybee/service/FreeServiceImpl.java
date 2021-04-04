@@ -41,8 +41,8 @@ public class FreeServiceImpl implements FreeService {
 	}
 
 	@Override
-	public List<FreeVO> getList() {
-		return mapper.getList();
+	public List<FreeVO> getList(Criteria cri) {
+		return mapper.getListWithPaging(cri);
 	}
 	
 	@Override
@@ -52,8 +52,7 @@ public class FreeServiceImpl implements FreeService {
 
 	@Override
 	public int getTotal(Criteria cri) {
-		// TODO Auto-generated method stub
-		return 0;
+		return mapper.getTotalCount(cri);
 	}
 
 

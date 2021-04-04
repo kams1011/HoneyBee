@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honeybee.domain.Criteria;
 import com.honeybee.domain.FreeVO;
+import com.honeybee.domain.PageDTO;
 import com.honeybee.service.FreeService;
 
 import lombok.AllArgsConstructor;
@@ -25,9 +26,12 @@ public class FreeController {
 	private FreeService service;
 	
 	@GetMapping("/list")
-	public void list(Model model) {
+	public void list(Criteria cri, Model model) {
 		log.info("list");
-		model.addAttribute("list", service.getList());
+		model.addAttribute("list", service.getList(cri));
+		
+		int total = service.getTotal(cri);
+		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
 	
 	@GetMapping("/reg")
@@ -45,7 +49,7 @@ public class FreeController {
 	}
 	
 	@GetMapping({ "/get", "/modify" })
-	public void get(@RequestParam("fno") Long fno, Model model) {
+	public void get(@RequestParam("fno") Long fno, @ModelAttribute("cri") Criteria cri, Model model) {
 		log.info("/get or modify");
 		model.addAttribute("free", service.get(fno));
 	}
