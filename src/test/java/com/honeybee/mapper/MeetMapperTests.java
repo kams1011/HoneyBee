@@ -94,7 +94,6 @@ public class MeetMapperTests {
 	public void testUpdate() {
 		MeetVO meet = new MeetVO();
 		meet.setMno(21L);
-		
 		meet.setTitle("����� ����Դϴ�");
 		meet.setSmry("����� ���Ӹ� �����Դϴ�");
 		meet.setContent("����� �����Դϴ�.");

@@ -19,6 +19,10 @@ public interface MeetMapper {
 	
 	public int update(MeetVO meet);
 
-	public List<MeetVO> getMyList(String id);
+	public MeetVO getMyList(String id);
+	
+	public List<MeetVO> getListTest(String id);
+	
+	public List<MeetVO> getNick(String id);
 
 }
