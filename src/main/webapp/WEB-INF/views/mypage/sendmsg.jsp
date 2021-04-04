@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../include/header.jsp"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -205,10 +207,11 @@ body {
 
 <!--메뉴바 시작 -->
 <div class="mypagemenubar">
-	<a href="mypagehome">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a
-		href="mypost">내가 쓴 글 </a> <a href="myreply">내가 쓴 댓글 </a> <a
-		href="receivemsg">쪽지함 </a>
-</div>
+		<a href="home">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a
+			href="posted">내가 쓴 글 </a> <a href="reply">내가 쓴 댓글 </a>
+		<a href="rcvmsg">쪽지함 </a>
+	</div>
+
 
 
 <!--  Header 끝 -->
@@ -221,7 +224,7 @@ body {
 <body>
 	<div class="board">
 		<div class="select">
-			<a class="selectpost" href="receivemsg"> 수신함 | </a> <a
+			<a class="selectpost" href="rcvmsg"> 수신함 | </a> <a
 				class="selectreply""> 발신함 </a>
 
 		</div>
@@ -243,63 +246,15 @@ body {
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="content">조회수</th>
-						<th class="date">작성일</th>
-						<th class="check"><input type="checkbox"></th>
-
+					<c:forEach items="${sendmsg}" var="sendmsg">
+							<td class="innerposttitle"><c:out value="${sendmsg.id2}" /></td>
+							<th class="poststatus"><c:out value="${sendmsg.content}" /></th>
+							<th class="date"><fmt:formatDate pattern="yyyy-MM-dd"
+								value="${sendmsg.regDt}"  /></th>
+							<th class="check"><input type="checkbox"></th>
 					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="content">조회수</th>
-						<th class="date">작성일</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="content">조회수</th>
-						<th class="date">작성일</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="content">조회수</th>
-						<th class="date">작성일</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="content">조회수</th>
-						<th class="date">작성일</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="content">조회수</th>
-						<th class="date">작성일</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="content">조회수</th>
-						<th class="date">작성일</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="poststatus">조회수</th>
-						<th class="date">작성일</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
+					</c:forEach>
+			
 
 				</tbody>
 			</table>

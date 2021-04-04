@@ -45,7 +45,7 @@ public class FreeServiceImpl implements FreeService {
 	}
 	
 	@Override
-	public FreeVO getMyList(String id) {
+	public List<FreeVO> getMyList(String id) {
 		return mapper.getMyList(id);
 	}
 
@@ -54,6 +54,9 @@ public class FreeServiceImpl implements FreeService {
 		return mapper.getTotalCount(cri);
 	}
 
-
+	@Override
+	public void removetest(String fno) {
+		mapper.removetest(fno); //김세훈 테스트
+	}
 	
 }

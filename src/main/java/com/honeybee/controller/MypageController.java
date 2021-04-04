@@ -1,5 +1,9 @@
 package com.honeybee.controller;
 
+import java.util.Arrays;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.honeybee.domain.FreeVO;
 import com.honeybee.domain.MeetVO;
 import com.honeybee.domain.UserVO;
 import com.honeybee.service.EnrollListService;
@@ -15,6 +21,7 @@ import com.honeybee.service.MeetService;
 import com.honeybee.service.SubscribeService;
 import com.honeybee.service.ThumbService;
 import com.honeybee.service.UserService;
+import com.honeybee.service.MsgService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -31,6 +38,7 @@ public class MypageController {
 	private EnrollListService eservice;
 	private ThumbService tservice;
 	private SubscribeService sservice;
+	private MsgService msgservice;
 	
 	
 	
@@ -40,14 +48,14 @@ public class MypageController {
 	@GetMapping("/posted")
 	public void posted(Model model) {
 		log.info("posted");
-		model.addAttribute("list", fservice.getMyList("kams"));
+		model.addAttribute("list", fservice.getMyList("HOHO995@naver.com"));
 	}
 
-	@GetMapping("/getmsg")
-	public void getmsg(@RequestParam("id") String id, Model model) {
-		log.info("list");
-		model.addAttribute("list", service.getList());
-		model.addAttribute("id", id);
+	@GetMapping("/sendmsg")
+	public void getsendmsg(Model model) {
+		log.info("sendmsg");
+		log.info(msgservice.getsendList("HOHO995@naver.com"));
+		model.addAttribute("sendmsg", msgservice.getsendList("HOHO995@naver.com"));
 	}
 
 	@GetMapping("/reply")
@@ -100,13 +108,16 @@ public class MypageController {
 	}
 
 	@PostMapping("/modify")
-	public String modify(UserVO user, RedirectAttributes rttr) {
-		log.info("modify: " + user);
-
-		if (service.modify(user)) {
-			rttr.addFlashAttribute("result", "success");
-		}
-		return "redirect:/mypage/pwdcheck";
+	public String modify(UserVO user, RedirectAttributes rttr, FreeVO vo, HttpServletRequest request) {
+		log.info("modify test 입니다~~~~~~~~~~~~~~~~~~");
+		String[] arr =request.getParameterValues("test");
+		for(int i=0; i<arr.length; i++) {
+		fservice.removetest(arr[i]);}
+		//		fservice.remove(vo);		//삭제(히든 처리 후 deldate sysdate로 기입) 뒤 홈화면으로 돌아갑니다. 배열 삭제를 해야겠네.
+//		if (service.modify(user)) {
+//			rttr.addFlashAttribute("result", "success");
+//		}
+		return "redirect:/mypage/home";
 	}
 
 	@PostMapping("/remove")
@@ -117,6 +128,14 @@ public class MypageController {
 			rttr.addFlashAttribute("result", "success");
 		}
 		return "redirect:/mypage/home";
+	}
+	
+	
+	@GetMapping("/rcvmsg")
+	public void getrcvmsg(Model model) {
+		log.info("수신함 체크입니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		log.info(msgservice.getrcvList("HOHO995@naver.com"));
+		model.addAttribute("rcvmsg", msgservice.getrcvList("HOHO995@naver.com"));
 	}
 
 }

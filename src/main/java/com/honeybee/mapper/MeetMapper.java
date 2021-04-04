@@ -20,7 +20,7 @@ public interface MeetMapper {
 
 	public int update(MeetVO meet);
 
-	public MeetVO getMyList(String id);
+//	public MeetVO getMyList(String id); UserMapper참조
 	
 	public List<MeetVO> getListWithPaging(Criteria cri); //페이징
 
