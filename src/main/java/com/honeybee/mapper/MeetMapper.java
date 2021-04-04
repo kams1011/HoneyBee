@@ -20,9 +20,9 @@ public interface MeetMapper {
 
 	public int update(MeetVO meet);
 
-	public List<MeetVO> getMyList(String id);
+	public MeetVO getMyList(String id);
 	
-	public List<MeetVO>  getLsitWithPaging(Criteria cri); //페이징
+	public List<MeetVO>  getListWithPaging(Criteria cri); //페이징
 
   public List<MeetVO> getListTest(String id);
 	

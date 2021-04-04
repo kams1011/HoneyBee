@@ -62,7 +62,7 @@ public class MeetServiceImpl implements MeetService {
 	@Override
 	public List<MeetVO> getList(Criteria cri) {
 		log.info("get List with criteria : " + cri);
-		return mapper.getLsitWithPaging(cri);
+		return mapper.getListWithPaging(cri);
 	}
 
 	@Override

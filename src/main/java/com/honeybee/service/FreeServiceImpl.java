@@ -45,7 +45,7 @@ public class FreeServiceImpl implements FreeService {
 	}
 	
 	@Override
-	public FreeVO getMyList(String id) {
+	public List<FreeVO> getMyList(String id) {
 		return mapper.getMyList(id);
 	}
 

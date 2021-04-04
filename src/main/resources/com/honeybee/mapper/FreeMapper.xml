@@ -2,11 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.honeybee.mapper.FreeMapper">
 
+
 	<select id="getList" resultType="com.honeybee.domain.FreeVO">
 		<![CDATA[
 			select
-				FNO, ID, TITLE, TO_CHAR(CONTENT) AS CONTENT, HIT, THUMB, REGDT, UPDDT, DELDT
-			from FREE where FNO > 0 and DELDT is null
+				FNO, ID, TITLE, TO_CHAR(CONTENT) as content, HIT, THUMB, REGDT, UPDDT
+			from FREE
+			where FNO > 0 and DELDT is null
 		]]>
 	</select>
 
@@ -15,7 +17,6 @@
 				FNO, ID, TITLE, TO_CHAR(CONTENT) AS CONTENT, HIT, THUMB, REGDT, UPDDT, DELDT
 			from FREE where id = #{id}
 	</select>
-
 
 	<!-- CREATE -->
 	<insert id="insert">
