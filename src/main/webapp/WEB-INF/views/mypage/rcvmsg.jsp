@@ -176,10 +176,9 @@ body {
 
 <!--메뉴바 시작 -->
 <div class="mypagemenubar">
-		<a href="home">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a
-			href="posted">내가 쓴 글 </a> <a href="reply">내가 쓴 댓글 </a>
-		<a href="rcvmsg">쪽지함 </a>
-	</div>
+	<a href="home">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a href="posted">내가
+		쓴 글 </a> <a href="reply">내가 쓴 댓글 </a> <a href="rcvmsg">쪽지함 </a>
+</div>
 
 
 <!--  Header 끝 -->
@@ -199,35 +198,35 @@ body {
 
 
 		<div class="mypost">
+			<form action="rcvmsgdelete" method="post">
+				<table class="post">
 
-			<table class="post">
 
 
+					<thead>
+						<tr class="posttitle">
 
-				<thead>
-					<tr class="posttitle">
-
-						<th class="innerposttitle">보낸사람</th>
-						<th class="poststatus">내용</th>
-						<th class="date">작성일</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<c:forEach items="${rcvmsg}" var="rcvmsg">
-							<td class="innerposttitle"><c:out value="${rcvmsg.id}" /></td>
-							<th class="poststatus"><c:out value="${rcvmsg.content}" /></th>
-							<th class="date"><fmt:formatDate pattern="yyyy-MM-dd"
-								value="${rcvmsg.regDt}"  /></th>
+							<th class="innerposttitle">보낸사람</th>
+							<th class="poststatus">내용</th>
+							<th class="date">작성일</th>
 							<th class="check"><input type="checkbox"></th>
-					</tr>
-					</c:forEach>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<c:forEach items="${rcvmsg}" var="rcvmsg">
+								<td class="innerposttitle"><c:out value="${rcvmsg.id}" /></td>
+								<td class="poststatus"><c:out value="${rcvmsg.content}" /></td>
+								<td class="date"><fmt:formatDate pattern="yyyy-MM-dd"
+										value="${rcvmsg.regDt}" /></td>
+								<td><input type="checkbox" name="rcvmsgcheck" value="${rcvmsg.msgno}" ></td>
+						</tr>
+						</c:forEach>
 
-				</tbody>
-			</table>
-			<button class="delete">삭제</button>
-
+					</tbody>
+				</table>
+				<input type="submit" class="delete">
+			</form>
 
 		</div>
 	</div>

@@ -27,6 +27,6 @@ public interface FreeMapper {
 	public List<FreeVO> getListWithPaging(Criteria cri);
 	public int getTotalCount(Criteria cri);
 	
-	public void removetest(String fno); //김세훈 테스트
+	public void mypostremove(String fno); //김세훈 테스트
 	
 }

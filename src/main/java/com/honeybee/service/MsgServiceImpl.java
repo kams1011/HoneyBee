@@ -17,18 +17,25 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class MsgServiceImpl implements MsgService {
 
-	@Setter(onMethod_ =@Autowired)
+	@Setter(onMethod_ = @Autowired)
 	private MsgMapper mmapper;
-	
-	public List<MsgVO> getrcvList(String id){
+
+	@Override
+	public List<MsgVO> getrcvList(String id) {
 		log.info("getlist.............");
 		return mmapper.getrcvList(id);// 수신메시지 리스트 가져오기
 	}
 
-	public List<MsgVO> getsendList(String id){
+	@Override
+	public List<MsgVO> getsendList(String id) {
 		log.info("getlist.............");
 		return mmapper.getsendList(id);// 발신메시지 리스트 가져오기
 	}
 
-	
+	@Override
+	public void rcvmsgremove(String msgmno) {
+		log.info("msgdelete...........");
+		mmapper.rcvmsgremove(msgmno);
+	}
+
 }

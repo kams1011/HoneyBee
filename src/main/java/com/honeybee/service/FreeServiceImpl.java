@@ -55,8 +55,8 @@ public class FreeServiceImpl implements FreeService {
 	}
 
 	@Override
-	public void removetest(String fno) {
-		mapper.removetest(fno); //김세훈 테스트
+	public void mypostremove(String fno) {
+		mapper.mypostremove(fno); //김세훈 테스트
 	}
 	
 }

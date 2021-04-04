@@ -39,11 +39,6 @@ public class MypageController {
 	private ThumbService tservice;
 	private SubscribeService sservice;
 	private MsgService msgservice;
-	
-	
-	
-	
-	
 
 	@GetMapping("/posted")
 	public void posted(Model model) {
@@ -94,7 +89,7 @@ public class MypageController {
 
 	@RequestMapping("/register")
 	public String register(UserVO user, RedirectAttributes rttr) {
-		log.info("register: " + user);	
+		log.info("register: " + user);
 		service.register(user);
 		rttr.addFlashAttribute("result", user.getCid());
 		return "mypage/modify";
@@ -108,34 +103,40 @@ public class MypageController {
 	}
 
 	@PostMapping("/modify")
-	public String modify(UserVO user, RedirectAttributes rttr, FreeVO vo, HttpServletRequest request) {
+	public String modify(Model model, HttpServletRequest request) {
 		log.info("modify test 입니다~~~~~~~~~~~~~~~~~~");
-		String[] arr =request.getParameterValues("test");
-		for(int i=0; i<arr.length; i++) {
-		fservice.removetest(arr[i]);}
-		//		fservice.remove(vo);		//삭제(히든 처리 후 deldate sysdate로 기입) 뒤 홈화면으로 돌아갑니다. 배열 삭제를 해야겠네.
-//		if (service.modify(user)) {
-//			rttr.addFlashAttribute("result", "success");
-//		}
+		String[] arr = request.getParameterValues("mypostcheck");
+		for (int i = 0; i < arr.length; i++) {
+			fservice.mypostremove(arr[i]);
+		}
 		return "redirect:/mypage/home";
 	}
 
 	@PostMapping("/remove")
 	public String remove(@RequestParam("id") String id, RedirectAttributes rttr) {
-		
+
 		log.info("remove...." + id);
 		if (service.remove(id)) {
 			rttr.addFlashAttribute("result", "success");
 		}
 		return "redirect:/mypage/home";
 	}
-	
-	
+
 	@GetMapping("/rcvmsg")
 	public void getrcvmsg(Model model) {
 		log.info("수신함 체크입니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		log.info(msgservice.getrcvList("HOHO995@naver.com"));
 		model.addAttribute("rcvmsg", msgservice.getrcvList("HOHO995@naver.com"));
+	}
+
+	@PostMapping("/rcvmsgdelete")
+	public String rcvmsgdelete(Model model, HttpServletRequest request) {
+		log.info("수신함 메세지 삭제 test 입니다~~~~~~~~~~~~~~~~~~");
+		String[] arr = request.getParameterValues("rcvmsgcheck");
+		for (int i = 0; i < arr.length; i++) {
+			msgservice.rcvmsgremove(arr[i]);
+		}
+		return "redirect:/mypage/home";
 	}
 
 }

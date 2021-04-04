@@ -21,5 +21,5 @@ public interface FreeService {
 	
 	public int getTotal(Criteria cri);
 
-	public void removetest(String fno); //김세훈 테스트
+	public void mypostremove(String fno);  //김세훈 테스트
 }

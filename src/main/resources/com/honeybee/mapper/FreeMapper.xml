@@ -52,10 +52,10 @@
 		where fno = #{fno}
 	</delete>
 	
-	<delete id="removetest">  <!-- 김세훈 테스트 -->
+	<update id="mypostremove">  <!-- 김세훈 테스트 -->
 		update FREE
 		set deldt = sysdate
 		where fno = #{fno}
-	</delete>
+	</update>
 	
 </mapper>

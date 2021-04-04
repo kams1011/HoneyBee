@@ -205,7 +205,7 @@ li {
 								<td><fmt:formatDate pattern="yyyy-MM-dd"
 										value="${free.regdt}" /></td>
 								<td><c:out value="${free.hit}" /></td>
-								<td><input type="checkbox" name="test" value="${free.fno}" ></td>
+								<td><input type="checkbox" name="mypostcheck" value="${free.fno}" ></td>
 							</tr>
 						</c:forEach>
 
