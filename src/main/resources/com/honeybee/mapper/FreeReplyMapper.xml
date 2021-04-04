@@ -3,25 +3,31 @@
 <mapper namespace="com.honeybee.mapper.FreeReplyMapper">
 
 	<insert id="insert">
-		insert into free_reply (frno, fno, id, reply)
+		insert into FREE_REPLY (FRNO, FNO, ID, REPLY)
 		values (seq_free_reply.nextval, #{fno}, #{id}, #{reply})
 	</insert>
 
 	<select id="read" resultType="com.honeybee.domain.FreeReplyVO">
-		select * from free_reply where frno = #{frno}
+		select * from FREE_REPLY
+		where FRNO = #{frno} and DELDT is null
 	</select>
 	
 	<update id="update">
 		update FREE_REPLY
-		set reply = #{reply}
-		where frno = #{frno}
+		set REPLY = #{reply}
+		where FRNO = #{frno}
 	</update>
 	
 	<delete id="delete">
-		delete from FREE_REPLY where frno = #{frno}
+		delete from FREE_REPLY where FRNO = #{frno}
 	</delete>
 	
-	
+	<select id="getList" resultType="com.honeybee.domain.FreeReplyVO">
+		select frno, fno, id, frno2, reply, layer, bundle, bunorder, nick, thumb, regdt, uptdt
+		from FREE_REPLY
+		where fno = #{fno} and DELDT is null
+		order by frno asc
+	</select>
 	
 
 </mapper>

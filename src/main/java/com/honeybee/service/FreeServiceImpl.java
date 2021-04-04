@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.honeybee.domain.Criteria;
 import com.honeybee.domain.FreeVO;
+import com.honeybee.domain.MeetVO;
 import com.honeybee.mapper.FreeMapper;
 
 import lombok.AllArgsConstructor;
@@ -40,8 +41,8 @@ public class FreeServiceImpl implements FreeService {
 	}
 
 	@Override
-	public List<FreeVO> getList(Criteria cri) {
-		return mapper.getListWithPaging(cri);
+	public List<FreeVO> getList() {
+		return mapper.getList();
 	}
 	
 	@Override
@@ -51,7 +52,8 @@ public class FreeServiceImpl implements FreeService {
 
 	@Override
 	public int getTotal(Criteria cri) {
-		return mapper.getTotalCount(cri);
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

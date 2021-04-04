@@ -15,7 +15,7 @@ public interface FreeService {
 	
 	public boolean remove(FreeVO vo);
 	
-	public List<FreeVO> getList(Criteria cri);
+	public List<FreeVO> getList();
 	
 	public List<FreeVO> getMyList(String id);
 	

@@ -1,8 +1,11 @@
 package com.honeybee.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.honeybee.domain.Criteria;
 import com.honeybee.domain.FreeReplyVO;
 import com.honeybee.mapper.FreeReplyMapper;
 
@@ -39,5 +42,11 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 		log.info("remove..........");
 		return mapper.delete(frno) == 1;
 	}
+
+	@Override
+	public List<FreeReplyVO> getList(Long fno) {
+		return mapper.getList(3L);
+	}
+	
 
 }

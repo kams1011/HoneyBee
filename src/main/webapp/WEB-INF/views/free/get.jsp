@@ -74,7 +74,7 @@
                                                 <a class="btn float-right text-green"><i class="fa fa-thumbs-up"></i> 13</a>
                                             </p>
                                             <span>
-                                                김'칫'국이 올바른 표현입니다.
+                                                김'칫'국이 올바른 표현입니다. 
                                             </span>
                                             <a href="#"><small class="float-right">답글</small></a>
                                         </div>

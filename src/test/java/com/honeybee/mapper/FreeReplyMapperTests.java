@@ -1,5 +1,6 @@
 package com.honeybee.mapper;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 import org.junit.Test;
@@ -59,6 +60,12 @@ public class FreeReplyMapperTests {
 	public void testDelete() {
 		int cnt = mapper.delete(4L);
 		log.info("DELETE COUNT: " + cnt);
+	}
+	
+	@Test
+	public void testList() {
+		List<FreeReplyVO> list = mapper.getList(fnoArr[0]);
+		list.forEach(reply -> log.info(reply));
 	}
 	
 }

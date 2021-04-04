@@ -17,5 +17,6 @@ public interface FreeReplyMapper {
 	
 	// Delete
 	public int delete(Long frno);
-
+	
+	public List<FreeReplyVO> getList(Long fno);
 }

@@ -11,7 +11,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honeybee.domain.Criteria;
 import com.honeybee.domain.MeetVO;
-import com.honeybee.domain.PageDTO;
 import com.honeybee.service.CodeTableService;
 import com.honeybee.service.MeetService;
 
@@ -42,7 +41,7 @@ public class MeetController {
 
 		log.info("total : " + total);
 
-		model.addAttribute("pageMaker", new PageDTO(cri, total));
+		model.addAttribute("pageMaker");
 	}
 
 
