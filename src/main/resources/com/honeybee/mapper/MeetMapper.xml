@@ -4,7 +4,7 @@
 
 <select id="getList" resultType="com.honeybee.domain.MeetVO">
 	<![CDATA[
-		select 
+		select
 			MNO,
 			CID,
 			CID2,
@@ -59,7 +59,7 @@
 			PLACE,
 			LINK,
 			IMG)
-			values 
+			values
 			(
 			SEQ_meet.nextval,
 			#{cid},
@@ -89,7 +89,7 @@
 	<selectKey keyProperty="mno" order="BEFORE" resultType="long">
 		select seq_meet.nextval from dual
 	</selectKey>
-	
+
 	insert into meet(MNO,
 			CID,
 			CID2,
@@ -187,11 +187,10 @@
 			updDt = sysdate
 	where mno = #{mno}
 </update>
-  
-  
+
 <select id="getMyList" resultType="com.honeybee.domain.MeetVO">
   <![CDATA[
-    select 
+    select
       MNO,
       CID,
       CID2,
@@ -218,6 +217,93 @@
       from MEET
       where id = #{id}
   ]]>
+</select>
+
+<select id="getListWithPaging" resultType="com.honeybee.domain.MeetVO">
+	<![CDATA[
+		select
+		  MNO,
+	      CID,
+	      CID2,
+	      ID,
+	      TITLE,
+	      SMRY,
+	      to_char(CONTENT) AS CONTENT,
+	      STARTDT,
+	      ENDDT,
+	      RECSDT,
+	      RECEDT,
+	      RECNO,
+	      CURRNO,
+	      CNCLNO,
+	      HIT,
+	      THUMB,
+	      CHARGE,
+	      ONOFF,
+	      PLACE,
+	      LINK,
+	      IMG,
+	      REGDT,
+	      UPDDT,
+	      DELDT
+
+	      from(
+	      select /*+index_desc(meet meet_pk)*/
+	      rownum rn,
+	      MNO,
+	      CID,
+	      CID2,
+	      ID,
+	      TITLE,
+	      SMRY,
+	      to_char(CONTENT) AS CONTENT,
+	      STARTDT,
+	      ENDDT,
+	      RECSDT,
+	      RECEDT,
+	      RECNO,
+	      CURRNO,
+	      CNCLNO,
+	      HIT,
+	      THUMB,
+	      CHARGE,
+	      ONOFF,
+	      PLACE,
+	      LINK,
+	      IMG,
+	      REGDT,
+	      UPDDT,
+	      DELDT
+	      from meet where]]>
+
+	      <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+	      	<foreach item='type' collection="typeArr">
+	      	<trim prefix="OR">
+	      		<choose>
+	      			<when test="type == 'T'.toString()">
+	      				title like '%'||#{keyword}||'%'
+	      			</when>
+	      			<when test="type =='C'.toString()">
+	      				content like '%'||#{keyword}||'%'
+	      			</when>
+	      			<when test="type =='W'.toString()">
+	      				id like '%'||#{keyword}||'%'
+	      			</when>
+	      		</choose>
+	      	</trim>
+	      	</foreach>
+	      </trim>
+
+	      <![CDATA[
+	      rownum <= #{pageNum} * #{amount}
+	      )
+
+	      where rn > (#{pageNum}-1) * #{amount}
+		  ]]>
+</select>
+
+<select id="getTotalCount" resultType="int">
+	select count(*) from meet where mno > 0
 </select>
 
 <select id="getListTest" resultType="com.honeybee.domain.MeetVO">
@@ -250,7 +336,6 @@
       where id = #{id}
   ]]>
 </select>
-
 
 <select id="getNick" resultType="com.honeybee.domain.CodeTableVO">
 select code_table.cname from code_table, meet where (meet.cid=code_table.cid) and (id=#{id})

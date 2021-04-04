@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.honeybee.domain.Criteria;
 import com.honeybee.domain.MeetVO;
 import com.honeybee.mapper.MeetMapper;
 
@@ -17,7 +18,7 @@ import lombok.extern.log4j.Log4j;
 @Service
 @AllArgsConstructor
 public class MeetServiceImpl implements MeetService {
-	
+
 	@Setter(onMethod_ =@Autowired)
 	private MeetMapper mapper;
 
@@ -45,13 +46,13 @@ public class MeetServiceImpl implements MeetService {
 		log.info("remove..............." + gno);
 		return mapper.delete(gno) == 1;
 	}
-	
+
 	@Override
 	public List<MeetVO> getList() {
 		log.info("getlist.............");
 		return mapper.getList();
 	}
-	
+
 	@Override
 	public MeetVO getMyList(String id) {
 		log.info("getlist.............");
@@ -70,6 +71,29 @@ public class MeetServiceImpl implements MeetService {
 		return mapper.getNick(id);
 	}
 	
-	
+	@Override
+	public List<MeetVO> getList(Criteria cri) {
+		log.info("get List with criteria : " + cri);
+		return mapper.getLsitWithPaging(cri);
+	}
 
+	@Override
+	public int getTotal(Criteria cri) {
+		log.info("get total count");
+		return mapper.getTotalCount(cri);
+	}
+	
+	@Override
+	public List<MeetVO> getListTest(String id) {
+		log.info("getlist.............");
+		return mapper.getListTest(id);
+	}
+	
+	@Override
+	public List<MeetVO> getNick(String id) {
+		log.info("getNick.............");
+		return mapper.getNick(id);
+	}
+	
+	
 }
