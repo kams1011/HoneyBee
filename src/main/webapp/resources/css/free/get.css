@@ -191,3 +191,7 @@ h6 {
 	cursor: pointer;
 	background-color: #3498db;
 }
+
+.text-success {
+	margin-top: 50px;
+}
