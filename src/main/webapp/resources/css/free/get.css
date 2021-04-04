@@ -189,5 +189,9 @@ h6 {
 
 .lstBtn:hover {
 	cursor: pointer;
-	background-color: #3498db;
+  background-color: #3498db;
+}
+
+.text-success {
+	margin-top: 50px;
 }
