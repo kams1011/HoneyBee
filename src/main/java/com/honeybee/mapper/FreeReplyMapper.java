@@ -2,6 +2,9 @@ package com.honeybee.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
+import com.honeybee.domain.Criteria;
 import com.honeybee.domain.FreeReplyVO;
 
 public interface FreeReplyMapper {
@@ -18,5 +21,5 @@ public interface FreeReplyMapper {
 	// Delete
 	public int delete(Long frno);
 	
-	public List<FreeReplyVO> getList(Long fno);
+	public List<FreeReplyVO> getList(@Param("cri") Criteria cri, @Param("fno") Long fno);
 }

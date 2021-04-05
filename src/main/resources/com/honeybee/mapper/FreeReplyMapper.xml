@@ -23,10 +23,10 @@
 	</delete>
 	
 	<select id="getList" resultType="com.honeybee.domain.FreeReplyVO">
-		select frno, fno, id, frno2, reply, layer, bundle, bunorder, nick, thumb, regdt, uptdt
+		select FRNO, FNO, ID, FRNO2, REPLY, LAYER, BUNDLE, BUNORDER, NICK, THUMB, REGDT, UPTDT
 		from FREE_REPLY
-		where fno = #{fno} and DELDT is null
-		order by frno asc
+		where FNO = #{fno} and DELDT is null
+		order by FRNO asc
 	</select>
 	
 

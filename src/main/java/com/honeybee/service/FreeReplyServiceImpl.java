@@ -44,8 +44,8 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 	}
 
 	@Override
-	public List<FreeReplyVO> getList(Long fno) {
-		return mapper.getList(3L);
+	public List<FreeReplyVO> getList(Criteria cri, Long fno) {
+		return mapper.getList(cri, fno);
 	}
 	
 

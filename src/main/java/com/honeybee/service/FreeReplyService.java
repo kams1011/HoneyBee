@@ -15,6 +15,6 @@ public interface FreeReplyService {
 	
 	public boolean remove(Long frno);
 	
-	public List<FreeReplyVO> getList(Long fno);
+	public List<FreeReplyVO> getList(Criteria cri, Long fno);
 
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.honeybee.domain.Criteria;
 import com.honeybee.domain.FreeReplyVO;
 
 import lombok.Setter;
@@ -64,7 +65,8 @@ public class FreeReplyMapperTests {
 	
 	@Test
 	public void testList() {
-		List<FreeReplyVO> list = mapper.getList(fnoArr[0]);
+		Criteria cri = new Criteria();
+		List<FreeReplyVO> list = mapper.getList(cri, fnoArr[0]);
 		list.forEach(reply -> log.info(reply));
 	}
 	
