@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.honeybee.mapper.MsgMapper">
+
+
+	<select id="getrcvList" resultType="com.honeybee.domain.MsgVO">
+		select * from message where id2=#{id} and DELDT IS NOT NULL
+	</select>
+	
+	<select id="getsendList" resultType="com.honeybee.domain.MsgVO">
+		select * from message where id=#{id} and DELDT IS NOT NULL
+	</select>
+	
+	
+	<update id="rcvmsgremove">  <!-- 김세훈 테스트 -->
+		update MESSAGE
+		set deldt = sysdate
+		where msgno = #{msgno}
+	</update>
+
+
+</mapper>

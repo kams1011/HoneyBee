@@ -198,7 +198,6 @@ a:hover {
 }
 
 .mypage-subscribe {
-
 	height: 500px;
 	width: 300px;
 	display: inline-block;
@@ -214,25 +213,15 @@ a:hover {
 	font-weight: bold;
 	color: rgba(133, 39, 39, 0.973);
 }
-
-
-
-
-
-
-
-
-
-
 </style>
 </head>
 <body>
 
 	<!-- 메뉴바 -->
 	<div class="mypagemenubar">
-		<a href="mypagehome">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a
-			href="mypost">내가 쓴 글 </a> <a href="myreply">내가 쓴 댓글 </a> <a
-			href="receivemsg">쪽지함 </a>
+		<a href="home">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a
+			href="posted">내가 쓴 글 </a> <a href="reply">내가 쓴 댓글 </a>
+		<a href="rcvmsg">쪽지함 </a>
 	</div>
 
 
@@ -336,45 +325,43 @@ a:hover {
 
 			</table>
 		</span>
-		<div class="mypage-thumb-name">
-			모임 찜 목록
-		</div>
+		<div class="mypage-thumb-name">모임 찜 목록</div>
 		<div class="mypage-thumb">
 			<table>
-			<c:forEach items="${thumbList}" var="thumbList" varStatus="status">
-				<th></th>
-				<th></th>
-				<th></th>
-				<th><fmt:formatDate pattern="yyyy-MM-dd"
-								value="${thumbRegDate[status.index].regDt}" /></th>
-				<tr>
-					<!-- 두번째 줄 시작 -->
-					<td colspan="3"><c:out value="${thumbList.title}" /> <br></td>
-				</tr>
-					</c:forEach>
+				<c:forEach items="${thumbList}" var="thumbList" varStatus="status">
+					<th></th>
+					<th></th>
+					<th></th>
+					<th><fmt:formatDate pattern="yyyy-MM-dd"
+							value="${thumbRegDate[status.index].regDt}" /></th>
+					<tr>
+						<!-- 두번째 줄 시작 -->
+						<td colspan="3"><c:out value="${thumbList.title}" /> <br></td>
+					</tr>
+				</c:forEach>
 				<!-- 두번째 줄 끝 -->
 			</table>
 
 		</div>
 	</div>
-		<div class="mypage-subscribe-name">
-			구독목록
-		</div>
-		<div class="mypage-subscribe">
-			<table>
-			<c:forEach items="${subscribeList}" var="subscribe" varStatus="status">
+	<div class="mypage-subscribe-name">구독목록</div>
+	<div class="mypage-subscribe">
+		<table>
+			<c:forEach items="${subscribeList}" var="subscribe"
+				varStatus="status">
 				<th></th>
 				<th></th>
 				<th></th>
 				<th>
 					<!-- 두번째 줄 시작 -->
-				<tr><td colspan="3"><c:out value="${subscribe.nick}" /> <br></td>
+				<tr>
+					<td colspan="3"><c:out value="${subscribe.nick}" /> <br></td>
 				</tr>
-					</c:forEach>
-				<!-- 두번째 줄 끝 -->
-			</table>
+			</c:forEach>
+			<!-- 두번째 줄 끝 -->
+		</table>
 
-		</div>
+	</div>
 	</div>
 
 

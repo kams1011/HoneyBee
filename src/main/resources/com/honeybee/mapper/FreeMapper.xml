@@ -11,11 +11,8 @@
 	</select>
 
 	<select id="getMyList" resultType="com.honeybee.domain.FreeVO">
-			select
-				FNO, ID, TITLE, TO_CHAR(CONTENT) AS CONTENT, HIT, THUMB, REGDT, UPDDT, DELDT
-			from FREE where id = #{id}
+	select  FNO, ID, TITLE, TO_CHAR(CONTENT) AS CONTENT, HIT, THUMB, REGDT, UPDDT, DELDT from FREE where id = #{id} and DELDT IS NOT NULL
 	</select>
-
 
 	<!-- CREATE -->
 	<insert id="insert">
@@ -54,5 +51,11 @@
 		set deldt = sysdate
 		where fno = #{fno}
 	</delete>
-
+	
+	<update id="mypostremove">  <!-- 김세훈 테스트 -->
+		update FREE
+		set deldt = sysdate
+		where fno = #{fno}
+	</update>
+	
 </mapper>
