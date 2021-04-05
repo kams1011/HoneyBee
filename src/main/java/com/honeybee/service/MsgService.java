@@ -10,5 +10,7 @@ public interface MsgService {
 
 	public List<MsgVO> getsendList(String id); // 발신메시지 리스트 가져오기
 
-	public void rcvmsgremove(String msgmno);
+	public void rcvmsgremove(String msgmno); //수신메세지 삭제
+	
+	public void sendmsgremove(String msgmno); //발신메세지 삭제
 }

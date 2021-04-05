@@ -7,19 +7,28 @@
 
 
 	<select id="getrcvList" resultType="com.honeybee.domain.MsgVO">
-		select * from message where id2=#{id} and DELDT IS NOT NULL
+		select * from message where
+		id2=#{id} and DELDT IS NULL
 	</select>
-	
+
 	<select id="getsendList" resultType="com.honeybee.domain.MsgVO">
-		select * from message where id=#{id} and DELDT IS NOT NULL
+		select * from message where
+		id=#{id} and DELDT IS NULL
 	</select>
-	
-	
+
+
 	<update id="rcvmsgremove">  <!-- 김세훈 테스트 -->
 		update MESSAGE
 		set deldt = sysdate
 		where msgno = #{msgno}
 	</update>
+
+	<update id="sendmsgremove">  <!-- 김세훈 테스트 -->
+		update MESSAGE
+		set deldt = sysdate
+		where msgno = #{msgno}
+	</update>
+
 
 
 </mapper>

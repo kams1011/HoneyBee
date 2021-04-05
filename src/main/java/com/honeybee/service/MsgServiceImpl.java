@@ -38,4 +38,9 @@ public class MsgServiceImpl implements MsgService {
 		mmapper.rcvmsgremove(msgmno);
 	}
 
+	@Override
+	public void sendmsgremove(String msgmno) {
+		log.info("sendmsgdelete............");
+		mmapper.sendmsgremove(msgmno);
+	}
 }

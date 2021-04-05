@@ -207,10 +207,9 @@ body {
 
 <!--메뉴바 시작 -->
 <div class="mypagemenubar">
-		<a href="home">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a
-			href="posted">내가 쓴 글 </a> <a href="reply">내가 쓴 댓글 </a>
-		<a href="rcvmsg">쪽지함 </a>
-	</div>
+	<a href="home">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a href="posted">내가
+		쓴 글 </a> <a href="reply">내가 쓴 댓글 </a> <a href="rcvmsg">쪽지함 </a>
+</div>
 
 
 
@@ -231,45 +230,46 @@ body {
 
 
 		<div class="mypost">
+			<form action="sendmsgdelete" method="post">
+				<table class="post">
 
-			<table class="post">
 
 
+					<thead>
+						<tr class="posttitle">
 
-				<thead>
-					<tr class="posttitle">
-
-						<th class="innerposttitle">수신인</th>
-						<th class="content">내용</th>
-						<th class="date">작성일</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${sendmsg}" var="sendmsg">
-							<td class="innerposttitle"><c:out value="${sendmsg.id2}" /></td>
-							<th class="poststatus"><c:out value="${sendmsg.content}" /></th>
-							<th class="date"><fmt:formatDate pattern="yyyy-MM-dd"
-								value="${sendmsg.regDt}"  /></th>
+							<th class="innerposttitle">수신인</th>
+							<th class="content">내용</th>
+							<th class="date">작성일</th>
 							<th class="check"><input type="checkbox"></th>
-					</tr>
-					</c:forEach>
-			
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${sendmsg}" var="sendmsg">
+							<td class="innerposttitle"><c:out value="${sendmsg.id2}" /></td>
+							<td class="poststatus"><c:out value="${sendmsg.content}" /></td>
+							<td class="date"><fmt:formatDate pattern="yyyy-MM-dd"
+									value="${sendmsg.regDt}" /></td>
+							<td class="check"><input type="checkbox" name="sendmsgcheck"
+								value="${sendmsg.msgno}"></td>
+							</tr>
+						</c:forEach>
 
-				</tbody>
-			</table>
-			<button class="delete">삭제</button>
 
-			<div id="ex1" class="modal">
-				수신인<input type="text" class="receiver" /><br> <input
-					type="text" class="msgcontent" height:40px;/><br>
-				<button>전송</button>
-				<a href="#" rel="modal:close">닫기</a>
+					</tbody>
+				</table>
+					<input type="submit" class="delete">
+				</form>
+				<div id="ex1" class="modal">
+					수신인<input type="text" class="receiver" /><br> <input
+						type="text" class="msgcontent" height:40px;/><br>
+					<button>전송</button>
+					<a href="#" rel="modal:close">닫기</a>
 
-			</div>
-			<p>
-				<a href="#ex1" rel="modal:open">쪽지 보내기</a>
-			</p>
+				</div>
+				<p>
+					<a href="#ex1" rel="modal:open">쪽지 보내기</a>
+				</p>
 		</div>
 	</div>
 

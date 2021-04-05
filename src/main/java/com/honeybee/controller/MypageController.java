@@ -139,4 +139,14 @@ public class MypageController {
 		return "redirect:/mypage/home";
 	}
 
+	@PostMapping("/sendmsgdelete")
+	public String sendmsgdelete(Model model, HttpServletRequest request) {
+		log.info("발신함 메세지 삭제 test 입니다~~~~~~~~~~~~~~~~~~");
+		String[] arr2 = request.getParameterValues("sendmsgcheck");
+		for (int i = 0; i < arr2.length; i++) {
+			msgservice.sendmsgremove(arr2[i]);
+		}
+		return "redirect:/mypage/home";
+	}
+
 }
