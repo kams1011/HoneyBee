@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.honeybee.domain.FreeReplyVO;
 import com.honeybee.domain.FreeVO;
 import com.honeybee.domain.MeetVO;
+import com.honeybee.domain.MsgVO;
 import com.honeybee.domain.UserVO;
 import com.honeybee.service.EnrollListService;
 import com.honeybee.service.FreeReplyService;
@@ -124,13 +125,13 @@ public class MypageController {
 	}
 
 	@PostMapping("/modify")
-	public String modify(Model model, HttpServletRequest request) {
+	public void modify(Model model, HttpServletRequest request) {
 		log.info("modify test 입니다~~~~~~~~~~~~~~~~~~");
 		String[] arr = request.getParameterValues("mypostcheck");
 		for (int i = 0; i < arr.length; i++) {
 			fservice.mypostremove(arr[i]);
 		}
-		return "redirect:/mypage/home";
+//		return "redirect:/mypage/home";
 	}
 
 	@PostMapping("/remove")
@@ -169,7 +170,25 @@ public class MypageController {
 		}
 		return "redirect:/mypage/home";
 	}
+	
+	@GetMapping("/pwdcheck")
+	public void pwdcheck(Model model) {
+		log.info("발신함~~~~~~~~~~~~~~~~");
+	}
 
 //	@PostMapping("myreplydelete")
 //	public String myreplydelete
+	
+	@PostMapping("/sendmsgtest")
+	public String sendmsg(Model model, HttpServletRequest request, MsgVO msg) {
+		log.info("sendmsg..................");
+		String receiver = request.getParameter("receiver");
+		String content = request.getParameter("msgcontent");
+		msg.setId("HOHO995@naver.com");
+		msg.setId2(receiver);
+		msg.setContent(content);
+		msgservice.sendmsg(msg);
+		return "redirect:/mypage/sendmsg";
+	}
+	
 }

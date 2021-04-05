@@ -24,4 +24,5 @@ public interface FreeReplyMapper {
 	// 댓글 달았던 게시물의 스테이터스 가져오기
 	public List<FreeReplyVO> getrestatus(String id);
 	
+	
 }

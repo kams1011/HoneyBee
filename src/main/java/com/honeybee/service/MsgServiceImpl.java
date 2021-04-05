@@ -43,4 +43,10 @@ public class MsgServiceImpl implements MsgService {
 		log.info("sendmsgdelete............");
 		mmapper.sendmsgremove(msgmno);
 	}
+	
+	@Override
+	public void sendmsg(MsgVO msg) {
+		log.info("sendmsg...............");
+		mmapper.sendmsg(msg);
+	}
 }

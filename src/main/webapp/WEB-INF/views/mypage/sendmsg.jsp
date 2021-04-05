@@ -261,11 +261,12 @@ body {
 					<input type="submit" class="delete">
 				</form>
 				<div id="ex1" class="modal">
-					수신인<input type="text" class="receiver" /><br> <input
-						type="text" class="msgcontent" height:40px;/><br>
-					<button>전송</button>
+				<form action="sendmsgtest" method="post">
+					수신인<input type="text" name="receiver" /><br> 
+					<input type="text" name="msgcontent" height:40px;/><br>
+					<input type="submit" name="send" >
 					<a href="#" rel="modal:close">닫기</a>
-
+					</form>
 				</div>
 				<p>
 					<a href="#ex1" rel="modal:open">쪽지 보내기</a>

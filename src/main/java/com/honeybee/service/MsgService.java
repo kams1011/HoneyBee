@@ -13,4 +13,6 @@ public interface MsgService {
 	public void rcvmsgremove(String msgmno); //수신메세지 삭제
 	
 	public void sendmsgremove(String msgmno); //발신메세지 삭제
+	
+	public void sendmsg(MsgVO msg); // 메세지 보내기
 }

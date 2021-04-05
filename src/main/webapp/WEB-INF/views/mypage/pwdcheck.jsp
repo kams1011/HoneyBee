@@ -133,7 +133,7 @@ li {
 		<input class="pwd" type:text>
 		<div class="col-4">
 			<button class="btn">
-				<a href="myinfomodify">확인 </a>
+				<a href="modify">확인 </a>
 			</button>
 		</div>
 	</div>
