@@ -1,6 +1,8 @@
 package com.honeybee.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.honeybee.domain.FreeReplyVO;
 import com.honeybee.domain.FreeVO;
 import com.honeybee.domain.MeetVO;
 import com.honeybee.domain.UserVO;
 import com.honeybee.service.EnrollListService;
+import com.honeybee.service.FreeReplyService;
 import com.honeybee.service.FreeService;
 import com.honeybee.service.MeetService;
 import com.honeybee.service.SubscribeService;
@@ -39,6 +43,7 @@ public class MypageController {
 	private ThumbService tservice;
 	private SubscribeService sservice;
 	private MsgService msgservice;
+	private FreeReplyService frservice;
 
 	@GetMapping("/posted")
 	public void posted(Model model) {
@@ -55,8 +60,24 @@ public class MypageController {
 
 	@GetMapping("/reply")
 	public void reply(Model model) {
-		log.info("reply");
-		model.addAttribute("list", service.getList());
+		log.info("reply test 입니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		log.info(frservice.readmyreply("HOHO995@naver.com"));
+		log.info("---------------------------------------------------");
+		log.info(frservice.getrestatus("HOHO995@naver.com"));
+		List<FreeReplyVO> arr = frservice.getrestatus("HOHO995@naver.com");
+		List<String> arr2 = new ArrayList<>();
+		log.info("배열값체크입니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		for(int i=0; i<arr.size(); i++) {
+			if(arr.get(i).getDeldt()==null) {
+				arr2.add("원글 보기▶");
+			}else {
+				arr2.add("삭제된 글");
+			}
+		}
+		log.info(arr2.toString());
+		model.addAttribute("replylist", frservice.readmyreply("HOHO995@naver.com"));
+		model.addAttribute("replystatus", arr2); 
+		//여기 너무 조잡해서 수정필요할듯.
 	}
 
 	@GetMapping("/regCenter")
@@ -149,4 +170,6 @@ public class MypageController {
 		return "redirect:/mypage/home";
 	}
 
+//	@PostMapping("myreplydelete")
+//	public String myreplydelete
 }

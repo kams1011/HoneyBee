@@ -1,5 +1,7 @@
 package com.honeybee.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +40,18 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 	public boolean remove(Long frno) {
 		log.info("remove..........");
 		return mapper.delete(frno) == 1;
+	}
+	
+	@Override
+	public List<FreeReplyVO> readmyreply(String id){ //내가 쓴 댓글 목록 가져오기
+		log.info("freereplyservice.............");
+		return mapper.readmyreply(id);
+	}
+	
+	@Override
+	public List<FreeReplyVO> getrestatus(String id) {
+		log.info("getreststaus.................");
+		return mapper.getrestatus(id);
 	}
 
 }

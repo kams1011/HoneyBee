@@ -200,12 +200,8 @@ body {
 		<div class="mypost">
 			<form action="rcvmsgdelete" method="post">
 				<table class="post">
-
-
-
 					<thead>
 						<tr class="posttitle">
-
 							<th class="innerposttitle">보낸사람</th>
 							<th class="poststatus">내용</th>
 							<th class="date">작성일</th>
@@ -219,7 +215,8 @@ body {
 								<td class="poststatus"><c:out value="${rcvmsg.content}" /></td>
 								<td class="date"><fmt:formatDate pattern="yyyy-MM-dd"
 										value="${rcvmsg.regDt}" /></td>
-								<td><input type="checkbox" name="rcvmsgcheck" value="${rcvmsg.msgno}" ></td>
+								<td><input type="checkbox" name="rcvmsgcheck"
+									value="${rcvmsg.msgno}"></td>
 						</tr>
 						</c:forEach>
 

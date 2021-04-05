@@ -29,4 +29,6 @@ public interface MeetMapper {
 	public List<MeetVO> getNick(String id);
 
 	public int getTotalCount(Criteria cri); //전체 게시물 갯수 가져오기
+	
+	
 }

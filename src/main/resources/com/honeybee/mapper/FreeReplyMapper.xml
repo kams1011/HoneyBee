@@ -4,24 +4,45 @@
 
 	<insert id="insert">
 		insert into free_reply (frno, fno, id, reply)
-		values (seq_free_reply.nextval, #{fno}, #{id}, #{reply})
+		values
+		(seq_free_reply.nextval, #{fno}, #{id}, #{reply})
 	</insert>
 
 	<select id="read" resultType="com.honeybee.domain.FreeReplyVO">
-		select * from free_reply where frno = #{frno}
+		select * from free_reply where frno
+		= #{frno}
 	</select>
-	
+
 	<update id="update">
 		update FREE_REPLY
 		set reply = #{reply}
-		where frno = #{frno}
+		where frno =
+		#{frno}
 	</update>
-	
+
 	<delete id="delete">
 		delete from FREE_REPLY where frno = #{frno}
 	</delete>
-	
-	
-	
+
+	<select id="readmyreply"
+		resultType="com.honeybee.domain.FreeReplyVO">   <!--김세훈 내가 쓴 댓글 가져오는 SQL -->
+		select frno, fno, id, frno2, reply, layer, nick, regdt,
+		uptdt, deldt
+		from free_reply where id=#{id} union all
+		select mrno, mno, id, mrno2,
+		reply, layer, nick, regdt, uptdt, deldt from
+		meet_reply where id=#{id}
+		order by regdt
+	</select>
+
+	<select id="getrestatus"
+		resultType="com.honeybee.domain.FreeReplyVO">
+		select r.fno, f.deldt from free_reply r, free f where (r.id
+		= #{id}) and (r.fno=f.fno) union all
+		select e.mno, m.deldt from meet_reply e, meet m where (e.id =
+		#{id}) and (e.mno=m.mno)
+	</select>
+
+
 
 </mapper>
