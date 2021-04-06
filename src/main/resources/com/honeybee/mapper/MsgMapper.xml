@@ -7,19 +7,31 @@
 
 
 	<select id="getrcvList" resultType="com.honeybee.domain.MsgVO">
-		select * from message where id2=#{id} and DELDT IS NOT NULL
+		select * from message where
+		id2=#{id} and DELDT IS NULL
 	</select>
-	
+
 	<select id="getsendList" resultType="com.honeybee.domain.MsgVO">
-		select * from message where id=#{id} and DELDT IS NOT NULL
+		select * from message where
+		id=#{id} and DELDT IS NULL
 	</select>
-	
-	
-	<update id="rcvmsgremove">  <!-- 김세훈 테스트 -->
+
+
+	<update id="rcvmsgremove">  <!-- 받은 메세지 삭제 -->
 		update MESSAGE
 		set deldt = sysdate
 		where msgno = #{msgno}
 	</update>
 
+	<update id="sendmsgremove">  <!-- 보낸 메세지 삭제 -->
+		update MESSAGE
+		set deldt = sysdate
+		where msgno = #{msgno}
+	</update>
+
+	<insert id="sendmsg">
+		INSERT INTO MESSAGE(MSGNO, ID, ID2, CONTENT, REGDT, DELDT) VALUES(SEQ_MSG.NEXTVAL,
+		#{id}, #{id2}, #{content}, SYSDATE, NULL)
+	</insert>
 
 </mapper>

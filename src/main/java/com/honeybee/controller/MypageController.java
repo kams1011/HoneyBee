@@ -1,6 +1,8 @@
 package com.honeybee.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.honeybee.domain.FreeReplyVO;
 import com.honeybee.domain.FreeVO;
 import com.honeybee.domain.MeetVO;
+import com.honeybee.domain.MsgVO;
 import com.honeybee.domain.UserVO;
 import com.honeybee.service.EnrollListService;
+import com.honeybee.service.FreeReplyService;
 import com.honeybee.service.FreeService;
 import com.honeybee.service.MeetService;
 import com.honeybee.service.SubscribeService;
@@ -39,6 +44,7 @@ public class MypageController {
 	private ThumbService tservice;
 	private SubscribeService sservice;
 	private MsgService msgservice;
+	private FreeReplyService frservice;
 
 	@GetMapping("/posted")
 	public void posted(Model model) {
@@ -55,8 +61,24 @@ public class MypageController {
 
 	@GetMapping("/reply")
 	public void reply(Model model) {
-		log.info("reply");
-		model.addAttribute("list", service.getList());
+		log.info("reply test 입니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		log.info(frservice.readmyreply("HOHO995@naver.com"));
+		log.info("---------------------------------------------------");
+		log.info(frservice.getrestatus("HOHO995@naver.com"));
+		List<FreeReplyVO> arr = frservice.getrestatus("HOHO995@naver.com");
+		List<String> arr2 = new ArrayList<>();
+		log.info("배열값체크입니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		for(int i=0; i<arr.size(); i++) {
+			if(arr.get(i).getDeldt()==null) {
+				arr2.add("원글 보기▶");
+			}else {
+				arr2.add("삭제된 글");
+			}
+		}
+		log.info(arr2.toString());
+		model.addAttribute("replylist", frservice.readmyreply("HOHO995@naver.com"));
+		model.addAttribute("replystatus", arr2); 
+		//여기 너무 조잡해서 수정필요할듯.
 	}
 
 	@GetMapping("/regCenter")
@@ -103,13 +125,13 @@ public class MypageController {
 	}
 
 	@PostMapping("/modify")
-	public String modify(Model model, HttpServletRequest request) {
+	public void modify(Model model, HttpServletRequest request) {
 		log.info("modify test 입니다~~~~~~~~~~~~~~~~~~");
 		String[] arr = request.getParameterValues("mypostcheck");
 		for (int i = 0; i < arr.length; i++) {
 			fservice.mypostremove(arr[i]);
 		}
-		return "redirect:/mypage/home";
+//		return "redirect:/mypage/home";
 	}
 
 	@PostMapping("/remove")
@@ -139,4 +161,34 @@ public class MypageController {
 		return "redirect:/mypage/home";
 	}
 
+	@PostMapping("/sendmsgdelete")
+	public String sendmsgdelete(Model model, HttpServletRequest request) {
+		log.info("발신함 메세지 삭제 test 입니다~~~~~~~~~~~~~~~~~~");
+		String[] arr2 = request.getParameterValues("sendmsgcheck");
+		for (int i = 0; i < arr2.length; i++) {
+			msgservice.sendmsgremove(arr2[i]);
+		}
+		return "redirect:/mypage/home";
+	}
+	
+	@GetMapping("/pwdcheck")
+	public void pwdcheck(Model model) {
+		log.info("발신함~~~~~~~~~~~~~~~~");
+	}
+
+//	@PostMapping("myreplydelete")
+//	public String myreplydelete
+	
+	@PostMapping("/sendmsgtest")
+	public String sendmsg(Model model, HttpServletRequest request, MsgVO msg) {
+		log.info("sendmsg..................");
+		String receiver = request.getParameter("receiver");
+		String content = request.getParameter("msgcontent");
+		msg.setId("HOHO995@naver.com");
+		msg.setId2(receiver);
+		msg.setContent(content);
+		msgservice.sendmsg(msg);
+		return "redirect:/mypage/sendmsg";
+	}
+	
 }

@@ -193,10 +193,11 @@ li {
 							<th class="innerposttitle">제목</th>
 							<th class="date">작성일</th>
 							<th class="viewnum">조회수</th>
-							<th class="status"><input type="checkbox"></th>
+							<th class="status"><input type="checkbox" id="selectall"></th>
 						</tr>
 					</thead>
 					<tbody>
+					
 
 						<c:forEach items="${list}" var="free">
 							<tr>
@@ -218,6 +219,10 @@ li {
 
 		</div>
 	</div>
+	<script> let testBtn = document.getElementById('selectall');
+	testBtn.onclick = function () { alert('Hello world1'); }; 
+		  </script>
+
 
 
 </body>

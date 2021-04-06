@@ -11,7 +11,7 @@
 	</select>
 
 	<select id="getMyList" resultType="com.honeybee.domain.FreeVO">
-	select  FNO, ID, TITLE, TO_CHAR(CONTENT) AS CONTENT, HIT, THUMB, REGDT, UPDDT, DELDT from FREE where id = #{id} and DELDT IS NOT NULL
+	select  FNO, ID, TITLE, TO_CHAR(CONTENT) AS CONTENT, HIT, THUMB, REGDT, UPDDT, DELDT from FREE where id = #{id} and DELDT IS NULL
 	</select>
 
 	<!-- CREATE -->
