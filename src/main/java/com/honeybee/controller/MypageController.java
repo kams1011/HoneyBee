@@ -196,4 +196,12 @@ public class MypageController {
 	public void modify() {
 		
 	}
+	
+	@GetMapping("/readcontent")
+	public String readcontent(Model model, HttpServletRequest request) {
+		String[] readtest = request.getParameterValues("mypostcheck");
+		log.info("-------------------------------------");
+		log.info(readtest==null);
+		return "redirect:/meet/get?mno=32";
+	}
 }

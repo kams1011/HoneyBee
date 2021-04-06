@@ -206,8 +206,9 @@ li {
 
 						<c:forEach items="${list}" var="free">
 							<tr>
-								<td><c:out value="${free.fno}" /></td>
-								<td><a href="/free/list"><c:out value="${free.title}" /></a></td>
+								<td name="plztest"><c:out value="${free.fno}" /></td>
+								<td><a class='move' href='readcontent' name="readtest" />
+									<c:out value="${free.title}" /></a></td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd"
 										value="${free.regdt}" /></td>
 								<td><c:out value="${free.hit}" /></td>
@@ -235,6 +236,13 @@ li {
 				checkbox[i].checked = !checkbox[i].checked;
 			}
 		}
+		let abc = document.getElementsByName("plztest");
+		let title = document.getElementsByName("readtest");
+		for(let i=0; i<abc.length; i++){
+		title[i].onclick = function stopDefault(e) {
+			e.preventDefault();
+			location.href="/free/get?fno="+abc[i].textContent
+		}}
 	</script>
 </body>
 <footer>
