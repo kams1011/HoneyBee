@@ -21,7 +21,7 @@ public interface FreeMapper {
 	// DELETE
 	public int delete(FreeVO vo);
 	
-	public FreeVO getMyList(String id);
+	public List<FreeVO> getMyList(String id);
 	
 	// Paging
 	public List<FreeVO> getListWithPaging(Criteria cri);

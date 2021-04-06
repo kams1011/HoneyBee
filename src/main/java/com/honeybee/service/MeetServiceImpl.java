@@ -18,7 +18,7 @@ import lombok.extern.log4j.Log4j;
 @Service
 @AllArgsConstructor
 public class MeetServiceImpl implements MeetService {
-
+	
 	@Setter(onMethod_ =@Autowired)
 	private MeetMapper mapper;
 
@@ -46,13 +46,13 @@ public class MeetServiceImpl implements MeetService {
 		log.info("remove..............." + gno);
 		return mapper.delete(gno) == 1;
 	}
-
+	
 	@Override
 	public List<MeetVO> getList() {
 		log.info("getlist.............");
 		return mapper.getList();
 	}
-
+	
 	@Override
 	public MeetVO getMyList(String id) {
 		log.info("getlist.............");
@@ -62,7 +62,7 @@ public class MeetServiceImpl implements MeetService {
 	@Override
 	public List<MeetVO> getList(Criteria cri) {
 		log.info("get List with criteria : " + cri);
-		return mapper.getLsitWithPaging(cri);
+		return mapper.getListWithPaging(cri);
 	}
 
 	@Override
@@ -84,4 +84,5 @@ public class MeetServiceImpl implements MeetService {
 	}
 	
 	
+
 }

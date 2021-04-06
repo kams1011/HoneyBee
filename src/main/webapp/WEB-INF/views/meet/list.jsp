@@ -13,7 +13,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-   
     <style>
 
         .navbar>.container, .navbar>.container-fluid, .navbar>.container-lg, .navbar>.container-md, .navbar>.container-sm, .navbar>.container-xl, .navbar>.container-xxl{
@@ -25,7 +24,7 @@
         }
 
         .bg-light{
-            background: transparent !important;
+            background: transparent  !important;
         }
 
         .search{
@@ -38,7 +37,7 @@
         }
 
     </style>
-    <link rel="stylesheet" href="/resources/css/meet/board.css">
+    <link rel="stylesheet" href="/resources/css/meet_board.css">
 </head>
 <body>
 
@@ -136,8 +135,7 @@
                   <td class="freeBno"><c:out value="${meet.mno}" /></td>
                   <td><img src="/resources/img/logo.png"></td>
                   <td class="title">
-                      <a  class='move' href='<c:out value="${meet.mno}"/>'>
-                      <c:out value="${meet.title}" /></a>
+                      <a href='/meet/get?mno=<c:out value="${meet.mno}"/>'><c:out value="${meet.title}" /></a>
                   </td>
                   <td><c:out value="${meet.recsDt}" /> ~ <c:out value="${meet.receDt}" /></td>
                   <td><c:out value="${meet.startDt}" /></td>
@@ -152,41 +150,28 @@
       </table>
       <form id="searchForm">
           <select name='type'>
-              <option value="TC">제목+내용</option>
-              <option value="T">제목</option>
-              <option value="C">내용</option>
-              <option value="W">작성자 아이디</option>
+              <option value="tc">제목+내용</option>
+              <option value="t">제목</option>
+              <option value="c">내용</option>
+              <option value="w">작성자</option>
           </select>
           <input type="text" name="keyword" />
           <button>Search</button>
       </form>
       <button class="meet_reg">모임 개설</a></button>
       
-       
-           <div class="paging">
-	           <c:if test="${pageMaker.prev}">
-	           	<a href="${pageMaker.startPage-1}" class="btn">&lt;</a>
-	           </c:if>
-	           
-	           <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-	           	<a href="${num}" class="num ${pageMaker.cri.pageNum == num ? 'on' : ''}">${num}</a>
-	           </c:forEach>
-	           
-	           <!-- on 빼면 노란색 css빠짐 -->
-	           
-		       <c:if test="${pageMaker.next}">
-		       <a href="${pageMaker.endPage + 1}" class="btn">&gt;</a>
-		       </c:if>
-     	   </div>
-     	   
-     	   <form id='actionForm' action="/meet/list" method="get">
-     	   	<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
-     	   	<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
-     	   </form>
+      <div class="paging">
+           <a href="#" class="btn">&lt;</a>
+          <a href="#" class="num">1</a>
+          <a href="#" class="num on">2</a>
+          <a href="#" class="num">3</a>
+          <a href="#" class="num">4</a>
+          <a href="#" class="num">5</a>
+          <a href="#" class="num">6</a>
+          <a href="#" class="num">7</a>
+          <a href="#" class="btn">&gt;</a>
+      </div>
   </div>
-  
-  
-  
 
 			<!-- Modal  추가 -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -234,24 +219,6 @@
 		 
 		 $(".meet_reg").on("click", function(){
 			 self.location = "/meet/reg";
-		 });
-		 
-		 var actionForm = $("#actionForm");
-		 
-		 $(".paging a").on("click", function(e){
-			 e.preventDefault();
-			 
-			 console.log('click');
-			 
-			 actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-			 actionForm.submit();
-		 });
-		 
-		 $(".move").on("click", function(e){
-			 e.preventDefault();
-			 actionForm.append("<input type='hidden' name='mno' value='" +$(this).attr("href")+"'>");
-			 actionForm.attr("action", "/meet/get");
-			 actionForm.submit();
 		 });
 	 });
  </script>

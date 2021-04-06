@@ -54,51 +54,65 @@
                     <div class="blog-comment">
                         <h3 class="text-success">댓글</h3>
                         <ul class="comments">
-                            <li class="clearfix">
-                                <img src="https://bootdey.com/img/Content/user_1.jpg" class="avatar" alt="">
-                                <div class="post-comments">
-                                    <p class="meta">
-                                        <a href="#">김치국</a><small class="float-right">2021.03.25. 22:23:24</small>
-                                        <a class="btn thumb float-right"><i class="fa fa-thumbs-up"></i> 13</a>  <!-- 클릭하면 class=text-green 추가  -->
-                                    </p>
-                                    <span>김치국이냐 김칫국이냐 그것이 문제로다.</span>
-                                    
-                                    <a href="#"><small class="float-right">답글</small></a>
-                                </div>
-                                <ul class="comments">
-                                    <li class="clearfix">
-                                        <img src="https://bootdey.com/img/Content/user_3.jpg" class="avatar" alt="">
-                                        <div class="post-comments">
-                                            <p class="meta">
-                                                <a href="#">한글마춤뻡의정석</a> <small class="float-right">2021.03.25. 22:23:24</small>
-                                                <a class="btn float-right text-green"><i class="fa fa-thumbs-up"></i> 13</a>
-                                            </p>
-                                            <span>
-                                                김'칫'국이 올바른 표현입니다.
-                                            </span>
-                                            <a href="#"><small class="float-right">답글</small></a>
-                                        </div>
-                                        
-                                        <form>
-                                            <ul class="comments">
-                                                <i class="fa fa-reply" style=""></i>
-                                                <input type="text" class="reply">
-                                                <input type="submit" value="입력">
-                                            </ul>
-                                        </form>
-                                    </li>
-                                </ul>
-                                <div class="write-repl">
-                                    <form>
-                                        <ul class="comments">
-                                            <h6>댓글 입력</h6>
-                                            <input type="text" class="reply">
-                                            <input type="submit" value="입력">
-                                        </ul>
-                                    </form>
-                                </div>
-                            </li>
-                        </ul>
+	                        <li class="clearfix" data-frno=''>
+	                            <img src="https://bootdey.com/img/Content/user_1.jpg" class="avatar" alt="">
+	                            <div class="post-comments">
+	                                <p class="meta">
+	                                    <a href="#">김치국</a><small class="float-right">2021.03.25. 22:23:24</small>
+	                                    <a class="btn thumb float-right"><i class="fa fa-thumbs-up"></i> 13</a>  <!-- 클릭하면 class=text-green 추가  -->
+	                                </p>
+	                                <span>김치국이냐 김칫국이냐 그것이 문제로다.</span>
+	                                <button class='repl' onclick="add_reply()">답글</button>
+	                            </div>
+	                        </li>
+	                        <li class="clearfix rp" style="margin-left:4%" data-frno=''>
+	                        	<i class="fa fa-share fa-flip-vertical re" style="display:flex"></i>
+	                            <img src="https://bootdey.com/img/Content/user_3.jpg" class="avatar" alt="">
+	                            <div class="post-comments">
+	                                <p class="meta">
+	                                    <a href="#">한글마춤뻡의정석</a> <small class="float-right">2021.03.25. 22:23:24</small>
+	                                    <a class="btn float-right text-green"><i class="fa fa-thumbs-up"></i> 13</a>
+	                                </p>
+	                                <span>김'칫'국이 올바른 표현입니다.</span>
+	                                <button class='repl' onclick="add_reply()">답글</button>
+	                            </div>
+	                        </li>
+	                        <li class="clearfix rp" style="margin-left:8%" data-frno=''>
+	                        	<i class="fa fa-share fa-flip-vertical re" style="display:flex"></i>
+	                            <img src="https://bootdey.com/img/Content/user_3.jpg" class="avatar" alt="">
+	                            <div class="post-comments">
+	                                <p class="meta">
+	                                    <a href="#">가나다</a> <small class="float-right">2021.03.25. 22:23:24</small>
+	                                    <a class="btn float-right text-green"><i class="fa fa-thumbs-up"></i> 13</a>
+	                                </p>
+	                                <span>이분 말씀이 맞습니다.</span>
+	                                <button class='repl' onclick="add_reply()">답글</button>
+	                            </div>
+	                        </li>
+                       	</ul>
+                       	
+                       	<!-- 댓글 입력창 -->
+	                    <div class="write-cm">
+                       		<hr class="solid">
+	                        <form>
+		                        <ul class="comment">
+			                        <h6>댓글 입력</h6>
+			                        <input type="text" class="reply" name="o-reply">
+			                        <button id='repRegBtn' type='button'>입력</button>
+		                        </ul>
+	                        </form>
+                        </div>
+                        <!-- 답글 입력창 양식 -->
+                        <!-- <div class="write-rp">
+	                        <form>
+		                        <ul class="re-comment">
+			                        <h6>답글 입력</h6>
+			                        <input type="text" class="reply">
+			                        <button id='repRegBtn' type='button'>입력</button>
+		                        </ul>
+	                        </form>
+                        </div> -->
+                        
                     </div>
                 </div>
             </div>
@@ -106,6 +120,137 @@
     </div>
 	<%@include file="../include/footer.jsp" %>
 
+<script type="text/javascript" src="/resources/js/freeReply.js"></script>
+
+<!-- 댓글 -->
+<script>
+	$(document).ready(function() {
+		
+		var fnoValue = '<c:out value="${free.fno}"/>';
+		var replyUL = $(".comments");
+		
+  		showList(1);
+		
+		function showList(page) {
+			freeReplyService.getList({fno:fnoValue, page: page || 1}, function(list) {
+				let str = "";
+				if (list == null || list.length == 0) {
+					replyUL.html("");
+					return;
+				}
+				
+ 				for (let i = 0, len = list.length || 0; i < len; i++) {
+ 					
+					str += "<li class='clearfix' id='" + list[i].frno + "' data-frno='" + list[i].frno + "'>"; 
+					str += "	<img src='https://bootdey.com/img/Content/user_1.jpg' class='avatar' alt=''>";
+					str += "	<div class='post-comments'><p class='meta'><a href='#'>" + list[i].id + "</a>";
+					str += "	<small class='float-right'>" + freeReplyService.displayTime(list[i].regdt) + "</small>";
+ 					str += "	<a class='btn thumb float-right' data-frno='" + list[i].frno + "'><i class='fa fa-thumbs-up'></i>" + list[i].thumb + "</a></p>"
+					str += "	<span>" + list[i].reply + "</span><button class='repl' onclick='comm(" + list[i].frno + ")'>답글</button></div></li>"
+				}
+
+				replyUL.html(str);
+			}); // end function
+		} // end showList
+		
+		// 원댓글 입력
+		let cmt = $(".write-cm");
+		let repInput = cmt.find("input[name='o-reply']");
+		
+		$("#repRegBtn").on("click", function(e) {
+			freeReplyService.add({reply: repInput.val(), id: "asdf", fno: fnoValue},
+				function(result) {
+					alert(result);
+					repInput.val("");
+					showList(1);
+			});
+		});
+		
+		// 댓글 좋아요
+		$(document).on("click", ".thumb", function(e) {
+			e.preventDefault();
+ 			let frno = $(this).data("frno");
+ 			let thumb = parseInt($(this)[0].innerText);
+ 			console.log(thumb);
+			
+   			/* freeReplyService.update({fno: fnoValue, frno: frno, thumb:thumb + 1},
+   					function(result) {
+  						alert("수정 완료!");
+  			}); */
+  		});
+		
+		
+	});
+</script>
+
+<!-- 답글 창 띄우기 -->
+<script type="text/javascript">
+	let cnt = 0;
+	const reply = "<div class='write-rp'><form><ul class='re-comment'><h6>답글 입력</h6><input type='text' class='reply'><button id='repRegBtn' type='button'>입력</button></ul></form></div>";
+	const div = document.getElementsByClassName("write-rp");
+	
+	function comm(id) {
+		cnt == 0 ? show_box(id) : hide_box(id);
+	}
+	
+	function show_box(id) {
+		const comment = document.getElementById(id);
+		
+		comment.innerHTML += reply;
+		cnt++;
+	}
+	
+	function hide_box(id) {
+		let ul = document.querySelector(".re-comment").parentNode.parentNode.innerHTML = "";
+		cnt = 0;
+	}
+</script>
+
+
+<!-- TEST -->
+<script>
+		
+	var fnoValue = '<c:out value="${free.fno}"/>';
+	
+	// for freeReplyService add test
+	/* freeReplyService.add(
+		{reply: "TEST", id: "tester", fno: fnoValue},
+		function(result) {
+			alert("RESULT: " + result);
+		}
+	) */
+	
+	// getList test
+	/* freeReplyService.getList({ fno:fnoValue, page:1 }, function(list) {
+		for (var i = 0, len = list.length || 0; i < len; i++)
+			console.log(list[i]);
+	}); */
+	
+	// delete Test
+	/* freeReplyService.remove(23, function(count) {
+		if (count === "success")
+			alert("REMOVED");
+	}, function(err) {
+		alert("ERROR...");
+	}); */
+	
+	// update Test
+	/* freeReplyService.update({
+		frno : 24,
+		fno : fnoValue,
+		reply : "가나다라마바"
+	}, function(result) {
+		alert("수정 완료!");
+	}); */
+	
+	// get Test
+	/* freeReplyService.get(27, function(data) {
+		console.log(data);
+	}); */
+	
+</script>
+
+<!-- 수정, 삭제, 목록으로 버튼 -->
 <script type="text/javascript">
 	$(document).ready(function() {
 		var operForm = $("#operForm");
@@ -125,3 +270,4 @@
 		});
 	});
 </script>
+
