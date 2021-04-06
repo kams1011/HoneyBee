@@ -155,13 +155,13 @@ a {
     margin-right: 10px;
 }
 
-.modBtn, .delBtn, #repRegBtn {
+.modBtn, .delBtn, #repRegBtn, #regBtn {
 	margin-top: 20px;
 	outline: none;
 	border: none;
 }
 
-.modBtn:hover, #repRegBtn:hover {
+.modBtn:hover, #repRegBtn:hover, #regBtn:hover {
 	cursor: pointer;
 	background-color: rgb(246, 218, 66);
 }
@@ -201,18 +201,29 @@ li.rp > i.re {
 	margin-bottom: 20px;
 }
 
-.repl {
+.repl, .modRep, .delRep {
     position: absolute;
     border: none;
 	background-color: transparent;
 	font-size: 13px;
     bottom: 3px;
-    right: 10px;
 }
 
-.repl:hover {
+.repl {
+	right: 10px;
+}
+
+.repl:hover, .modRep:hover, .delRep:hover {
 	cursor: pointer;
 	color: #3498db;
+}
+
+.modRep {
+	right: 45px;
+}
+
+.delRep {
+	right: 80px;
 }
 
 button:focus {

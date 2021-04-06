@@ -14,7 +14,8 @@
 	
 	<update id="update">
 		update FREE_REPLY
-		set REPLY = #{reply}
+		set REPLY = #{reply},
+			UPTDT = sysdate
 		where FRNO = #{frno}
 	</update>
 	

@@ -32,7 +32,9 @@ public class FreeReplyController {
 	
 	@PostMapping(value = "/new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> create(@RequestBody FreeReplyVO vo) {
+		log.info("FreeReplyVO: " + vo);
 		int insertCount = service.register(vo);
+		log.info("Reply INSERT COUNT: " + insertCount);
 		
 		return insertCount == 1 ? new ResponseEntity<>("success", HttpStatus.OK	) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
