@@ -241,7 +241,7 @@ body {
 							<th class="innerposttitle">수신인</th>
 							<th class="content">내용</th>
 							<th class="date">작성일</th>
-							<th class="check"><input type="checkbox"></th>
+							<th class="check"><input type="checkbox" id="selectall"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -273,7 +273,14 @@ body {
 				</p>
 		</div>
 	</div>
-
+	<script type="text/javascript">
+		let checkbox = document.getElementsByName('sendmsgcheck');
+		document.getElementById('selectall').onclick = function() {
+			for (let i = 0; i < checkbox.length; i++) {
+				checkbox[i].checked = !checkbox[i].checked;
+			}
+		}
+	</script>
 
 </body>
 <footer>

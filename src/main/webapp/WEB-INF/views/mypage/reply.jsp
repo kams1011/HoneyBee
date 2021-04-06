@@ -196,7 +196,7 @@ body {
 
 							<th class="innerposttitle">댓글</th>
 							<th class="poststatus">게시글 상태</th>
-							<th class="check"><input type="checkbox"></th>
+							<th class="check"><input type="checkbox" id="selectall"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -219,7 +219,14 @@ body {
 
 		</div>
 	</div>
-
+<script type="text/javascript">
+		let checkbox = document.getElementsByName('myreplycheck');
+		document.getElementById('selectall').onclick = function() {
+			for (let i = 0; i < checkbox.length; i++) {
+				checkbox[i].checked = !checkbox[i].checked;
+			}
+		}
+	</script>
 
 </body>
 <footer>

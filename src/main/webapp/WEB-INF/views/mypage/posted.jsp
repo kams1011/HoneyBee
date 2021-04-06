@@ -6,9 +6,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="https://code.jquery.com/jquery-3.6.0.js"
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.js"
 	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-	crossorigin="anonymous"></script>
+	crossorigin="anonymous"></script> -->
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -167,6 +167,11 @@ li {
 </div>
 
 
+
+
+
+
+
 <!--  Header 끝 -->
 
 
@@ -197,7 +202,7 @@ li {
 						</tr>
 					</thead>
 					<tbody>
-					
+
 
 						<c:forEach items="${list}" var="free">
 							<tr>
@@ -206,7 +211,8 @@ li {
 								<td><fmt:formatDate pattern="yyyy-MM-dd"
 										value="${free.regdt}" /></td>
 								<td><c:out value="${free.hit}" /></td>
-								<td><input type="checkbox" name="mypostcheck" value="${free.fno}" ></td>
+								<td><input type="checkbox" name="mypostcheck"
+									value="${free.fno}"></td>
 							</tr>
 						</c:forEach>
 
@@ -219,12 +225,17 @@ li {
 
 		</div>
 	</div>
-	<script> let testBtn = document.getElementById('selectall');
-	testBtn.onclick = function () { alert('Hello world1'); }; 
-		  </script>
 
 
 
+	<script type="text/javascript">
+		let checkbox = document.getElementsByName('mypostcheck');
+		document.getElementById('selectall').onclick = function() {
+			for (let i = 0; i < checkbox.length; i++) {
+				checkbox[i].checked = !checkbox[i].checked;
+			}
+		}
+	</script>
 </body>
 <footer>
 	<div id="footer_box">

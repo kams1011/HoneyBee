@@ -124,15 +124,15 @@ public class MypageController {
 
 	}
 
-	@PostMapping("/modify")
-	public void modify(Model model, HttpServletRequest request) {
-		log.info("modify test 입니다~~~~~~~~~~~~~~~~~~");
-		String[] arr = request.getParameterValues("mypostcheck");
-		for (int i = 0; i < arr.length; i++) {
-			fservice.mypostremove(arr[i]);
-		}
-//		return "redirect:/mypage/home";
-	}
+//	@PostMapping("/modify")
+//	public void modify(Model model, HttpServletRequest request) {
+//		log.info("modify test 입니다~~~~~~~~~~~~~~~~~~");
+//		String[] arr = request.getParameterValues("mypostcheck");
+//		for (int i = 0; i < arr.length; i++) {
+//			fservice.mypostremove(arr[i]);
+//		}
+////		return "redirect:/mypage/home";
+//	}
 
 	@PostMapping("/remove")
 	public String remove(@RequestParam("id") String id, RedirectAttributes rttr) {
@@ -191,4 +191,9 @@ public class MypageController {
 		return "redirect:/mypage/sendmsg";
 	}
 	
+	
+	@GetMapping("/modify")
+	public void modify() {
+		
+	}
 }
