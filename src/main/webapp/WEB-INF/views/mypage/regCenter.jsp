@@ -292,6 +292,7 @@ body {
 							<td>${meet.receDt}</td>
 							<td>${meet.startDt}</td>
 							<td><c:out value="${meet.endDt}" /></td>
+							
 						</tr>
 					</c:forEach>
 				</tbody>

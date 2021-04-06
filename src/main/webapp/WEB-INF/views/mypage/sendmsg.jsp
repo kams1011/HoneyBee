@@ -216,7 +216,9 @@ body {
 <!--  Header 끝 -->
 
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+	crossorigin="anonymous"></script>
 </head>
 
 
@@ -227,8 +229,11 @@ body {
 				class="selectreply""> 발신함 </a>
 
 		</div>
-
-
+		<div id="ex2" class="modal">
+			수신인 <input type="text" class="receiverread" value="" /><br> <input
+				type="text" class="msgcontentread" height:40px;/><br> <a
+				href="#" rel="modal:close">닫기</a>
+		</div>
 		<div class="mypost">
 			<form action="sendmsgdelete" method="post">
 				<table class="post">
@@ -239,15 +244,17 @@ body {
 						<tr class="posttitle">
 
 							<th class="innerposttitle">수신인</th>
-							<th class="content">내용</th>
+							<th>내용</th>
 							<th class="date">작성일</th>
 							<th class="check"><input type="checkbox" id="selectall"></th>
 						</tr>
 					</thead>
 					<tbody>
+
 						<c:forEach items="${sendmsg}" var="sendmsg">
 							<td class="innerposttitle"><c:out value="${sendmsg.id2}" /></td>
-							<td class="poststatus"><c:out value="${sendmsg.content}" /></td>
+							<td class="poststatus"><a href="#ex2" rel="modal:open"
+								id="content"><c:out value="${sendmsg.content}" /></a></td>
 							<td class="date"><fmt:formatDate pattern="yyyy-MM-dd"
 									value="${sendmsg.regDt}" /></td>
 							<td class="check"><input type="checkbox" name="sendmsgcheck"
@@ -258,19 +265,19 @@ body {
 
 					</tbody>
 				</table>
-					<input type="submit" class="delete">
-				</form>
-				<div id="ex1" class="modal">
+				<input type="submit" class="delete">
+			</form>
+			<div id="ex1" class="modal">
 				<form action="sendmsgtest" method="post">
-					수신인<input type="text" name="receiver" /><br> 
-					<input type="text" name="msgcontent" height:40px;/><br>
-					<input type="submit" name="send" >
-					<a href="#" rel="modal:close">닫기</a>
-					</form>
-				</div>
-				<p>
-					<a href="#ex1" rel="modal:open">쪽지 보내기</a>
-				</p>
+					수신인<input type="text" name="receiver" /><br> <input
+						type="text" name="msgcontent" height:40px;/><br> <input
+						type="submit" name="send"> <a href="#" rel="modal:close">닫기</a>
+				</form>
+			</div>
+			<p>
+				<a href="#ex1" rel="modal:open">쪽지 보내기</a>
+			</p>
+
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -280,6 +287,13 @@ body {
 				checkbox[i].checked = !checkbox[i].checked;
 			}
 		}
+
+		$("td").on("click", "a", function() {
+			var msgcontent = $(this).text();
+			var receiverread = $(this).parent().prev().text();
+			$(".msgcontentread").val(msgcontent);
+			$(".receiverread").val(receiverread);
+		});
 	</script>
 
 </body>
