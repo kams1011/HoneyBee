@@ -26,5 +26,7 @@ public interface MeetService {
 	public List<MeetVO> getListTest(String id);
 	
 	public List<MeetVO> getNick(String id);
+	
+	public List<MeetVO> getListWithCategory(String cid); //내가 개설한 모임을 카테고리별로 가져오기
 
 }

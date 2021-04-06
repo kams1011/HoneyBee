@@ -30,5 +30,7 @@ public interface MeetMapper {
 
 	public int getTotalCount(Criteria cri); //전체 게시물 갯수 가져오기
 	
+	public List<MeetVO> getListWithCategory(String cid); //내가 개설한 모임을 카테고리별로 가져오기
+	
 	
 }
