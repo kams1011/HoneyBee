@@ -6,6 +6,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <script src="https://code.jquery.com/jquery-3.6.0.js"
 	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
 	crossorigin="anonymous"></script>
@@ -182,7 +188,9 @@ body {
 
 
 <!--  Header 끝 -->
-
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+	crossorigin="anonymous"></script>
 
 
 </head>
@@ -195,6 +203,11 @@ body {
 				href="sendmsg"> 발신함 </a>
 
 		</div>
+		<div id="ex2" class="modal">
+			수신인 <input type="text" class="receiverread" value="" /><br> <input
+				type="text" class="msgcontentread" height:40px;/><br> <a
+				href="#" rel="modal:close">닫기</a>
+		</div>
 
 
 		<div class="mypost">
@@ -205,14 +218,15 @@ body {
 							<th class="innerposttitle">보낸사람</th>
 							<th class="poststatus">내용</th>
 							<th class="date">작성일</th>
-							<th class="check"><input type="checkbox"></th>
+							<th class="check"><input type="checkbox" id="selectall"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<c:forEach items="${rcvmsg}" var="rcvmsg">
 								<td class="innerposttitle"><c:out value="${rcvmsg.id}" /></td>
-								<td class="poststatus"><c:out value="${rcvmsg.content}" /></td>
+								<td class="poststatus"><a href="#ex2" rel="modal:open"
+									id="content"><c:out value="${rcvmsg.content}" /></a></td>
 								<td class="date"><fmt:formatDate pattern="yyyy-MM-dd"
 										value="${rcvmsg.regDt}" /></td>
 								<td><input type="checkbox" name="rcvmsgcheck"
@@ -225,9 +239,24 @@ body {
 				<input type="submit" class="delete">
 			</form>
 
+
 		</div>
 	</div>
+	<script type="text/javascript">
+		let checkbox = document.getElementsByName('rcvmsgcheck');
+		document.getElementById('selectall').onclick = function() {
+			for (let i = 0; i < checkbox.length; i++) {
+				checkbox[i].checked = !checkbox[i].checked;
+			}
+		}
 
+		$("td").on("click", "a", function() {
+			var msgcontent = $(this).text();
+			var receiverread = $(this).parent().prev().text();
+			$(".msgcontentread").val(msgcontent);
+			$(".receiverread").val(receiverread);
+		});
+	</script>
 
 </body>
 <footer>

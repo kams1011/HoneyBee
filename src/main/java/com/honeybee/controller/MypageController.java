@@ -19,6 +19,7 @@ import com.honeybee.domain.FreeVO;
 import com.honeybee.domain.MeetVO;
 import com.honeybee.domain.MsgVO;
 import com.honeybee.domain.UserVO;
+import com.honeybee.service.CodeTableService;
 import com.honeybee.service.EnrollListService;
 import com.honeybee.service.FreeReplyService;
 import com.honeybee.service.FreeService;
@@ -45,6 +46,7 @@ public class MypageController {
 	private SubscribeService sservice;
 	private MsgService msgservice;
 	private FreeReplyService frservice;
+	private CodeTableService cservice;
 
 	@GetMapping("/posted")
 	public void posted(Model model) {
@@ -82,11 +84,16 @@ public class MypageController {
 	}
 
 	@GetMapping("/regCenter")
-	public void regCenter(Model model) {
+	public void regCenter(Model model, HttpServletRequest request) {
 		log.info("list");
 		log.info(mservice.getNick("HOHO995@naver.com"));
+		log.info("---------------------------------");
+		log.info(cservice.getCatList());
+		log.info(request.getParameter("cid"));
 		model.addAttribute("meet", mservice.getListTest("HOHO995@naver.com"));
 		model.addAttribute("nick", mservice.getNick("HOHO995@naver.com"));
+		model.addAttribute("code", cservice.getCatList());
+		
 	}
 
 	@GetMapping("/home")
@@ -124,15 +131,15 @@ public class MypageController {
 
 	}
 
-	@PostMapping("/modify")
-	public void modify(Model model, HttpServletRequest request) {
-		log.info("modify test 입니다~~~~~~~~~~~~~~~~~~");
-		String[] arr = request.getParameterValues("mypostcheck");
-		for (int i = 0; i < arr.length; i++) {
-			fservice.mypostremove(arr[i]);
-		}
-//		return "redirect:/mypage/home";
-	}
+//	@PostMapping("/modify")
+//	public void modify(Model model, HttpServletRequest request) {
+//		log.info("modify test 입니다~~~~~~~~~~~~~~~~~~");
+//		String[] arr = request.getParameterValues("mypostcheck");
+//		for (int i = 0; i < arr.length; i++) {
+//			fservice.mypostremove(arr[i]);
+//		}
+////		return "redirect:/mypage/home";
+//	}
 
 	@PostMapping("/remove")
 	public String remove(@RequestParam("id") String id, RedirectAttributes rttr) {
@@ -191,4 +198,26 @@ public class MypageController {
 		return "redirect:/mypage/sendmsg";
 	}
 	
+	
+	@GetMapping("/modify")
+	public void modify() {
+		
+	}
+	
+	@GetMapping("/readcontent")
+	public String readcontent(Model model, HttpServletRequest request) {
+		String[] readtest = request.getParameterValues("mypostcheck");
+		log.info("-------------------------------------");
+		log.info(readtest==null);
+		return "redirect:/meet/get?mno=32";
+	}
+	
+	@GetMapping("/redirecttest")
+	public String redirecttest(Model model, String cid) {
+		log.info(mservice.getListWithCategory(cid));
+		model.addAttribute("meet", mservice.getListWithCategory(cid));
+		model.addAttribute("nick", mservice.getNick("HOHO995@naver.com"));
+		model.addAttribute("code", cservice.getCatList());
+		return "/mypage/regCenter";
+	}
 }

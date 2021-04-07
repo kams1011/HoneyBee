@@ -341,5 +341,9 @@
 select code_table.cname from code_table, meet where (meet.cid=code_table.cid) and (id=#{id})
 </select>
 
+<select id="getListWithCategory" resultType="com.honeybee.domain.MeetVO">
+select * from meet where cid=#{cid}
+</select>
+
 
 </mapper>
