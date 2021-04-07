@@ -137,7 +137,7 @@
 		var fnoValue = '<c:out value="${free.fno}"/>';
 		var replyUL = $(".comments");
 		
-    	showList(1);
+    showList(1);
 		
 		function showList(page) {
 			freeReplyService.getList({fno:fnoValue, page: page || 1}, function(list) {
@@ -211,6 +211,7 @@
 		// 댓글 삭제
 		
 		
+
 		// 댓글 좋아요
 		$(document).on("click", ".thumb", function(e) {
 			e.preventDefault();
