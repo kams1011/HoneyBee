@@ -67,7 +67,7 @@
 	                                <button class='repl'>답글</button>
 	                            </div>
 	                        </li>
-	                        <li class="clearfix rp" style="margin-left:4%" data-frno=''>
+	                        <li class="clearfix rp" style="margin-left: 4%" data-frno=''>
 	                        	<i class="fa fa-share fa-flip-vertical re" style="display:flex"></i>
 	                            <img src="https://bootdey.com/img/Content/user_3.jpg" class="avatar" alt="">
 	                            <div class="post-comments">
@@ -148,15 +148,19 @@
 				}
 				
  				for (let i = 0, len = list.length || 0; i < len; i++) {
+ 					let showHide = list[i].layer === 0 ? 'none' : 'flex';
  					
-					str += "<li class='clearfix' id='" + list[i].frno + "' data-frno='" + list[i].frno + "'>"; 
+					str += "<li class='clearfix' id='" + list[i].frno + "' style='margin-left:" + list[i].layer * 4 + "%' data-frno='" + list[i].frno + "'>"; 
+					str += "	<i class='fa fa-share fa-flip-vertical re' style='display:" + showHide + "'></i>"
 					str += "	<img src='https://bootdey.com/img/Content/user_1.jpg' class='avatar' alt=''>";
 					str += "	<div class='post-comments'><p class='meta'><a href='#'>" + list[i].id + "</a>";
 					str += "	<small class='float-right'>" + freeReplyService.displayTime(list[i].regdt) + "</small>";
  					str += "	<a class='btn thumb float-right' data-frno='" + list[i].frno + "'><i class='fa fa-thumbs-up'></i>" + list[i].thumb + "</a></p>"
-					str += "	<span>" + list[i].reply + "</span><button class='modRep'>수정</button><button class='delRep'>삭제</button><button class='repl' onclick='comm(" + list[i].frno + ")'>답글</button></div></li>"
+					str += "	<span>" + list[i].reply + "</span><button class='modRep'>수정</button><button class='delRep'>삭제</button><button class='repl' onclick='comm(" + list[i].frno + ")'>답글</button></div>"
+					str += "	<input type='hidden' data-layer='" + list[i].layer + "'>"
+					str += "	<input type='hidden' data-bundle='" + list[i].bundle + "'></li>";
 				}
-
+ 				
 				replyUL.html(str);
 			}); // end function
 		} // end showList
@@ -186,43 +190,57 @@
 			comm(div.id);
 			$(".reply")[0].value = thisEl.previousSibling.innerText;
 			$(".write-rp").data("frno", div.id);
-		})
+ 		})
 		
-		// 댓글 수정 또는 답글 입력
+		// 댓글 수정 or 답글 입력
+		
 		$(document).on("click", "#repRegBtn", function(e) {
-			let check = $(".write-rp").data("frno");
+			let writeRp = $(".write-rp");
+			let check = writeRp.data("frno");
+			let prev = writeRp.prev();
+			let layer = prev.prev().data("layer") + 1;
+			
 			if (!(check === null || check === "")) { // 댓글 수정
 				let reply = {frno: check, reply: $(".reply").val()};
 				freeReplyService.update(reply, function(result) {
 					alert(result);
-					showList(1);
+					/* showList(1); */
+					location.reload();
 				});
 			} else { // 답글 입력
-/* 				let reply = {fno: fnoValue, frno2: check, id: "asdf", reply: $(".reply").val()};
+				/* let oRepl = $(".re-comment > input[type='hidden']").val(); */
+				let bundle = layer === 0 ? $(".re-comment > input[type='hidden']").val() : prev.data("bundle");
+ 				let reply = {fno: fnoValue, id: "asdf", reply: $(".reply").val(), layer: layer, bundle: bundle};
 				freeReplyService.add(reply, function(result) {
 					alert(result);
-				})
- */			}
+					/* showList(1); */
+ 					location.reload();
+ 				});
+ 			}
 			 
 				
 		});
 		
 		
 		// 댓글 삭제
+		$(document).on("click", ".delRep", function(e) {
+			let frno = $(this).parent().parent().data("frno");
+			console.log(frno);
+			
+			freeReplyService.remove(frno, function(result) {
+				alert(result);
+				showList(1);
+			});
+		})
 		
 		
-
-		// 댓글 좋아요
+		// 댓글 좋아요 *********** 미완 ***************
 		$(document).on("click", ".thumb", function(e) {
 			e.preventDefault();
  			let frno = $(this).data("frno");
- 			let thumb = parseInt($(this)[0].innerText);
+ 			let thumb = parseInt($(this)[0].innerText) + 1;
  			console.log(thumb);
-			
-   			/* freeReplyService.update({fno: fnoValue, frno: frno, thumb:thumb + 1},
-   					function(result) {
-  						alert("수정 완료!");
-  			}); */
+   			
   		});
 		
 		
@@ -230,7 +248,10 @@
 	
 	// 답글 창 띄우기
 	let cnt = 0;
-	const reply = "<div class='write-rp' data-frno=''><form><ul class='re-comment'><h6>댓글 쓰기</h6><input type='text' class='reply' value=''><button id='repRegBtn' type='button'>입력</button></ul></form></div>";
+	const reply = "<div class='write-rp' data-frno=''><form><ul class='re-comment'><h6>댓글 쓰기</h6>"
+					+ "<input type='text' class='reply' value=''>"
+					+ "<button id='repRegBtn' type='button'>입력</button>"
+					+ "<input type='hidden' value='' /></ul></form></div>";
 	
 	function comm(id) {
 		cnt == 0 ? show_box(id) : hide_box(id);
@@ -240,8 +261,8 @@
 		const comment = $("#" + id);
 		
 		comment[0].innerHTML += reply;
-/* 		$(".write-rp").data("frno", id);
- */		cnt++;
+		$(".re-comment > input[type='hidden']").val(id);
+ 		cnt++;
 	}
 	
 	function hide_box(id) {

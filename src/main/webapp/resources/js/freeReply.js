@@ -4,9 +4,10 @@ var freeReplyService = (function() {
 
 	function add(reply, callback, error) {
 		console.log("add reply...........");
+		console.log(reply);
 		
 		$.ajax({
-			type : 'post',
+			type : 'POST',
 			url : '/freply/new',
 			data : JSON.stringify(reply),
 			contentType : "application/json; charset=UTF-8",

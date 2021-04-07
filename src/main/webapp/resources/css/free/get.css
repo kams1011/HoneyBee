@@ -183,11 +183,11 @@ a {
 	background-color: #3498db;
 }
 
-li.rp {
+li.clearfix {
 	position: relative;
 }
 
-li.rp > i.re {
+li.clearfix > i.re {
 	position: absolute;
 	left: -30px;
 	top: 22px;

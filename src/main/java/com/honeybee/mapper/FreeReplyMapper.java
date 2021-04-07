@@ -11,6 +11,7 @@ public interface FreeReplyMapper {
 		
 	// Create
 	public int insert(FreeReplyVO vo);
+	public int insertAnswer(FreeReplyVO vo);
 	
 	// Read
 	public FreeReplyVO read(Long frno);
