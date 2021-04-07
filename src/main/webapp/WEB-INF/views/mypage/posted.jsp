@@ -202,6 +202,7 @@ li {
 						</tr>
 					</thead>
 					<tbody>
+					
 
 
 						<c:forEach items="${list}" var="free">
@@ -226,6 +227,10 @@ li {
 
 		</div>
 	</div>
+	<script> let testBtn = document.getElementById('selectall');
+	testBtn.onclick = function () { alert('Hello world1'); }; 
+		  </script>
+
 
 
 
