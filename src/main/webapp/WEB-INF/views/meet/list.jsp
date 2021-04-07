@@ -142,7 +142,7 @@
                   </td>
                   <td><c:out value="${meet.recsDt}" /> ~ <c:out value="${meet.receDt}" /></td>
                   <td><c:out value="${meet.startDt}" /></td>
-                   <td><c:out value="${meet.id}" /></td>
+                  <td><c:out value="${meet.id}" /></td>
                   <td><c:out value="${meet.recNo}" /></td>
                   <td><fmt:formatDate pattern="yyyy-MM-dd" value="${meet.regDt}" /></td>
                   <td><c:out value="${meet.hit}" /></td>

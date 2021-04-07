@@ -32,5 +32,7 @@ public interface MeetService {
 	public List<MeetVO> getNick(String id); //닉네임 가져오기
 	
 	public String getCategoryName(Long mno); //해당 모임게시물의 카테고리 이름 가져오기
+	
+	public List<MeetVO> getListWithCategory(String cid); //내가 개설한 모임을 카테고리별로 가져오기
 
 }

@@ -32,4 +32,8 @@ public interface MeetMapper {
 	public List<MeetVO> getListWithPagingAndCat(Criteria cri); //카테고리, 페이징한 리스트 가져오기
 	
 	public String getCategoryName(Long mno); //모임 게시물 카테고리 cid에 따라 코드테이블의 cname가져오기
+
+	public List<MeetVO> getListWithCategory(String cid); //내가 개설한 모임을 카테고리별로 가져오기
+	
+	
 }
