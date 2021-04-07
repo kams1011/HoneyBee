@@ -53,15 +53,15 @@
 
 
     <div class="search">
-    <form action="/meet/list" method="post">
-     <select class="cat" name='catTitle'>
-     	<option>카테고리</option>
+    <form action="/meet/list" method="get">
+     <select class="cat" name="cid" id="cat">
         <c:forEach items="${category}" var="category">
-        <option><c:out value="${category.CName}"/></option>
+        <option value="${category.CId}"><c:out value="${category.CName}"/></option>
         </c:forEach>
     </select>
 
-    <select class="cat" >
+
+    <select>
       <option>서울특별시</option>
       <option>스터디</option>
       <option>취미</option>
@@ -73,7 +73,7 @@
       <option>하이룽</option>
     </select>
     
-    <select class="cat" >
+    <select>
       <option>구</option>
       <option>스터디</option>
       <option>취미</option>
@@ -85,13 +85,13 @@
       <option>하이룽</option>
     </select>
 
-    <select class="cat" >
+    <select>
       <option>비용</option>
       <option>유료</option>
       <option>무료</option>
     </select>
 
-    <select class="cat" >
+    <select>
       <option>시간</option>
       <option>스터디</option>
       <option>취미</option>
@@ -104,7 +104,7 @@
      </select>
 
      <div class="checkedBox"> <input type="checkbox">마감된 모임 포함</div>
-    
+   
      <input type="submit" value="검색">
      </form>
      </div>
@@ -164,6 +164,7 @@
           <input type="text" name="keyword" value='<c:out value="${pageMaker.cri.keyword}"/>'/>
           <input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
           <input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+          
           <button>Search</button>
       </form>
       <button class="meet_reg">모임 개설</button>
@@ -192,8 +193,6 @@
      	   	<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
      	   </form>
   </div>
-  
-  
   
 
 			<!-- Modal  추가 -->
@@ -283,6 +282,16 @@
 			 
 			 searchForm.submit();
 		 });
+		 
+				 
+		/* 카테코리 선택 검색 후 카테고리 유지 */
+		 
+		 console.log("${pickCat}");
+		 var pickCat = "${pickCat}";
+		 
+		 $("#cat").val(pickCat).prop("selected",true);
 	 });
+	 
+	 
  </script>
  
