@@ -155,7 +155,7 @@ a:hover {
 	<!--메뉴바 시작 -->
 <div class="mypagemenubar">
 		<a href="home">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a
-			href="posted">내가 쓴 글 </a> <a href="reply">내가 쓴 댓글 </a>
+			href="posted">내가 쓴 글 </a> <a href="freply">내가 쓴 댓글 </a>
 		<a href="rcvmsg">쪽지함 </a>
 	</div>
 

@@ -18,11 +18,13 @@ public interface FreeReplyMapper {
 	// Delete
 	public int delete(Long frno);
 	
-	// 내가 쓴 댓글 목록 가져오기
-	public List<FreeReplyVO> readmyreply(String id);
+	// 내가 자유게시물에 쓴 댓글 목록 가져오기
+	public List<FreeReplyVO> readmyfreereply(String id);
 	
-	// 댓글 달았던 게시물의 스테이터스 가져오기
-	public List<FreeReplyVO> getrestatus(String id);
+	// 내가 댓글 달았던 자유 게시물의 스테이터스 가져오기
+	public List<FreeReplyVO> getfreereplystatus(String id);
+	
+
 	
 	
 }

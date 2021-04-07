@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.js"
+<!--  <script src="https://code.jquery.com/jquery-3.6.0.js"
 	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
 	crossorigin="anonymous"></script> -->
 <meta charset="UTF-8">
@@ -182,7 +182,7 @@ li {
 <body>
 	<div class="select">
 		<a class="selectpost"> 내가 쓴 글 | </a> <a class="selectreply"
-			href="/mypage/reply"> 내가 쓴 댓글 </a>
+			href="/mypage/freply"> 내가 쓴 댓글 </a>
 
 	</div>
 
@@ -207,8 +207,8 @@ li {
 
 						<c:forEach items="${list}" var="free">
 							<tr>
-								<td name="fno"><c:out value="${free.fno}" /></td>
-								<td><a class='move' href='readcontent' name="readtest" />
+								<td name="fno" value="${free.fno}"><c:out value="${free.fno}" /></td>
+								<td><a class='move' href='readcontent' name="mypost" />
 									<c:out value="${free.title}" /></a></td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd"
 										value="${free.regdt}" /></td>
@@ -242,7 +242,7 @@ li {
 			}
 		}
 		let fno = document.getElementsByName("fno");
-		let title = document.getElementsByName("readtest");
+		let title = document.getElementsByName("mypost");
 		for(let i=0; i<fno.length; i++){
 		title[i].onclick = function stopDefault(e) {
 			e.preventDefault();
