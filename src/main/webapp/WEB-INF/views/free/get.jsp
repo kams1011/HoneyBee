@@ -62,7 +62,9 @@
 	                                    <a class="btn thumb float-right"><i class="fa fa-thumbs-up"></i> 13</a>  <!-- 클릭하면 class=text-green 추가  -->
 	                                </p>
 	                                <span>김치국이냐 김칫국이냐 그것이 문제로다.</span>
-	                                <button class='repl' onclick="add_reply()">답글</button>
+	                                <button class='modRep'>수정</button>
+	                                <button class='delRep'>삭제</button>
+	                                <button class='repl'>답글</button>
 	                            </div>
 	                        </li>
 	                        <li class="clearfix rp" style="margin-left:4%" data-frno=''>
@@ -74,7 +76,9 @@
 	                                    <a class="btn float-right text-green"><i class="fa fa-thumbs-up"></i> 13</a>
 	                                </p>
 	                                <span>김'칫'국이 올바른 표현입니다.</span>
-	                                <button class='repl' onclick="add_reply()">답글</button>
+	                             	<button class='modRep'>수정</button>
+	                                <button class='delRep'>삭제</button>
+	                                <button class='repl'>답글</button>
 	                            </div>
 	                        </li>
 	                        <li class="clearfix rp" style="margin-left:8%" data-frno=''>
@@ -86,7 +90,9 @@
 	                                    <a class="btn float-right text-green"><i class="fa fa-thumbs-up"></i> 13</a>
 	                                </p>
 	                                <span>이분 말씀이 맞습니다.</span>
-	                                <button class='repl' onclick="add_reply()">답글</button>
+	                                <button class='modRep'>수정</button>
+	                                <button class='delRep'>삭제</button>
+	                                <button class='repl'>답글</button>
 	                            </div>
 	                        </li>
                        	</ul>
@@ -96,9 +102,11 @@
                        		<hr class="solid">
 	                        <form>
 		                        <ul class="comment">
-			                        <h6>댓글 입력</h6>
-			                        <input type="text" class="reply" name="o-reply">
-			                        <button id='repRegBtn' type='button'>입력</button>
+		                        	<li>
+				                        <h6>댓글 입력</h6>
+				                        <input type="text" class="reply" name="o-reply" />
+				                        <button id='regBtn' class="regBtn" type='button'>입력</button>
+			                        </li>
 		                        </ul>
 	                        </form>
                         </div>
@@ -129,7 +137,7 @@
 		var fnoValue = '<c:out value="${free.fno}"/>';
 		var replyUL = $(".comments");
 		
-  		showList(1);
+    showList(1);
 		
 		function showList(page) {
 			freeReplyService.getList({fno:fnoValue, page: page || 1}, function(list) {
@@ -146,19 +154,24 @@
 					str += "	<div class='post-comments'><p class='meta'><a href='#'>" + list[i].id + "</a>";
 					str += "	<small class='float-right'>" + freeReplyService.displayTime(list[i].regdt) + "</small>";
  					str += "	<a class='btn thumb float-right' data-frno='" + list[i].frno + "'><i class='fa fa-thumbs-up'></i>" + list[i].thumb + "</a></p>"
-					str += "	<span>" + list[i].reply + "</span><button class='repl' onclick='comm(" + list[i].frno + ")'>답글</button></div></li>"
+					str += "	<span>" + list[i].reply + "</span><button class='modRep'>수정</button><button class='delRep'>삭제</button><button class='repl' onclick='comm(" + list[i].frno + ")'>답글</button></div></li>"
 				}
 
 				replyUL.html(str);
 			}); // end function
 		} // end showList
-		
-		// 원댓글 입력
+  	
+		// 댓글 입력
 		let cmt = $(".write-cm");
 		let repInput = cmt.find("input[name='o-reply']");
 		
-		$("#repRegBtn").on("click", function(e) {
-			freeReplyService.add({reply: repInput.val(), id: "asdf", fno: fnoValue},
+		$("#regBtn").on("click", function(e) {
+			if (repInput.val() === null || repInput.val().trim() === "") {
+				alert("댓글을 입력해주세요.");
+				return;
+			}
+			
+			freeReplyService.add({fno: fnoValue, id:"asdf", reply: repInput.val()},
 				function(result) {
 					alert(result);
 					repInput.val("");
@@ -166,6 +179,39 @@
 			});
 		});
 		
+		// 댓글 수정창 띄우기
+		$(document).on("click", ".modRep", function(e) {
+			let thisEl = $(this)[0];
+			let div = thisEl.parentNode.parentNode;
+			comm(div.id);
+			$(".reply")[0].value = thisEl.previousSibling.innerText;
+			$(".write-rp").data("frno", div.id);
+		})
+		
+		// 댓글 수정 또는 답글 입력
+		$(document).on("click", "#repRegBtn", function(e) {
+			let check = $(".write-rp").data("frno");
+			if (!(check === null || check === "")) { // 댓글 수정
+				let reply = {frno: check, reply: $(".reply").val()};
+				freeReplyService.update(reply, function(result) {
+					alert(result);
+					showList(1);
+				});
+			} else { // 답글 입력
+/* 				let reply = {fno: fnoValue, frno2: check, id: "asdf", reply: $(".reply").val()};
+				freeReplyService.add(reply, function(result) {
+					alert(result);
+				})
+ */			}
+			 
+				
+		});
+		
+		
+		// 댓글 삭제
+		
+		
+
 		// 댓글 좋아요
 		$(document).on("click", ".thumb", function(e) {
 			e.preventDefault();
@@ -180,28 +226,28 @@
   		});
 		
 		
-	});
-</script>
-
-<!-- 답글 창 띄우기 -->
-<script type="text/javascript">
+	}); // end of $(document).ready()
+	
+	// 답글 창 띄우기
 	let cnt = 0;
-	const reply = "<div class='write-rp'><form><ul class='re-comment'><h6>답글 입력</h6><input type='text' class='reply'><button id='repRegBtn' type='button'>입력</button></ul></form></div>";
-	const div = document.getElementsByClassName("write-rp");
+	const reply = "<div class='write-rp' data-frno=''><form><ul class='re-comment'><h6>댓글 쓰기</h6><input type='text' class='reply' value=''><button id='repRegBtn' type='button'>입력</button></ul></form></div>";
 	
 	function comm(id) {
 		cnt == 0 ? show_box(id) : hide_box(id);
 	}
 	
 	function show_box(id) {
-		const comment = document.getElementById(id);
+		const comment = $("#" + id);
 		
-		comment.innerHTML += reply;
-		cnt++;
+		comment[0].innerHTML += reply;
+/* 		$(".write-rp").data("frno", id);
+ */		cnt++;
 	}
 	
 	function hide_box(id) {
-		let ul = document.querySelector(".re-comment").parentNode.parentNode.innerHTML = "";
+		let rp = $(".write-rp");
+		
+		rp[0].outerHTML = "";
 		cnt = 0;
 	}
 </script>
@@ -210,7 +256,7 @@
 <!-- TEST -->
 <script>
 		
-	var fnoValue = '<c:out value="${free.fno}"/>';
+	/* var fnoValue = '<c:out value="${free.fno}"/>'; */
 	
 	// for freeReplyService add test
 	/* freeReplyService.add(
