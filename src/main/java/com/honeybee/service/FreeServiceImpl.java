@@ -55,6 +55,9 @@ public class FreeServiceImpl implements FreeService {
 		return mapper.getTotalCount(cri);
 	}
 
-
+	@Override
+	public void mypostremove(String fno) {
+		mapper.mypostremove(fno); //김세훈 테스트
+	}
 	
 }

@@ -6,8 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
 	
-	@RequestMapping("/")
-	public String home() {
+private CodeTableService cService;
+
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String home(Model model) {
+		
+		model.addAttribute("category", cService.getCatList());
 		
 		return "home";
 	}

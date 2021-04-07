@@ -34,7 +34,7 @@ public class FreeReplyController {
 		
 		log.info("FreeReplyVO: " + vo);
 		int insertCount = vo.getLayer() != 0 ? service.registerAnswer(vo) : service.register(vo);
-		
+
 		return insertCount == 1 ? new ResponseEntity<>("success", HttpStatus.OK	) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
