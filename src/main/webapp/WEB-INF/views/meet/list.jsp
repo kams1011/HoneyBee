@@ -13,7 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-   
+    
     <style>
 
         .navbar>.container, .navbar>.container-fluid, .navbar>.container-lg, .navbar>.container-md, .navbar>.container-sm, .navbar>.container-xl, .navbar>.container-xxl{
@@ -25,7 +25,7 @@
         }
 
         .bg-light{
-            background: transparent !important;
+            background: transparent  !important;
         }
 
         .search{
@@ -38,7 +38,7 @@
         }
 
     </style>
-    <link rel="stylesheet" href="/resources/css/meet/board.css">
+    <link rel="stylesheet" href="/resources/css/meet_board.css">
 </head>
 <body>
 
@@ -53,15 +53,15 @@
 
 
     <div class="search">
-    <form action="/meet/list" method="post">
-     <select class="cat" name='catTitle'>
-     	<option>카테고리</option>
+    <form action="/meet/list" method="get">
+     <select class="cat" name="cid" id="cat">
         <c:forEach items="${category}" var="category">
-        <option><c:out value="${category.CName}"/></option>
+        <option value="${category.CId}"><c:out value="${category.CName}"/></option>
         </c:forEach>
     </select>
 
-    <select class="cat" >
+
+    <select>
       <option>서울특별시</option>
       <option>스터디</option>
       <option>취미</option>
@@ -73,7 +73,7 @@
       <option>하이룽</option>
     </select>
     
-    <select class="cat" >
+    <select>
       <option>구</option>
       <option>스터디</option>
       <option>취미</option>
@@ -85,13 +85,13 @@
       <option>하이룽</option>
     </select>
 
-    <select class="cat" >
+    <select>
       <option>비용</option>
       <option>유료</option>
       <option>무료</option>
     </select>
 
-    <select class="cat" >
+    <select>
       <option>시간</option>
       <option>스터디</option>
       <option>취미</option>
@@ -104,7 +104,7 @@
      </select>
 
      <div class="checkedBox"> <input type="checkbox">마감된 모임 포함</div>
-    
+   
      <input type="submit" value="검색">
      </form>
      </div>
@@ -132,11 +132,12 @@
           </thead>
           <tbody>
               <c:forEach items="${list}" var="meet">
+              <c:if test="${meet.delDt == null}">
               <tr>
                   <td class="freeBno"><c:out value="${meet.mno}" /></td>
                   <td><img src="/resources/img/logo.png"></td>
                   <td class="title">
-                      <a  class='move' href='<c:out value="${meet.mno}"/>'>
+                      <a href='/meet/get?mno=<c:out value="${meet.mno}"/>'>
                       <c:out value="${meet.title}" /></a>
                   </td>
                   <td><c:out value="${meet.recsDt}" /> ~ <c:out value="${meet.receDt}" /></td>
@@ -147,20 +148,30 @@
                   <td><c:out value="${meet.hit}" /></td>
                   <td><c:out value="${meet.thumb}" /></td>
               </tr>
+              </c:if>
               </c:forEach>
           </tbody>
       </table>
-      <form id="searchForm">
+      <form id="searchForm" action="/meet/list" method="get">
           <select name='type'>
-              <option value="TC">제목+내용</option>
-              <option value="T">제목</option>
-              <option value="C">내용</option>
-              <option value="W">작성자 아이디</option>
+          	  <option value="" <c:out value="${pageMaker.cri.type == null? 'selected' : ''}" />>--</option>
+              <option value="T" <c:out value="${pageMaker.cri.type eq 'T'? 'selected' : ''}" />>제목</option>
+              <option value="C" <c:out value="${pageMaker.cri.type eq 'C'? 'selected' : ''}" />>내용</option>
+              <option value="W" <c:out value="${pageMaker.cri.type eq 'W'? 'selected' : ''}" />>작성자 아이디</option>
+              <option value="TC" <c:out value="${pageMaker.cri.type eq 'TC'? 'selected' : ''}" />>제목+내용</option>
+              <option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'? 'selected' : ''}" />>제목+작성자 아이디</option>
+              <option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC'? 'selected' : ''}" />>제목+내용+작성자 아이디</option>
           </select>
-          <input type="text" name="keyword" />
+          
+          <input type="text" name="keyword" value='<c:out value="${pageMaker.cri.keyword}"/>'/>
+          <input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
+          <input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+          <input type='hidden' name='cid' value='${pageMaker.cri.cid}'>
+
+          
           <button>Search</button>
       </form>
-      <button class="meet_reg">모임 개설</a></button>
+      <button class="meet_reg">모임 개설</button>
       
        
            <div class="paging">
@@ -182,10 +193,12 @@
      	   <form id='actionForm' action="/meet/list" method="get">
      	   	<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
      	   	<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+     	   	<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>'>
+     	   	<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
+     	   	<input type='hidden' name='cid' value='<c:out value="${pageMaker.cri.cid}"/>'>
+     	   	
      	   </form>
   </div>
-  
-  
   
 
 			<!-- Modal  추가 -->
@@ -214,6 +227,7 @@
 
  <script type="text/javascript">
 	 $(document).ready(function(){
+		 //게시물 수정, 삭제, 작성 시 게시물 번호 
 		 var result = '<c:out value="${result}"/>';
 		 
 		 checkModal(result);
@@ -253,6 +267,38 @@
 			 actionForm.attr("action", "/meet/get");
 			 actionForm.submit();
 		 });
+		 
+		 /* 검색 버튼의 이벤트 처리 */
+		 var searchForm = $("#searchForm");
+		 
+		 /* 브라우저에서 검색조건을 선택하지 않고 검색하면 알림 설정 */
+		 $("#searchForm button").on("click", function(e){
+			 if(!searchForm.find("option:selected").val()){
+				 alert("검색 종류를 선택하세요.");
+				 return false;
+			 }
+			 
+			 if(!searchForm.find("input[name='keyword']").val()){
+				 alert("키워드를 입력하세요.");
+				 return false;
+			 }
+			 
+			 /* 검색조건 선택 후 키워드 검색이 없으면 1페이지로 이동 */
+			 searchForm.find("input[name='pageNum']").val("1");
+			 e.preventDefault();
+			 
+			 searchForm.submit();
+		 });
+		 
+				 
+		/* 카테코리 선택 검색 후 카테고리 유지 */
+		 
+		 console.log("${pickCat}");
+		 var pickCat = "${pickCat}";
+		 
+		 $("#cat").val(pickCat).prop("selected",true);
 	 });
+	 
+	 
  </script>
  

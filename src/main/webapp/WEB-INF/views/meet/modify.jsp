@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/resources/css/meet/reigster.css">
+<link rel="stylesheet" href="/resources/css/meet_reigster.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
@@ -17,12 +17,16 @@
             <div class="b top">
                 <div class="top title">모임 개설</div>
                 <div class="sub title">
+                
                     <select class="cat" name='cid'>
-                        <option>카테고리</option>
 				        <c:forEach items="${category}" var="category">
-				        	<option value='<c:out value="${meet.mno}"/>'><c:out value="${category.CName}"/></option>
+				        	<c:if test="${category.CId != 'M000'}">
+				        	<option value='<c:out value="${category.CId}"/>'><c:out value="${category.CName}"/></option>
+				        	</c:if>
 				        </c:forEach>
                     </select>
+                    
+                    
                     <input type="hidden" name="mno" value='<c:out value="${meet.mno}"/>'>
                     <input type="text" name="title" value='<c:out value="${meet.title}"/>'>
                 </div>
@@ -58,8 +62,10 @@
                             <li>모임장소<input type="text" name="place" value='<c:out value="${meet.place}"/>'></li>
                             <li>링크<input type="text" name="link" value='<c:out value="${meet.link}"/>'></li> 
                         </ul>
+                        <!-- 하드코딩 -->
                         <input type='hidden' name="cid2" value="RC002">
                         <input type='hidden' name="id" value="tony">
+                        
                     </div>
                     <div class="bot right">
                         <div class="thumb title">썸네일</div>
@@ -71,12 +77,16 @@
                 <div class="map"><input type="text" name="img" value='<c:out value="${meet.img}"/>'></div>
                 
                 <button type="submit" data-oper='modfy'>모임 수정</button>
-                <button type="reset" data-oper='remove'>모임 삭제</button>
+                <button type="reset" data-oper='delete'>모임 삭제</button>
                 <button type="submit" data-oper='list'>목록으로 가기</button>
-                
+
                 <!-- 추가 -->
                 <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
                 <input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
+                <input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
+                <input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
+                <input type='hidden' name='cid' value='<c:out value="${cri.cid}"/>'>
+                
             </div>
         </div>
     </div>
@@ -113,18 +123,39 @@
 			 
 			 if(operation === 'remove'){
 				 formObj.attr("action", "/meet/remove");
+				 
 			 }else if(operation === 'list'){
 				 formObj.attr("action", "/meet/list").attr("method", "get");
 				 var pageNumTag = $("input[name='pageNum']").clone();
 				 var amountTag = $("input[name='amount']").clone();
+				 var keywordTag = $("input[name='keyword']").clone();
+				 var typeTag = $("input[name='type']").clone();
+				 var cidTag = $("input[name='cid']").clone();
 				 
 				 formObj.empty();
+				 
 				 formObj.append(pageNumTag);
 				 formObj.append(amountTag);
-				 
+				 formObj.append(keywordTag);
+				 formObj.append(typeTag);
+				 formObj.append(cidTag);
+
 			 }
 			 
 			 formObj.submit();
 		 });
+		 
+		 
+		/* 카테코리 선택 검색 후 카테고리 유지 */
+		 
+		  console.log("${pickedCat}");
+		
+		 var pickedCat = "${pickedCat}";
+		  if(pickedCat.length >= 1){
+			 pickedCat = pickedCat[1];
+		 } 
+		 
+		
+		 $(".cat").val(pickedCat).prop("selected",true);
 	 });
  </script>

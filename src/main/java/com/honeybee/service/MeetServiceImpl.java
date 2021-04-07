@@ -18,7 +18,7 @@ import lombok.extern.log4j.Log4j;
 @Service
 @AllArgsConstructor
 public class MeetServiceImpl implements MeetService {
-
+	
 	@Setter(onMethod_ =@Autowired)
 	private MeetMapper mapper;
 
@@ -46,19 +46,13 @@ public class MeetServiceImpl implements MeetService {
 		log.info("remove..............." + gno);
 		return mapper.delete(gno) == 1;
 	}
-
+	
 	@Override
 	public List<MeetVO> getList() {
 		log.info("getlist.............");
 		return mapper.getList();
 	}
 
-//	@Override
-//	public MeetVO getMyList(String id) {
-//		log.info("getlist.............");
-//		return mapper.getMyList(id);
-//	}
-	
 	@Override
 	public List<MeetVO> getList(Criteria cri) {
 		log.info("get List with criteria : " + cri);
@@ -66,10 +60,24 @@ public class MeetServiceImpl implements MeetService {
 	}
 
 	@Override
+	public List<MeetVO> getListWithCat(Criteria cri) {
+		log.info("get List with Category and criteria : " + cri);
+		
+		return mapper.getListWithPagingAndCat(cri);
+	}
+	
+	@Override
 	public int getTotal(Criteria cri) {
 		log.info("get total count");
 		return mapper.getTotalCount(cri);
 	}
+	
+	@Override
+	public int getTotalWithCat(Criteria cri) {
+		log.info("get total count with category");
+		return mapper.getTotalCountWithCat(cri);
+	}
+	
 	
 	@Override
 	public List<MeetVO> getListTest(String id) {
@@ -82,7 +90,13 @@ public class MeetServiceImpl implements MeetService {
 		log.info("getNick.............");
 		return mapper.getNick(id);
 	}
-	
+
+	@Override
+	public String getCategoryName(Long mno) {
+		log.info("get category name ..............");
+		return mapper.getCategoryName(mno);
+	}
+
 	@Override
 	public List<MeetVO> getListWithCategory(String cid){
 		log.info("getListWithCategory...............");

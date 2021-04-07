@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.honeybee.domain.Criteria;
 import com.honeybee.domain.FreeReplyVO;
 import com.honeybee.mapper.FreeReplyMapper;
 
@@ -55,5 +56,15 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 	}
 	
 
+	@Override
+	public List<FreeReplyVO> getList(Criteria cri, Long fno) {
+		return mapper.getList(cri, fno);
+	}
+
+	@Override
+	public int registerAnswer(FreeReplyVO vo) {
+		return mapper.insertAnswer(vo);
+	}
+	
 
 }
