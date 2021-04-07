@@ -292,7 +292,7 @@ body {
 			var msgcontent = $(this).text();
 			var receiverread = $(this).parent().prev().text();
 			$(".msgcontentread").val(msgcontent);
-				$(".receiverread").val(receiverread);
+			$(".receiverread").val(receiverread);
 		});
 	</script>
 
