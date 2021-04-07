@@ -1,7 +1,5 @@
 package com.honeybee.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +29,7 @@ public class MeetController {
 
 
 	@RequestMapping("/list")
-	public void list(@ModelAttribute("cri") Criteria cri, Model model, HttpServletRequest request) {
+	public void list(@ModelAttribute("cri") Criteria cri, Model model) {
 		log.info("list total");
 		log.info("list total : " + cri);
 		System.out.println("category pick : " + cri.getCid());
@@ -39,6 +37,7 @@ public class MeetController {
 		//카테고리 미 선택시 리스트
 		if(cri.getCid() == null || cri.getCid().equals("카테고리") || cri.getCid().equals("M000")) {
 			
+			cri.setCid("M000");
 			model.addAttribute("list", service.getList(cri)); //모임게시물 리스트 가져오기
 			model.addAttribute("category", cService.getCatList());
 			model.addAttribute("pickCat", "M000");
@@ -67,28 +66,6 @@ public class MeetController {
 
 	}
 
-
-	/*
-	 * @RequestMapping("/listcat") public String listcat(Criteria cri, Model model)
-	 * { log.info("list");
-	 * 
-	 * log.info("list : " + cri); //model.addAttribute("list",
-	 * service.getList(cri)); //모임게시물 리스트 가져오기
-	 * 
-	 * model.addAttribute("list", service.getListWithCat(cri)); //모임게시물 리스트 (페이징,
-	 * 카테고리)가져오기 model.addAttribute("category", cService.getCatList());
-	 * 
-	 * System.out.println("pickCat : " + cri.getCid());
-	 * model.addAttribute("pickCat", cri.getCid());
-	 * 
-	 * int total = service.getTotalWithCat(cri);
-	 * 
-	 * log.info("total : " + total);
-	 * 
-	 * model.addAttribute("pageMaker", new PageDTO(cri, total));
-	 * 
-	 * return "/meet/list"; }
-	 */
 	
 	@PostMapping("/reg")
 	public String register(MeetVO meet, RedirectAttributes rttr) {
@@ -114,22 +91,28 @@ public class MeetController {
 		log.info("/get or /modify");
 		model.addAttribute("meet", service.get(mno));
 		model.addAttribute("category", cService.getCatList());
+		model.addAttribute("pickedCat", service.get(mno).getCid());
+		model.addAttribute("categoryName", service.getCategoryName(mno)); //해당 모임게시물의 카테고리 이름 cname 보내기
 	}
 
 
 	@PostMapping("/modify")
-	public String modify(MeetVO meet, @ModelAttribute("cri") Criteria cri,  RedirectAttributes rttr) {
+	public String modify(MeetVO meet, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr, Model model) {
 		log.info("modify : " + meet);
 
 		if(service.modify(meet)) {
 			rttr.addFlashAttribute("result", "success");
 		}
 
+		//수정한 카테고리 값 
+		System.out.println("cid : " + meet.getCid());
+		
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
 		rttr.addAttribute("type", cri.getType());
 		rttr.addAttribute("keyword", cri.getKeyword());
 		rttr.addAttribute("category", cri.getCid());
+
 		
 		return "redirect:/meet/list";
 	}
@@ -147,6 +130,7 @@ public class MeetController {
 		rttr.addAttribute("amount", cri.getAmount());
 		rttr.addAttribute("type", cri.getType());
 		rttr.addAttribute("keyword", cri.getKeyword());
+		rttr.addAttribute("cid", cri.getCid());
 
 		return "redirect:/meet/list";
 	}

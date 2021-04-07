@@ -17,18 +17,35 @@
     <link rel="stylesheet" href="/resources/css/free/get.css">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
     
      <style>
       #modify {
         position: absolute;
             bottom: 3px;
-            right: 60px;
+            right: 10px;
     	}
 
      #delete {
         position: absolute;
             bottom: 3px;
+            right: 60px;
+   	 }
+   	 
+   	 #reply {
+   		position: absolute;
+            bottom: 3px;
             right: 110px;
+   	 }
+   	 
+   	 .post-comments {
+   	  position : relative;
+   	 }
+   	 
+   	 i {
+   	  position : absolute;
+   	  left : -105px;
+   	  top : 30px;
    	 }
    	 
    	 .replyList{
@@ -39,7 +56,24 @@
    	 
    	 
    	 input:focus {outline:none};
-
+   	 
+   	 .bottom{
+    	position: relative;
+	}
+	
+	#inquiry{
+	    position: absolute;
+	    bottom: 15px;
+	    right: 10px;
+	    background-color: aqua;
+	}
+	
+	#wish{
+	    position: absolute;
+	    bottom: 15px;
+	    right: 100px;
+	    background-color: aqua;
+	}
     </style>
 </head>
 <body>
@@ -50,7 +84,7 @@
           <span class="navbar-brand mb-0 h1" style="font-weight: bold;">모임게시판</span>
         </div>
         <div class="container-fluid" style="background: transparent;">
-            <span class="navbar-brand mb-0 h1" style="font-weight: bold; background-color: white;">모임카테고리 : ${meet.cid}</span>
+            <span class="navbar-brand mb-0 h1" style="font-weight: bold; background-color: white;">모임카테고리 : <c:out value="${categoryName}"/></span>
           </div>
     </nav>
 
@@ -85,6 +119,7 @@
               <li>조회수   <c:out value="${meet.hit}"/></li>
             </ul>
           </div>
+           <button id="inquiry">문의하기</button> <button id="wish">찜하기</button>
         </div>
       </div>
     </div>
@@ -101,7 +136,9 @@
 	        </div>
       </div>
       <div class="text">
-        <c:out value="${meet.content}"/>
+
+       <textarea rows="20" class="contents" name="content"  style="width:100%; height:auto; border: none;"  readonly><c:out value="${meet.content}"/></textarea>  
+
       </div>
 
       <hr class="second_line" style="border:1px color= silver;" width="90%">
@@ -116,6 +153,8 @@
 	  	<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
 	  	<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
 	  	<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
+	  	<input type='hidden' name='cid' value='<c:out value="${meet.cid}"/>'>
+
 	  </form>
         
         
@@ -165,14 +204,24 @@
 		  
 		  for(var i=0, len = list.length || 0; i<len; i++){
 			  
-		      str += "<li class='clearfix " + list[i].mrno + "' data-mrno='"+list[i].mrno+"'>";
+		      str += "<li class='clearfix " + list[i].mrno + "' data-mrno='"+list[i].mrno+"' style='margin-left : " + list[i].layer * 7 + "%'>";
 		      str += "<img src='/resources/img/logo.png' class='avatar' alt=''>";
               str += "<div class='post-comments'>";
+              
+		      if(list[i].layer == 1){
+		      	str += "<i class='fa fa-share fa-flip-vertical re'></i>";
+		      }
+		      
               str += "<p class='meta'>";
               str += "닉네임 : " + list[i].nick +"<small class='float-right'>" + replyService.displayTime(list[i].regDt) + "</small>";     
               str += "</p>";
               str += "<input type='text' class='replyList' style='background-color:transparent;' id='"+ list[i].mrno + "'value='" + list[i].reply + "' readonly>";
+              
+              if(list[i].layer != 1){
+            	  
               str += "<a href='#'><small class='float-right' id='reply' data-mrno='"+list[i].mrno+"'>답글</small></a>";
+              };
+              
               str += "<a href='#'><small class='float-right' id='modify' data-mrno='"+list[i].mrno+"'>수정</small></a>";
               str += "<a href='#'><small class='float-right' id='delete' data-layer='" +list[i].layer+ "' data-mrno='"+list[i].mrno+"'>삭제</small></a>";
               str += "</div>";
@@ -218,10 +267,13 @@
 	  console.log(mrno);
 	  var text = $(this).text();
 	  
+	  console.log(text);
+	  
 	  if(text == '확인'){
 		  $('#'+mrno).prop('readonly',true);
 		  
 		  var reply = {mrno : mrno, reply : $('#'+mrno).val()};
+		  $(this).text('수정');
 		  
 		  replyService.update(reply, function(result){
 			  alert(result);
@@ -248,6 +300,7 @@
 	  
 	  str += "<div class='write-repl' id='reply_reply' style='margin-bottom : 30px'>";
 	  str += "<ul class='comments'>";
+	  //str += "<i class='fa fa-share fa-flip-vertical re'></i>";
 	  str += "<h6>댓글 입력</h6>";
 	  str += "<input type='text' class='reply' name='replyR_Content'>";
 	  str += "<input id='regR_ReplyBtn' type='submit' value='입력'>";
@@ -261,12 +314,13 @@
       } 
       
       
+  }); 
 	  //대댓글 등록 이벤트 처리
 	  $(document).on("click", "#regR_ReplyBtn", function(e){
+		  e.preventDefault();
 	  	  var InputR_Reply = $(".write-repl").find("input[name='replyR_Content']"); //댓글 입력창
 		  var par = $("#reply_reply").prev().children("input").attr("id");
-		  e.preventDefault();
-		  console.log(InputR_Reply.val());
+		  console.log("내용 : " + InputR_Reply.val() + "mrno : " + par);
 	
 		  var R_reply ={
 		  mno:mnoValue,
@@ -290,7 +344,6 @@
 		  console.log("대댓글 입력 취소");
 		  $("."+mrno).children("#reply_reply").remove();
 	  });
-  }); 
   
   
   //댓글 삭제 이벤트 
@@ -379,4 +432,8 @@
    });
 	 
    </script>
+   
+   <script>
+	 autosize($("textarea"));
+	</script>
 <%@include file="../include/footer.jsp" %>

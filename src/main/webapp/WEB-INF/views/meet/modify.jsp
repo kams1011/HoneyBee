@@ -17,12 +17,16 @@
             <div class="b top">
                 <div class="top title">모임 개설</div>
                 <div class="sub title">
+                
                     <select class="cat" name='cid'>
-                        <option>카테고리</option>
 				        <c:forEach items="${category}" var="category">
-				        	<option value='<c:out value="${meet.mno}"/>'><c:out value="${category.CName}"/></option>
+				        	<c:if test="${category.CId != 'M000'}">
+				        	<option value='<c:out value="${category.CId}"/>'><c:out value="${category.CName}"/></option>
+				        	</c:if>
 				        </c:forEach>
                     </select>
+                    
+                    
                     <input type="hidden" name="mno" value='<c:out value="${meet.mno}"/>'>
                     <input type="text" name="title" value='<c:out value="${meet.title}"/>'>
                 </div>
@@ -81,6 +85,7 @@
                 <input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
                 <input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
                 <input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
+                <input type='hidden' name='cid' value='<c:out value="${cri.cid}"/>'>
                 
             </div>
         </div>
@@ -118,12 +123,14 @@
 			 
 			 if(operation === 'remove'){
 				 formObj.attr("action", "/meet/remove");
+				 
 			 }else if(operation === 'list'){
 				 formObj.attr("action", "/meet/list").attr("method", "get");
 				 var pageNumTag = $("input[name='pageNum']").clone();
 				 var amountTag = $("input[name='amount']").clone();
 				 var keywordTag = $("input[name='keyword']").clone();
 				 var typeTag = $("input[name='type']").clone();
+				 var cidTag = $("input[name='cid']").clone();
 				 
 				 
 				 formObj.empty();
@@ -132,10 +139,24 @@
 				 formObj.append(amountTag);
 				 formObj.append(keywordTag);
 				 formObj.append(typeTag);
-							 
+				 formObj.append(cidTag);
+
 			 }
 			 
 			 formObj.submit();
 		 });
+		 
+		 
+		/* 카테코리 선택 검색 후 카테고리 유지 */
+		 
+		  console.log("${pickedCat}");
+		
+		 var pickedCat = "${pickedCat}";
+		  if(pickedCat.length >= 1){
+			 pickedCat = pickedCat[1];
+		 } 
+		 
+		
+		 $(".cat").val(pickedCat).prop("selected",true);
 	 });
  </script>
