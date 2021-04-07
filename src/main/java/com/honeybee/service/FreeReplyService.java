@@ -9,6 +9,8 @@ public interface FreeReplyService {
 	
 	public int register(FreeReplyVO vo);
 	
+	public int registerAnswer(FreeReplyVO vo);
+	
 	public FreeReplyVO get(Long frno);
 	
 	public boolean modify(FreeReplyVO vo);
@@ -16,5 +18,5 @@ public interface FreeReplyService {
 	public boolean remove(Long frno);
 	
 	public List<FreeReplyVO> getList(Criteria cri, Long fno);
-
+	
 }

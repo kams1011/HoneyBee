@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,9 +31,9 @@ public class FreeReplyController {
 	
 	@PostMapping(value = "/new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> create(@RequestBody FreeReplyVO vo) {
+		
 		log.info("FreeReplyVO: " + vo);
-		int insertCount = service.register(vo);
-		log.info("Reply INSERT COUNT: " + insertCount);
+		int insertCount = vo.getLayer() != 0 ? service.registerAnswer(vo) : service.register(vo);
 		
 		return insertCount == 1 ? new ResponseEntity<>("success", HttpStatus.OK	) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -61,9 +60,9 @@ public class FreeReplyController {
 	@RequestMapping(method = { RequestMethod.PUT, RequestMethod.PATCH }, value = "/{frno}", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> modify(@RequestBody FreeReplyVO vo, @PathVariable("frno") Long frno) {
 		vo.setFrno(frno);
-		
+
 		return service.modify(vo) ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+		
 
  }
