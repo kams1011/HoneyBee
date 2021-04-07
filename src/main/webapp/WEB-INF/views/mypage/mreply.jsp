@@ -2,13 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@include file="../include/header.jsp"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!--  <script src="https://code.jquery.com/jquery-3.6.0.js"
+<script src="https://code.jquery.com/jquery-3.6.0.js"
 	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-	crossorigin="anonymous"></script> -->
+	crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,7 +39,7 @@ body {
 footer {
 	width: 100%;
 	height: 150px;
-	margin-top: 650px;
+	margin-top: 850px;
 	background-color: lightgrey;
 	border: solid 1px lightgrey;
 }
@@ -53,6 +53,10 @@ footer {
 
 li {
 	list-style-type: none;
+}
+
+body {
+	height: 1000px;
 }
 
 .header {
@@ -118,7 +122,7 @@ li {
 }
 
 .innerposttitle {
-	width: 450px;
+	width: 650px;
 	border: 1px black;
 }
 
@@ -127,49 +131,46 @@ li {
 	border: 1px black;
 }
 
-.viewnum {
-	width: 80px;
+.poststatus {
+	width: 120px;
 	border: 1px black;
 }
 
 .post {
 	border: 1px solid black;
 	margin-left: 120px;
-	top: 100px;
+	height: 250px;
 }
 
-.status {
+.check {
 	width: 80px;
 }
 
 .board {
 	position: relative;
+	left: -50px;
+	top: -50px;
 }
 
 .select {
 	position: absolute;
-	left: 180px;
-	top: 290px;
+	left: 170px;
+	top: 120px;
 }
 
 .selectpost, .selectreply {
 	color: black;
 	font-size: small;
 	color: rgba(58, 7, 7, 0.829);
-	font-display: unset;
 }
 </style>
+
 
 <!--메뉴바 시작 -->
 <div class="mypagemenubar">
 	<a href="home">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a href="posted">내가
-		쓴 글 </a> <a href="reply">내가 쓴 댓글 </a> <a href="rcvmsg">쪽지함 </a>
+		쓴 글 </a> <a href="freply">내가 쓴 댓글 </a> <a href="rcvmsg">쪽지함 </a>
 </div>
-
-
-
-
-
 
 
 <!--  Header 끝 -->
@@ -177,43 +178,37 @@ li {
 
 
 </head>
-
-
 <body>
-	<div class="select">
-		<a class="selectpost"> 내가 쓴 글 | </a> <a class="selectreply"
-			href="/mypage/freply"> 내가 쓴 댓글 </a>
-
-	</div>
 
 	<div class="board">
+		<div class="select">
+			<a class="selectpost" href="posted"> 내가 쓴 글 | </a> <a
+				class="selectreply" href="mreply"> 내가 쓴 모임게시물 댓글 |</a> <a
+				class="selectreply" href="freply"> 내가 쓴 자유게시물 댓글 </a>
+
+		</div>
+
+
 		<div class="mypost">
-			<form action="modify" method="post">
+			<form action="replydelete" method="post">
 				<table class="post">
-
-
 					<thead>
 						<tr class="posttitle">
-							<th class="num">게시번호</th>
-							<th class="innerposttitle">제목</th>
-							<th class="date">작성일</th>
-							<th class="viewnum">조회수</th>
-							<th class="status"><input type="checkbox" id="selectall"></th>
+
+							<th class="innerposttitle">댓글</th>
+							<th class="poststatus">게시글 상태</th>
+							<th class="check"><input type="checkbox" id="selectall"></th>
 						</tr>
 					</thead>
 					<tbody>
-
-
-						<c:forEach items="${list}" var="free">
+						<c:forEach items="${replylist}" var="replylist" varStatus="status">
 							<tr>
-								<td name="fno" value="${free.fno}"><c:out value="${free.fno}" /></td>
-								<td><a class='move' href='readcontent' name="mypost" />
-									<c:out value="${free.title}" /></a></td>
-								<td><fmt:formatDate pattern="yyyy-MM-dd"
-										value="${free.regdt}" /></td>
-								<td><c:out value="${free.hit}" /></td>
-								<td><input type="checkbox" name="mypostcheck"
-									value="${free.fno}"></td>
+								<td class="innerposttitle"><c:out
+										value="${replylist.reply}" /></td>
+								<td class="poststatus"><c:out
+										value="${replystatus[status.index]}" /></td>
+								<td class="check"><input type="checkbox"
+									name="myreplycheck" value=1></td>
 							</tr>
 						</c:forEach>
 
@@ -223,27 +218,17 @@ li {
 			</form>
 
 
-
 		</div>
 	</div>
-
-
-
 	<script type="text/javascript">
-		let checkbox = document.getElementsByName('mypostcheck');
+		let checkbox = document.getElementsByName('myreplycheck');
 		document.getElementById('selectall').onclick = function() {
 			for (let i = 0; i < checkbox.length; i++) {
 				checkbox[i].checked = !checkbox[i].checked;
 			}
 		}
-		let fno = document.getElementsByName("fno");
-		let title = document.getElementsByName("mypost");
-		for(let i=0; i<fno.length; i++){
-		title[i].onclick = function stopDefault(e) {
-			e.preventDefault();
-			location.href="/free/get?fno="+fno[i].textContent
-		}}
 	</script>
+
 </body>
 <footer>
 	<div id="footer_box">

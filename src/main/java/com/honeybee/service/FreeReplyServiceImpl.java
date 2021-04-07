@@ -43,15 +43,17 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 	}
 	
 	@Override
-	public List<FreeReplyVO> readmyreply(String id){ //내가 쓴 댓글 목록 가져오기
+	public List<FreeReplyVO> readmyfreereply(String id){ //내가 자유게시물에 쓴 댓글 목록 가져오기
 		log.info("freereplyservice.............");
-		return mapper.readmyreply(id);
+		return mapper.readmyfreereply(id);
 	}
 	
 	@Override
-	public List<FreeReplyVO> getrestatus(String id) {
+	public List<FreeReplyVO> getfreereplystatus(String id) { //내가 댓글 단 자유게시물의 상태 가져오기.
 		log.info("getreststaus.................");
-		return mapper.getrestatus(id);
+		return mapper.getfreereplystatus(id);
 	}
+	
+
 
 }

@@ -24,23 +24,19 @@
 		delete from FREE_REPLY where frno = #{frno}
 	</delete>
 
-	<select id="readmyreply"
-		resultType="com.honeybee.domain.FreeReplyVO">   <!--김세훈 내가 쓴 댓글 가져오는 SQL -->
+	<select id="readmyfreereply"
+		resultType="com.honeybee.domain.FreeReplyVO">   <!--김세훈 내가 쓴 자유게시물 댓글 가져오는 SQL -->
 		select frno, fno, id, frno2, reply, layer, nick, regdt,
 		uptdt, deldt
-		from free_reply where id=#{id} and deldt is null union all
-		select mrno, mno, id, mrno2,
-		reply, layer, nick, regdt, uptdt, deldt from
-		meet_reply where id=#{id} and deldt is null
-		order by regdt
+		from free_reply where id=#{id} and deldt is null order by regdt
 	</select>
 
-	<select id="getrestatus"  
+	<select id="getfreereplystatus"
 		resultType="com.honeybee.domain.FreeReplyVO">
 		select r.fno, f.deldt from free_reply r, free f where (r.id
-		= #{id}) and (r.fno=f.fno) union all
-		select e.mno, m.deldt from meet_reply e, meet m where (e.id =
-		#{id}) and (e.mno=m.mno) 
-	</select><!-- 김세훈 내가 쓴 댓글이 달린 게시글의 상태 -->
+		=#{id}) and
+		(r.fno=f.fno) order by r.regdt
+	</select><!-- 김세훈 내가 쓴 댓글이 달린 자유 게시글의 상태 -->
+
 
 </mapper>

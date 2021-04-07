@@ -227,7 +227,7 @@ body {
 <!--메뉴바 시작 -->
 <div class="mypagemenubar">
 	<a href="home">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a href="posted">내가
-		쓴 글 </a> <a href="reply">내가 쓴 댓글 </a> <a href="rcvmsg">쪽지함 </a>
+		쓴 글 </a> <a href="freply">내가 쓴 댓글 </a> <a href="rcvmsg">쪽지함 </a>
 </div>
 
 
@@ -286,7 +286,7 @@ body {
 						<tr>
 							<td><input type="checkbox"></td>
 							<td><c:out value="${nick[status.index].CName}"></c:out></td>
-							<td><a href="/free/list"><c:out value="${meet.title}" /></a></td>
+							<td><a href="#" value="${meet.mno}"><c:out value="${meet.title}" /></a></td>
 							<td><c:out value="${meet.currNo}" /></td>
 							<td><c:out value="${meet.cid2}" /></td>
 							<td>${meet.receDt}</td>
