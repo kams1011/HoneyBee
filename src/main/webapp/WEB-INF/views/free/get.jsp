@@ -137,7 +137,7 @@
 		var fnoValue = '<c:out value="${free.fno}"/>';
 		var replyUL = $(".comments");
 		
-    	showList(1);
+    showList(1);
 		
 		function showList(page) {
 			freeReplyService.getList({fno:fnoValue, page: page || 1}, function(list) {
@@ -232,7 +232,6 @@
 				showList(1);
 			});
 		})
-		
 		
 		
 		// 댓글 좋아요 *********** 미완 ***************
