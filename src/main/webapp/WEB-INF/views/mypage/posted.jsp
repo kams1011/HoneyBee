@@ -188,7 +188,7 @@ li {
 
 	<div class="board">
 		<div class="mypost">
-			<form action="modify" method="post">
+			<form action="mypostdelete" method="post">
 				<table class="post">
 
 

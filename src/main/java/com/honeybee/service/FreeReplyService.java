@@ -17,13 +17,13 @@ public interface FreeReplyService {
 	
 	public boolean remove(Long frno);
 		
-	public List<FreeReplyVO> readmyfreereply(String id); //내가 자유게시물에 쓴 댓글 목록 가져오기
-	
 	public List<FreeReplyVO> getList(Criteria cri, Long fno);
 	
 	public List<FreeReplyVO> readmyfreereply(String id); //내가 자유게시물에 쓴 댓글 목록 가져오기
 	
 	public List<FreeReplyVO> getfreereplystatus(String id); //내가 자유게시물에 쓴 댓글이 달린 게시글 상태 조회
+	
+	public void freplyremove(Long mrno); // 내가 자유게시물에 쓴 댓글 삭제
 	
 	
 	

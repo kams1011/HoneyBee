@@ -339,8 +339,8 @@ a:hover {
 							value="${thumbRegDate[status.index].regDt}" /></th>
 					<tr>
 						<!-- 두번째 줄 시작 -->
-						<th colspan="3"><a href="#" value="${thumbList.mno}"><c:out
-									value="${thumbList.title}" /></a> <br></th>
+						<td colspan="3"><a href="#" value="${thumbList.mno}"><c:out
+									value="${thumbList.title}" /></a> <br></td>
 					</tr>
 				</c:forEach>
 				<!-- 두번째 줄 끝 -->
