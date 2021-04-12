@@ -229,3 +229,15 @@ li.clearfix > i.re {
 button:focus {
 	outline: none;
 }
+
+.heartBtn {
+    width: 36px;
+    height: 36px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.fa-heart:hover, .heart-active {
+    color: pink;
+}

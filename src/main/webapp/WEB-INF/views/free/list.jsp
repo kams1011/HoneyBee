@@ -32,7 +32,7 @@
                 <tr>
                     <td class="freeBno"><c:out value="${free.fno}" /></td>
                     <td class="title">
-                        <a class='move' href='<c:out value="${free.fno}"/>'><c:out value="${free.title}" /></a>
+                        <a class='move' href='<c:out value="${free.fno}"/>'><c:out value="${free.title}" />   <small>[<c:out value="${free.replyCnt}" />]</small></a>
                     </td>
                     <td><c:out value="${free.id}"/></td>
                     <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${free.regdt}"/></td>
