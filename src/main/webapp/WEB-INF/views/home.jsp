@@ -74,8 +74,8 @@
                               카테고리
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <c:forEach items="${catList}" var="cat"> 
-                              <li><a class="dropdown-item" href="/meet/list"><c:out value="${cat.cName}" /></a></li>
+                            <c:forEach items="${category}" var="category"> 
+                              <li><a class="dropdown-item" href="/meet/list"><c:out value="${category.CName}" /></a></li>
                             </c:forEach>
                               <!-- <li><hr class="dropdown-divider"></li> --> <!-- 라인 -->
                             </ul>

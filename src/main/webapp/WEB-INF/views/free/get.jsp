@@ -55,47 +55,7 @@
                     <div class="blog-comment">
                         <h3 class="text-success">댓글</h3>
                         <ul class="comments">
-	                        <li class="clearfix" data-frno=''>
-	                            <img src="https://bootdey.com/img/Content/user_1.jpg" class="avatar" alt="">
-	                            <div class="post-comments">
-	                                <p class="meta">
-	                                    <a href="#">김치국</a><small class="float-right">2021.03.25. 22:23:24</small>
-	                                    <a class="btn thumb float-right"><i class="fa fa-thumbs-up"></i> 13</a>  <!-- 클릭하면 class=text-green 추가  -->
-	                                </p>
-	                                <span>김치국이냐 김칫국이냐 그것이 문제로다.</span>
-	                                <button class='modRep'>수정</button>
-	                                <button class='delRep'>삭제</button>
-	                                <button class='repl'>답글</button>
-	                            </div>
-	                        </li>
-	                        <li class="clearfix rp" style="margin-left: 4%" data-frno=''>
-	                        	<i class="fa fa-share fa-flip-vertical re" style="display:flex"></i>
-	                            <img src="https://bootdey.com/img/Content/user_3.jpg" class="avatar" alt="">
-	                            <div class="post-comments">
-	                                <p class="meta">
-	                                    <a href="#">한글마춤뻡의정석</a> <small class="float-right">2021.03.25. 22:23:24</small>
-	                                    <a class="btn float-right text-green"><i class="fa fa-thumbs-up"></i> 13</a>
-	                                </p>
-	                                <span>김'칫'국이 올바른 표현입니다.</span>
-	                             	<button class='modRep'>수정</button>
-	                                <button class='delRep'>삭제</button>
-	                                <button class='repl'>답글</button>
-	                            </div>
-	                        </li>
-	                        <li class="clearfix rp" style="margin-left:8%" data-frno=''>
-	                        	<i class="fa fa-share fa-flip-vertical re" style="display:flex"></i>
-	                            <img src="https://bootdey.com/img/Content/user_3.jpg" class="avatar" alt="">
-	                            <div class="post-comments">
-	                                <p class="meta">
-	                                    <a href="#">가나다</a> <small class="float-right">2021.03.25. 22:23:24</small>
-	                                    <a class="btn float-right text-green"><i class="fa fa-thumbs-up"></i> 13</a>
-	                                </p>
-	                                <span>이분 말씀이 맞습니다.</span>
-	                                <button class='modRep'>수정</button>
-	                                <button class='delRep'>삭제</button>
-	                                <button class='repl'>답글</button>
-	                            </div>
-	                        </li>
+	                        
                        	</ul>
                        	
                        	<!-- 댓글 입력창 -->
@@ -138,7 +98,7 @@
 		var fnoValue = '<c:out value="${free.fno}"/>';
 		var replyUL = $(".comments");
 		
-    showList(1);
+    	showList(1);
 		
 		function showList(page) {
 			freeReplyService.getList({fno:fnoValue, page: page || 1}, function(list) {
@@ -158,8 +118,10 @@
 					str += "	<small class='float-right'>" + freeReplyService.displayTime(list[i].regdt) + "</small>";
  					str += "	<a class='btn thumb float-right' data-frno='" + list[i].frno + "'><i class='fa fa-thumbs-up'></i>" + list[i].thumb + "</a></p>"
 					str += "	<span>" + list[i].reply + "</span><button class='modRep'>수정</button><button class='delRep'>삭제</button><button class='repl' onclick='comm(" + list[i].frno + ")'>답글</button></div>"
-					str += "	<input type='hidden' data-layer='" + list[i].layer + "'>"
-					str += "	<input type='hidden' data-bundle='" + list[i].bundle + "'></li>";
+					str += "	<input type='hidden' data-last=''>";
+					str += "	<input type='hidden' data-bundle='" + list[i].bundle + "'>";
+					str += "	<input type='hidden' data-order='" + list[i].bunorder + "'>";
+					str += "	<input type='hidden' data-layer='" + list[i].layer + "'></li>"
 				}
  				
 				replyUL.html(str);
@@ -180,7 +142,8 @@
 				function(result) {
 					alert(result);
 					repInput.val("");
-					showList(1);
+					/* showList(1); */
+					location.reload();
 			});
 		});
 		
@@ -191,7 +154,7 @@
 			comm(div.id);
 			$(".reply")[0].value = thisEl.previousSibling.innerText;
 			$(".write-rp").data("frno", div.id);
- 		})
+ 		});
 		
 		// 댓글 수정 or 답글 입력
 		
@@ -199,20 +162,23 @@
 			let writeRp = $(".write-rp");
 			let check = writeRp.data("frno");
 			let prev = writeRp.prev();
-			let layer = prev.prev().data("layer") + 1;
+			let layer = prev.data("layer");
+			let order = prev.prev().data("order");
 			
 			if (!(check === null || check === "")) { // 댓글 수정
 				let reply = {frno: check, reply: $(".reply").val()};
+				
 				freeReplyService.update(reply, function(result) {
 					alert(result);
 					/* showList(1); */
 					location.reload();
 				});
 			} else { // 답글 입력
-				/* let oRepl = $(".re-comment > input[type='hidden']").val(); */
-				let bundle = layer === 0 ? $(".re-comment > input[type='hidden']").val() : prev.data("bundle");
- 				let reply = {fno: fnoValue, id: "asdf", reply: $(".reply").val(), layer: layer, bundle: bundle};
-				freeReplyService.add(reply, function(result) {
+				let bundle = prev.prev().prev().data("bundle");
+				let bunorder = order + (0.1 * (Math.pow(0.1, layer)));
+ 				let reply = {fno: fnoValue, id: "asdf", reply: $(".reply").val(), layer: layer + 1, bundle: bundle, bunorder: bunorder};
+ 				
+ 				freeReplyService.add(reply, function(result) {
 					alert(result);
 					/* showList(1); */
  					location.reload();
