@@ -6,8 +6,8 @@
 		<selectKey keyProperty="frno" order="BEFORE" resultType="long">
 			select SEQ_FREE_REPLY.nextval from dual
 		</selectKey>
-		insert into FREE_REPLY (FRNO, FNO, ID, REPLY, BUNDLE)
-		values (#{frno}, #{fno}, #{id}, #{reply}, #{frno})
+		insert into FREE_REPLY (FRNO, FNO, ID, REPLY, BUNDLE, BUNORDER)
+		values (#{frno}, #{fno}, #{id}, #{reply}, #{frno}, #{frno})
 	</insert>
 	
 	<insert id="insertAnswer">

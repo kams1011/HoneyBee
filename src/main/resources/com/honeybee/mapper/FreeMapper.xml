@@ -44,6 +44,13 @@
 			upddt = sysdate
 		where fno = #{fno}
 	</update>
+	
+	<!-- 조회수 업데이트 -->
+	<update id="updateHit">
+		update FREE
+		set hit = #{hit}
+		where fno = #{fno}
+	</update>
 
 	<!-- DELETE -->
 	<delete id="delete">
