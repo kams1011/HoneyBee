@@ -1,5 +1,7 @@
 package com.honeybee.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -90,6 +92,13 @@ public class MeetController {
 
 		log.info("/get or /modify");
 		model.addAttribute("meet", service.get(mno));
+		
+		MeetVO meet = service.get(mno);
+		
+		cri.setCid(meet.getCid());
+		log.info("cri : " + cri);
+		System.out.println("이 게시물의 카테고리번호는 ? " + service.get(mno).getCid3());
+		System.out.println("이 게시물의 카테고리번호는 ? " + service.get(mno).getCid());
 		model.addAttribute("category", cService.getCatList());
 		model.addAttribute("pickedCat", service.get(mno).getCid());
 		model.addAttribute("categoryName", service.getCategoryName(mno)); //해당 모임게시물의 카테고리 이름 cname 보내기
@@ -97,9 +106,12 @@ public class MeetController {
 
 
 	@PostMapping("/modify")
-	public String modify(MeetVO meet, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr, Model model) {
+	public String modify(MeetVO meet, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr, Model model, HttpServletRequest request) {
 		log.info("modify : " + meet);
 
+
+	    System.out.println("meet.getCid() : " + meet.getCid());
+	    
 		if(service.modify(meet)) {
 			rttr.addFlashAttribute("result", "success");
 		}
@@ -111,15 +123,15 @@ public class MeetController {
 		rttr.addAttribute("amount", cri.getAmount());
 		rttr.addAttribute("type", cri.getType());
 		rttr.addAttribute("keyword", cri.getKeyword());
-		rttr.addAttribute("category", cri.getCid());
-
+		rttr.addAttribute("cid", cri.getCid());
+		
 		
 		return "redirect:/meet/list";
 	}
 
 
 	@RequestMapping("/remove")
-	public String remove(@RequestParam("mno") Long mno,@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
+	public String remove(@RequestParam("mno") Long mno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		log.info("remove.............." + mno);
 
 		if(service.remove(mno)) {
