@@ -6,8 +6,8 @@
 		<selectKey keyProperty="frno" order="BEFORE" resultType="long">
 			select SEQ_FREE_REPLY.nextval from dual
 		</selectKey>
-		insert into FREE_REPLY (FRNO, FNO, ID, REPLY, BUNDLE, BUNORDER)
-		values (#{frno}, #{fno}, #{id}, #{reply}, #{frno}, #{frno})
+		insert into FREE_REPLY (FRNO, FNO, ID, REPLY, BUNDLE)
+		values (#{frno}, #{fno}, #{id}, #{reply}, #{frno})
 	</insert>
 	
 	<insert id="insertAnswer">
@@ -41,7 +41,9 @@
 		select FRNO, FNO, ID, FRNO2, REPLY, LAYER, BUNDLE, BUNORDER, NICK, THUMB, REGDT, UPTDT
 		from FREE_REPLY
 		where FNO = #{fno} and DELDT is null
-		order by BUNDLE, BUNORDER, LAYER, REGDT asc
+		start with bunorder is null
+		connect by prior frno = bunorder
+		<!-- order by BUNDLE, BUNORDER, LAYER, REGDT asc -->
 	</select>
 	
 	<select id="readmyfreereply"
