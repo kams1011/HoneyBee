@@ -23,4 +23,14 @@ public interface FreeReplyMapper {
 	public int delete(Long frno);
 	
 	public List<FreeReplyVO> getList(@Param("cri") Criteria cri, @Param("fno") Long fno);
+
+	// 내가 자유게시물에 쓴 댓글 목록 가져오기
+	public List<FreeReplyVO> readmyfreereply(String id);
+	
+	// 내가 댓글 달았던 자유 게시물의 스테이터스 가져오기
+	public List<FreeReplyVO> getfreereplystatus(String id);
+	
+
+	
+	
 }

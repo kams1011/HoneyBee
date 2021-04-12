@@ -13,9 +13,7 @@
 	</select>
 
 	<select id="getMyList" resultType="com.honeybee.domain.FreeVO">
-			select
-				FNO, ID, TITLE, TO_CHAR(CONTENT) AS CONTENT, HIT, THUMB, REGDT, UPDDT, DELDT
-			from FREE where id = #{id}
+	select  FNO, ID, TITLE, TO_CHAR(CONTENT) AS CONTENT, HIT, THUMB, REGDT, UPDDT, DELDT from FREE where id = #{id} and DELDT IS NULL
 	</select>
 
 	<!-- CREATE -->
@@ -43,9 +41,14 @@
 		set id = #{id},
 			title = #{title},
 			content = #{content},
-			hit = #{hit},
-			thumb = #{thumb},
 			upddt = sysdate
+		where fno = #{fno}
+	</update>
+	
+	<!-- 조회수 업데이트 -->
+	<update id="updateHit">
+		update FREE
+		set hit = #{hit}
 		where fno = #{fno}
 	</update>
 
@@ -79,10 +82,10 @@
 	<select id="getListWithPaging" resultType="com.honeybee.domain.FreeVO">
 		<![CDATA[
 			select
-				fno, id, title, content, regdt, upddt
+				fno, id, title, content, hit, thumb, regdt, upddt
 			from (
 				select /*+INDEX_DESC(FREE pk_free) */
-					rownum rn, fno, id, title, content, regdt, upddt
+					rownum rn, fno, id, title, content, hit, thumb, regdt, upddt
 				from FREE
 				where 
 		]]>
@@ -105,4 +108,10 @@
 		FNO > 0 and DELDT is null
 	</select>
 
+	<update id="mypostremove">  <!-- 김세훈 테스트 -->
+		update FREE
+		set deldt = sysdate
+		where fno = #{fno}
+	</update>
+	
 </mapper>

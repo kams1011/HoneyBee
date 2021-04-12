@@ -42,6 +42,20 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 		log.info("remove..........");
 		return mapper.delete(frno) == 1;
 	}
+	
+	@Override
+	public List<FreeReplyVO> readmyfreereply(String id){ //내가 자유게시물에 쓴 댓글 목록 가져오기
+		log.info("freereplyservice.............");
+		return mapper.readmyfreereply(id);
+	}
+	
+	@Override
+	public List<FreeReplyVO> getfreereplystatus(String id) { //내가 댓글 단 자유게시물의 상태 가져오기.
+		log.info("getreststaus.................");
+		return mapper.getfreereplystatus(id);
+	}
+	
+
 
 	@Override
 	public List<FreeReplyVO> getList(Criteria cri, Long fno) {
