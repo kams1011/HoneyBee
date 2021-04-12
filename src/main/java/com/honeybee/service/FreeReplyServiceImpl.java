@@ -2,6 +2,7 @@ package com.honeybee.service;
 
 import java.util.List;
 
+import com.honeybee.mapper.FreeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import com.honeybee.mapper.FreeReplyMapper;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Log4j
@@ -19,9 +21,15 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 	@Setter(onMethod_ = @Autowired)
 	private FreeReplyMapper mapper;
 
+	@Setter(onMethod_ = @Autowired)
+	private FreeMapper freeMapper;
+
+	@Transactional
 	@Override
 	public int register(FreeReplyVO vo) {
-		log.info("register...........");
+		log.info("register..........." + vo);
+
+		freeMapper.updateReplyCnt(vo.getFno(), 1);
 		return mapper.insert(vo);
 	}
 
@@ -37,9 +45,14 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 		return mapper.update(vo) == 1;
 	}
 
+	@Transactional
 	@Override
 	public boolean remove(Long frno) {
-		log.info("remove..........");
+		log.info("remove.........." + frno);
+
+		FreeReplyVO vo = mapper.read(frno);
+
+		freeMapper.updateReplyCnt(vo.getFno(), -1);
 		return mapper.delete(frno) == 1;
 	}
 	
@@ -54,8 +67,6 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 		log.info("getreststaus.................");
 		return mapper.getfreereplystatus(id);
 	}
-	
-
 
 	@Override
 	public List<FreeReplyVO> getList(Criteria cri, Long fno) {

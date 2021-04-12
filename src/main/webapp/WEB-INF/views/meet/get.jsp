@@ -80,7 +80,7 @@
       <div class="meet right">
         <div class="meet top">
           <div class="title"><p><c:out value="${meet.title}"/></p></div>
-          <hr class="line" style="border:1px color= silver;" width="90%">
+          <hr class="line" style="border:1px solid silver;" width="90%">
 
 
         <div class="id">
@@ -105,7 +105,7 @@
 
     <div class="mid">
       <div class="information">모임 상세 안내</div>
-      <hr class="first_line" style="border:1px color= silver;" width="90%">
+      <hr class="first_line" style="border:1px solid silver;" width="90%">
       <div class="data">
         개설자 정보
       </div>
@@ -115,7 +115,7 @@
 
       </div>
 
-      <hr class="second_line" style="border:1px color= silver;" width="90%">
+      <hr class="second_line" style="border:1px solid silver;" width="90%">
       
       <button data-oper='modify' class="btn btn-default" >수정하기</button>
       <button type="reset" data-oper='remove'>모임 삭제</button>

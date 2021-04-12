@@ -75,4 +75,5 @@ public class FreeController {
 		return "redirect:/free/list" + cri.getListLink();
 	}
 
+
 }
