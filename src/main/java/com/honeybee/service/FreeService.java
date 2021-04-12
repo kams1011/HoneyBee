@@ -13,12 +13,12 @@ public interface FreeService {
 	
 	public boolean modify(FreeVO vo);
 	
-	
+
 	public boolean remove(FreeVO vo);
 	
 	public List<FreeVO> getList(Criteria cri);
 	
-	
+
 	public List<FreeVO> getMyList(String id);
 	
 	public int getTotal(Criteria cri);

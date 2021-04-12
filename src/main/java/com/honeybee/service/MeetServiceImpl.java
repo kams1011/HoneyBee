@@ -18,7 +18,7 @@ import lombok.extern.log4j.Log4j;
 @Service
 @AllArgsConstructor
 public class MeetServiceImpl implements MeetService {
-	
+
 	@Setter(onMethod_ =@Autowired)
 	private MeetMapper mapper;
 
@@ -46,13 +46,16 @@ public class MeetServiceImpl implements MeetService {
 		log.info("remove..............." + gno);
 		return mapper.delete(gno) == 1;
 	}
-	
+
 	@Override
 	public List<MeetVO> getList() {
 		log.info("getlist.............");
 		return mapper.getList();
 	}
 
+
+
+	//내가 개설한 모임을 카테고리별로 가져오기
 	@Override
 	public List<MeetVO> getList(Criteria cri) {
 		log.info("get List with criteria : " + cri);
@@ -62,29 +65,29 @@ public class MeetServiceImpl implements MeetService {
 	@Override
 	public List<MeetVO> getListWithCat(Criteria cri) {
 		log.info("get List with Category and criteria : " + cri);
-		
+
 		return mapper.getListWithPagingAndCat(cri);
 	}
-	
+
 	@Override
 	public int getTotal(Criteria cri) {
 		log.info("get total count");
 		return mapper.getTotalCount(cri);
 	}
-	
+
 	@Override
 	public int getTotalWithCat(Criteria cri) {
 		log.info("get total count with category");
 		return mapper.getTotalCountWithCat(cri);
 	}
-	
-	
+
+
 	@Override
 	public List<MeetVO> getListTest(String id) {
 		log.info("getlist.............");
 		return mapper.getListTest(id);
 	}
-	
+
 	@Override
 	public List<MeetVO> getNick(String id) {
 		log.info("getNick.............");
@@ -101,6 +104,7 @@ public class MeetServiceImpl implements MeetService {
 	public List<MeetVO> getListWithCategory(String cid){
 		log.info("getListWithCategory...............");
 		return mapper.getListWithCategory(cid);
-	}//내가 개설한 모임을 카테고리별로 가져오기
-	
+	}
+
+
 }

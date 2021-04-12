@@ -43,13 +43,13 @@
 		UPDDT=sysdate
 		where ID = #{id}
 	</update>
-	
+
 	<select id="getMyList" resultType="com.honeybee.domain.UserVO">
 		select * from USER_INFO where id = #{id}
 	</select>
-	
+
 	<select id="checkId" resultType="boolean">
 		select ID from USER_INFO where ID = #{id}
 	</select>
-	
+
 </mapper>
