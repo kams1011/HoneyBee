@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,8 +71,8 @@ public class MypageController {
 	@GetMapping("/posted")
 	public void posted(Model model, String id) {
 		log.info("posted");
-//		model.addAttribute("list", fservice.getMyList("HOHO995@naver.com"));
-		model.addAttribute("list", fservice.getMyList(id)); // id를 받아서 리스트 가져옴
+		model.addAttribute("list", fservice.getMyList("HOHO995@naver.com"));
+//		model.addAttribute("list", fservice.getMyList(id)); // id를 받아서 리스트 가져옴
 	}
 
 	@GetMapping("/sendmsg")
@@ -81,7 +82,6 @@ public class MypageController {
 
 	@GetMapping("/freply")
 	public void freply(Model model) {
-
 		List<FreeReplyVO> arr = frservice.getfreereplystatus("HOHO995@naver.com");
 		List<String> arr2 = new ArrayList<>();
 		for (int i = 0; i < arr.size(); i++) {
@@ -100,8 +100,7 @@ public class MypageController {
 
 		List<ReplyVO> arr = mrservice.getmeetreplystatus("HOHO995@naver.com");
 		List<String> arr2 = new ArrayList<>();
- 			log.info("check~~~~~~~~~~~~~~~~~~~~~");
-			log.info(arr.get(0));
+		log.info(arr.get(0));
 		for (int i = 0; i < arr.size(); i++) {
 			if (arr.get(i).getDeldt() == null) {
 				arr2.add("원글 보기▶");
@@ -130,6 +129,7 @@ public class MypageController {
 		model.addAttribute("thumbList", tservice.getThumbList("HOHO995@naver.com"));
 		model.addAttribute("thumbRegDate", tservice.getThumbRegDate("HOHO995@naver.com"));
 		model.addAttribute("subscribeList", sservice.getSubscribeList("HOHO995@naver.com"));
+		model.addAttribute("getimg", service.getimg("HOHO995@naver.com"));
 	}
 
 	@RequestMapping("/register")
@@ -191,9 +191,6 @@ public class MypageController {
 		log.info("발신함~~~~~~~~~~~~~~~~");
 	}
 
-//	@PostMapping("myreplydelete")
-//	public String myreplydelete
-
 	@PostMapping("/sendmsgtest")
 	public String sendmsg(Model model, HttpServletRequest request, MsgVO msg) {
 		String receiver = request.getParameter("receiver");
@@ -254,7 +251,7 @@ public class MypageController {
 
 		log.info("upload ajax");
 	}
-	
+
 	@PostMapping("/freplydelete")
 	public void freplydelete(HttpServletRequest request, Long frno) {
 		String[] arr = request.getParameterValues("myreplycheck");
@@ -262,7 +259,7 @@ public class MypageController {
 			frservice.freplyremove(Long.parseLong(arr[i]));
 		}
 	}
-	
+
 	@PostMapping("/mreplydelete")
 	public void mreplydelete(HttpServletRequest request, Long mrno) {
 		String[] arr = request.getParameterValues("myreplycheck");
@@ -297,7 +294,7 @@ public class MypageController {
 
 	@GetMapping("/display")
 	@ResponseBody
-	public ResponseEntity<byte[]> getFile(String fileName) {
+	public ResponseEntity<byte[]> getFile(String fileName, Model model) {
 		log.info("fileName: " + fileName);
 
 		File file = new File("c:\\upload\\" + fileName);
@@ -319,46 +316,38 @@ public class MypageController {
 
 	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile) {
-
+	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile, Model model) {
 		List<AttachFileDTO> list = new ArrayList<>();
 		String uploadFolder = "C:\\upload";
-
 		String uploadFolderPath = getFolder();
-		// make folder --------
-		File uploadPath = new File(uploadFolder, uploadFolderPath);
+		// make Folder----------
 
+		File uploadPath = new File(uploadFolder, uploadFolderPath);
 		if (uploadPath.exists() == false) {
 			uploadPath.mkdirs();
 		}
-		// make yyyy/MM/dd folder
 		for (MultipartFile multipartFile : uploadFile) {
-
 			AttachFileDTO attachDTO = new AttachFileDTO();
-
-			String uploadFileName = multipartFile.getOriginalFilename();
-
+			String extension = multipartFile.getOriginalFilename()
+					.substring(multipartFile.getOriginalFilename().indexOf(".") + 1);
+			String uploadFileName = "HOHO995@naver.com" + "." + extension; // 여기에 아이디 넣기
+//			String path = uploadFolderPath.replace("\\", "/") + "/";
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
-			log.info("only file name: " + uploadFileName);
 			attachDTO.setFileName(uploadFileName);
-
-			UUID uuid = UUID.randomUUID();
-
-			uploadFileName = uuid.toString() + "_" + uploadFileName;
+			UserVO uvo = new UserVO();
+			uvo.setId("HOHO995@naver.com");
+			uvo.setImg(uploadFileName);
+			service.updateimg(uvo);
 
 			try {
 				File saveFile = new File(uploadPath, uploadFileName);
 				multipartFile.transferTo(saveFile);
-
-				attachDTO.setUuid(uuid.toString());
 				attachDTO.setUploadPath(uploadFolderPath);
 				if (checkImageType(saveFile)) {
-
 					attachDTO.setImage(true);
 					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
 
 					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100);
-
 					thumbnail.close();
 				}
 				list.add(attachDTO);
@@ -369,4 +358,29 @@ public class MypageController {
 		}
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
+	
+	
+	@PostMapping("/myinfomodify") //내 정보 수정
+	public String myinfomodify(HttpServletRequest request, Model model, UserVO uvo) {
+		int gender = Integer.parseInt(request.getParameter("gender"));	
+		String year = request.getParameter("year");	
+		String month = request.getParameter("month");	
+		String day = request.getParameter("day");	
+		uvo.setSex(gender);
+		uvo.setBirth(year+month+day);
+		service.infomodify(uvo);
+		return "redirect:/mypage/modify";
+		//관심지역 관심분야 추가 
+		
+	}
+	
+	@PostMapping("nickmodify") //닉네임 수정
+	public String nickmodify(HttpServletRequest request, Model model, UserVO uvo) {
+		String nick = request.getParameter("nick");
+		uvo.setNick(nick);
+		service.nickmodify(uvo);
+		return "redirect:/mypage/modify";
+	}
+
+	
 }

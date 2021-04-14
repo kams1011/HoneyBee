@@ -2,6 +2,8 @@ package com.honeybee.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.honeybee.domain.UserVO;
 
 public interface UserService {
@@ -18,5 +20,12 @@ public interface UserService {
 	
 	public UserVO getMyList(String id);
 	
+	public void updateimg(UserVO uvo);
 	
+	public UserVO getimg(String ID);
+	
+	public void infomodify(UserVO uvo);
+	
+	public void nickmodify(UserVO uvo);
+
 }

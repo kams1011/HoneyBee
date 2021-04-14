@@ -144,6 +144,10 @@ a:hover {
 	color: blue;
 	text-decoration: underline;
 }
+
+.status {
+	magin-left: 1000px;
+}
 </style>
 
 
@@ -153,10 +157,10 @@ a:hover {
 
 
 	<!--메뉴바 시작 -->
-<div class="mypagemenubar">
+	<div class="mypagemenubar">
 		<a href="home">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a
-			href="posted">내가 쓴 글 </a> <a href="freply">내가 쓴 댓글 </a>
-		<a href="rcvmsg">쪽지함 </a>
+			href="posted">내가 쓴 글 </a> <a href="freply">내가 쓴 댓글 </a> <a
+			href="rcvmsg">쪽지함 </a>
 	</div>
 
 
@@ -176,182 +180,246 @@ a:hover {
 				<p>
 					<a href="#ex1" rel="modal:open">사진 변경</a>
 				</p>
+			</span>
+		</div>
+		<table id="status" border="1" width="50%" height="200" cellspacing="5">
+			<thead>
+				<tr>
+					<th colspan="2">${user.nick}</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr align="center" bgcolor="white">
+					<td>이메일</td>
+					<td><c:out value="${user.email}" /></td>
+				</tr>
+				<tr align="center" bgcolor="white">
+					<td>휴대전화</td>
+					<td><c:out value="${user.telno}" /></td>
+				</tr>
+				<tr align="center" bgcolor="white">
+					<td>가입일</td>
+					<td><c:out value="${user.regdt}" /></td>
+				</tr>
+				<tr align="center" bgcolor="white">
+					<td>기타</td>
+					<td><input type="radio"></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="user_status"></div>
+		<form action="myinfomodify" method="post">
+			<div class="user_info">
+				<div class="user_info_name">회원정보</div>
+				<div class="user_gender">
+					<span>성별</span> <input type="radio" class="user_gender_male"
+						name="gender" value=1> 남 <input type="radio"
+						class="user_gender_female" name="gender" value=2> 여
+				</div>
+				<div class="user_birth">
+					<span>생년월일</span> <select id="user_birth_year" name="year">
+						<option>년도</option>
+						<option>1986</option>
+						<option>1987</option>
+						<option>1988</option>
+						<option>1989</option>
+						<option>1990</option>
+						<option>1991</option>
+						<option>1992</option>
+						<option>1993</option>
+						<option>1994</option>
+						<option>1995</option>
+						<option>1996</option>
+						<option>1997</option>
+						<option>1998</option>
+						<option>1999</option>
+						<option>2000</option>
+						<option>2001</option>
+						<option>2002</option>
+						<option>2003</option>
+						<option>2004</option>
+						<option>2005</option>
+						<option>2006</option>
+						<option>2007</option>
+						<option>2008</option>
+						<option>2009</option>
+						<option>2010</option>
+
+					</select> <select id="user_birth_month" name="month">
+						<option>월</option>
+						<option>12</option>
+						<option>11</option>
+						<option>10</option>
+						<option>9</option>
+						<option>8</option>
+						<option>7</option>
+						<option>6</option>
+						<option>5</option>
+						<option>4</option>
+						<option>3</option>
+						<option>2</option>
+						<option>1</option>
+					</select> <select id="user_birth_day" name="day">
+						<option>일</option>
+						<option>12</option>
+						<option>11</option>
+						<option>10</option>
+						<option>9</option>
+						<option>8</option>
+						<option>7</option>
+						<option>6</option>
+						<option>5</option>
+						<option>4</option>
+						<option>3</option>
+						<option>2</option>
+						<option>1</option>
+					</select>
+				</div>
+				<div class="user_region">
+					<span>관심지역</span> <select id="user_region_select" name="region">
+						<option>관심지역</option>
+						<option>마포구</option>
+						<option>강서구</option>
+						<option>중랑구</option>
+						<option>노원구</option>
+						<option>중구</option>
+						<option>서초구</option>
+						<option>도봉구</option>
+						<option>용산구</option>
+						<option>강남구</option>
+						<option>강북구</option>
+						<option>이정도면</option>
+						<option>됐다</option>
+					</select>
 
 
-				<div class="user_status"></div>
-				<div class="user_info">
-					<div class="user_info_name">회원정보</div>
-					<div class="user_gender">
-						<span>성별</span> <input type="radio" class="user_gender_male">
-						남 <input type="radio" class="user_gender_female"> 여
-					</div>
-					<div class="user_birth">
-						<span>생년월일</span> <select class="user_birth_year">
-							<option>년도</option>
-							<option>1993</option>
-							<option>1994</option>
-							<option>1995</option>
-							<option>1996</option>
-							<option>1997</option>
-							<option>1998</option>
-							<option>1999</option>
-							<option>2000</option>
-							<option>2001</option>
-							<option>2002</option>
-							<option>2003</option>
-							<option>2004</option>
-						</select> <select class="user_birth_month">
-							<option>월</option>
-							<option>12</option>
-							<option>11</option>
-							<option>10</option>
-							<option>9</option>
-							<option>8</option>
-							<option>7</option>
-							<option>6</option>
-							<option>5</option>
-							<option>4</option>
-							<option>3</option>
-							<option>2</option>
-							<option>1</option>
-						</select> <select class="user_birth_day">
-							<option>일</option>
-							<option>12</option>
-							<option>11</option>
-							<option>10</option>
-							<option>9</option>
-							<option>8</option>
-							<option>7</option>
-							<option>6</option>
-							<option>5</option>
-							<option>4</option>
-							<option>3</option>
-							<option>2</option>
-							<option>1</option>
-						</select>
-					</div>
-					<div class="user_region">
-						<span>관심지역</span> <select class="user_region_select">
-							<option>관심지역</option>
-							<option>12</option>
-							<option>11</option>
-							<option>10</option>
-							<option>9</option>
-							<option>8</option>
-							<option>7</option>
-							<option>6</option>
-							<option>5</option>
-							<option>4</option>
-							<option>3</option>
-							<option>2</option>
-							<option>1</option>
-						</select>
-
-
-					</div>
-
-
-
-					<div class="user_category">
-						<span>관심분야</span> <select class="user_category_select">
-							<option>관심분야</option>
-							<option>12</option>
-							<option>11</option>
-							<option>10</option>
-							<option>9</option>
-							<option>8</option>
-							<option>7</option>
-							<option>6</option>
-							<option>5</option>
-							<option>4</option>
-							<option>3</option>
-							<option>2</option>
-							<option>1</option>
-						</select><br>
-						<div class="pwd_change_button">
-							<button
-								style="width: 200px; height: 40px; background-color: yellow; color: black; border: none;">적용</button>
-						</div>
-					</div>
-
-
-
-					<br> <br>
-					<div style="width: 1000px; border-bottom: 1px solid black"></div>
 				</div>
 
 
 
-				<div class="pwd_change">
-					<div class="pwd_msg">비밀번호 변경</div>
-
-
-					<div class="pwd_notice">
-						개인정보 어쩌고 저쩌고<br> 비밀번호 어쩌고 저쩌고<br> 주민번호 어쩌고 저쩌고<br>
-					</div>
-					<div class="pwd_now">
-						<div style="font-weight: bold">현재 비밀번호 입력</div>
-						<input type="text" style="width: 400px"
-							placeholder="현재비밀번호를 입력해주세요">
-					</div>
-					<div class="pwd_new">
-						<div style="font-weight: bold">새로운 비밀번호 입력</div>
-						<input type="text" style="width: 400px"
-							placeholder="새로운비밀번호를 입력해주세요"><br> <span>비밀번호는
-							대문자 소문자 어쩌고 저쩌고</span>
-					</div>
-					<div class="pwd_new_check">
-						<div style="font-weight: bold">새로운 비밀번호 입력확인</div>
-						<input type="text" style="width: 400px"
-							placeholder="새로운 비밀번호를 다시 입력해주세요"><br>
-						<div>새로운 비밀번호는 어쩌고 저쩌고</div>
-					</div>
-
+				<div class="user_category">
+					<span>관심분야</span> <select id="user_category_select" name="category">
+						<option>관심분야</option>
+						<option>12</option>
+						<option>11</option>
+						<option>10</option>
+						<option>9</option>
+						<option>8</option>
+						<option>7</option>
+						<option>6</option>
+						<option>5</option>
+						<option>4</option>
+						<option>3</option>
+						<option>2</option>
+						<option>1</option>
+					</select><br>
 					<div class="pwd_change_button">
 						<button
-							style="width: 200px; height: 40px; background-color: yellow; color: black; border: none;">비밀번호
-							변경완료</button>
-					</div>
-					<br>
-					<div style="width: 1000px; border-bottom: 1px solid black"></div>
-				</div>
-
-
-				<div class="user_quit">
-					<div>탈퇴 사유를 선택해주세요</div>
-					<div>허니비의 더 나은 어쩌고</div>
-					<br>
-					<div>
-						<input type="radio">탈퇴사유1
-					</div>
-					<div>
-						<input type="radio">탈퇴사유2
-					</div>
-					<div>
-						<input type="radio">탈퇴사유3
-					</div>
-					<div>
-						<input type="radio">탈퇴사유4
-					</div>
-					<div style="display: inline-block; width: 400px;">
-						<input type="radio">기타 <input type="text">
-					</div>
-					<br> <br>
-					<div>탈퇴할 이메일 아이디를 확인해</div>
-					<div>wjeorjwpr@naweirnhwoiqr.com</div>
-					<br> <br>
-					<div>본인인증을 위해 어쩌고 저쩌고</div>
-					<input type="text" placeholder="내용을 입력해 주세요"><br> <br>
-
-
-
-
-					<div class="pwd_change_button" style="text-align: left;">
-						<button
-							style="width: 200px; height: 40px; background-color: yellow; color: black; border: none;">회원
-							탈퇴 완료</button>
+							style="width: 200px; height: 40px; background-color: yellow; color: black; border: none;">적용</button>
 					</div>
 				</div>
+		</form>
+
+
+		<br> <br>
+		<div style="width: 1000px; border-bottom: 1px solid black"></div>
+	</div>
+
+
+
+	<div class="pwd_change">
+		<div class="pwd_msg">비밀번호 변경</div>
+
+
+		<div class="pwd_notice">
+			개인정보 어쩌고 저쩌고<br> 비밀번호 어쩌고 저쩌고<br> 주민번호 어쩌고 저쩌고<br>
+		</div>
+		<div class="pwd_now">
+			<div style="font-weight: bold">현재 비밀번호 입력</div>
+			<input type="text" style="width: 400px" placeholder="현재비밀번호를 입력해주세요">
+		</div>
+		<div class="pwd_new">
+			<div style="font-weight: bold">새로운 비밀번호 입력</div>
+			<input type="text" style="width: 400px" placeholder="새로운비밀번호를 입력해주세요"><br>
+			<span>비밀번호는 대문자 소문자 어쩌고 저쩌고</span>
+		</div>
+		<div class="pwd_new_check">
+			<div style="font-weight: bold">새로운 비밀번호 입력확인</div>
+			<input type="text" style="width: 400px"
+				placeholder="새로운 비밀번호를 다시 입력해주세요"><br>
+			<div>새로운 비밀번호는 어쩌고 저쩌고</div>
+		</div>
+
+		<div class="pwd_change_button">
+			<button
+				style="width: 200px; height: 40px; background-color: yellow; color: black; border: none;">비밀번호
+				변경완료</button>
+		</div>
+		<br>
+		<div style="width: 1000px; border-bottom: 1px solid black"></div>
+	</div>
+
+
+	<div class="user_quit">
+		<div>탈퇴 사유를 선택해주세요</div>
+		<div>허니비의 더 나은 어쩌고</div>
+		<br>
+		<div>
+			<input type="radio">탈퇴사유1
+		</div>
+		<div>
+			<input type="radio">탈퇴사유2
+		</div>
+		<div>
+			<input type="radio">탈퇴사유3
+		</div>
+		<div>
+			<input type="radio">탈퇴사유4
+		</div>
+		<div style="display: inline-block; width: 400px;">
+			<input type="radio">기타 <input type="text">
+		</div>
+		<br> <br>
+		<div>탈퇴할 이메일 아이디를 확인해</div>
+		<div>wjeorjwpr@naweirnhwoiqr.com</div>
+		<br> <br>
+		<div>본인인증을 위해 어쩌고 저쩌고</div>
+		<input type="text" placeholder="내용을 입력해 주세요"><br> <br>
+
+
+
+
+		<div class="pwd_change_button" style="text-align: left;">
+			<button
+				style="width: 200px; height: 40px; background-color: yellow; color: black; border: none;">회원
+				탈퇴 완료</button>
+		</div>
+	</div>
+
+
+
+	<script type="text/javascript">
+		$('#user_region_select').on('change', function() {
+			alert("hi!");
+		});
+
+		$('#user_birth_year').on('change', function() {
+			alert("hi!");
+		});
+
+		$('#user_birth_month').on('change', function() {
+			alert("hi!");
+		});
+
+		$('#user_birth_day').on('change', function() {
+			alert("hi!");
+		});
+
+		$('#user_category_select').on('change', function() {
+			alert("hi!");
+		});
+	</script>
 </body>
 </html>
 
