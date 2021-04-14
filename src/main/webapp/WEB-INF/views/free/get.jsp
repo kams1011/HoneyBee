@@ -91,7 +91,7 @@
         </div>
     </div>
 	<%@include file="../include/footer.jsp" %>
-
+	
 <script type="text/javascript" src="/resources/js/freeReply.js"></script>
 <script type="text/javascript" src="/resources/js/freeThumb.js"></script>
 
@@ -99,9 +99,11 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		
-		var fnoValue = '<c:out value="${free.fno}"/>';
-
+		let fnoValue = '<c:out value="${free.fno}"/>';
+				
 		// 좋아요 클릭
+		// * 남은 과제 : 1) 이미 좋아요 한 상태면 분홍색 하트, 아니면 검은색 하트
+		//			   2) 좋아요 누르면 실시간으로 좋아요 개수 바뀌게
 		$(".heart").on("click", function(e) {
 		    e.preventDefault();
 		    freeService.thumbUp({id:"asdf", fno: fnoValue}, function(result) {
@@ -178,7 +180,6 @@
  		});
 		
 		// 댓글 수정 or 답글 입력
-		
 		$(document).on("click", "#repRegBtn", function(e) {
 			let writeRp = $(".write-rp");
 			let check = writeRp.data("frno");
@@ -216,15 +217,19 @@
 				alert(result);
 				showList(1);
 			});
-		})
+		});
 		
 		
-		// 댓글 좋아요 *********** 미완 ***************
+		// 댓글 좋아요
 		$(document).on("click", ".thumb", function(e) {
 			e.preventDefault();
- 			let frno = $(this).data("frno");
- 			let thumb = parseInt($(this)[0].innerText) + 1;
- 			console.log(thumb);
+			let frnoValue = $(this).data("frno");
+			let reply = {id:"asdf", frno: frnoValue};
+			
+			freeService.replyThumbUp(reply, function(result) {
+				alert(result);
+				showList(1);
+			});
    			
   		});
 		

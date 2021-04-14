@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.honeybee.domain.Criteria;
 import com.honeybee.domain.FreeReplyVO;
+import com.honeybee.domain.ThumbVO;
 import com.honeybee.mapper.FreeReplyMapper;
 
 import lombok.Setter;
@@ -34,7 +35,7 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 	}
 
 	@Override
-	public FreeReplyVO get(Long frno) {
+	public FreeReplyVO get(long frno) {
 		log.info("get..........");
 		return mapper.read(frno);
 	}
@@ -47,7 +48,7 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 
 	@Transactional
 	@Override
-	public boolean remove(Long frno) {
+	public boolean remove(long frno) {
 		log.info("remove.........." + frno);
 
 		FreeReplyVO vo = mapper.read(frno);
@@ -69,7 +70,7 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 	}
 
 	@Override
-	public List<FreeReplyVO> getList(Criteria cri, Long fno) {
+	public List<FreeReplyVO> getList(Criteria cri, long fno) {
 		return mapper.getList(cri, fno);
 	}
 
@@ -79,6 +80,25 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 		
 		freeMapper.updateReplyCnt(vo.getFno(), 1);
 		return mapper.insertAnswer(vo);
+	}
+
+	@Transactional
+	@Override
+	public int thumbUp(ThumbVO vo) {
+		mapper.updateThumbCnt(vo.getFrno(), 1);
+		return mapper.thumbUp(vo.getId(), vo.getFrno());
+	}
+
+	@Transactional
+	@Override
+	public int cancelThumbUp(ThumbVO vo) {
+		mapper.updateThumbCnt(vo.getFrno(), -1);
+		return mapper.cancelThumbUp(vo.getId(), vo.getFrno());
+	}
+
+	@Override
+	public boolean check(String id, long frno) {
+		return mapper.checkThumbed(id, frno) == null;
 	}
 	
 
