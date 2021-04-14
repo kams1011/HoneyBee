@@ -115,14 +115,6 @@
 			e.preventDefault();
 			searchForm.submit();
 		});
-		
-		// 조회수
-		$(document).on("click", ".move", function(e) {
-			e.preventDefault();
-			let fno = parseInt($(this).attr("href"));
-			
-			
-		});
-				
+						
 	});
 </script>

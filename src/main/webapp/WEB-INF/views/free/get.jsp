@@ -36,7 +36,7 @@
             <c:out value="${free.content}" escapeXml="false"/>
         </div>
         <div class="heartBtn">
-            <a class='btn heart'><i class="fa fa-heart fa-3x" aria-hidden="true"></i><br>좋아요</a>
+            <a class='btn heart'><i class="fa fa-heart fa-3x" aria-hidden="true"></i><br>좋아요 <c:out value='${free.thumb}' /></a>
         </div>
         <button data-oper="list" class="lstBtn">목록</button>
         <button data-oper="modify" class="modBtn">수정</button>
@@ -93,6 +93,24 @@
 	<%@include file="../include/footer.jsp" %>
 
 <script type="text/javascript" src="/resources/js/freeReply.js"></script>
+<script type="text/javascript" src="/resources/js/freeThumb.js"></script>
+
+<!-- 게시물 -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		
+		var fnoValue = '<c:out value="${free.fno}"/>';
+
+		// 좋아요 클릭
+		$(".heart").on("click", function(e) {
+		    e.preventDefault();
+		    freeService.thumbUp({id:"asdf", fno: fnoValue}, function(result) {
+		    	alert(result);
+		    });
+        });
+
+	});
+</script>
 
 <!-- 게시물 -->
 <script type="text/javascript">
@@ -260,8 +278,8 @@
 	
 	function hide_box(id) {
 		let rp = $(".write-rp");
-		
 		rp[0].outerHTML = "";
+/* 		$(".reply").val() = ""; */
 		cnt = 0;
 	}
 </script>
