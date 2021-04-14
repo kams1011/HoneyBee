@@ -73,8 +73,11 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 		return mapper.getList(cri, fno);
 	}
 
+	@Transactional
 	@Override
 	public int registerAnswer(FreeReplyVO vo) {
+		
+		freeMapper.updateReplyCnt(vo.getFno(), 1);
 		return mapper.insertAnswer(vo);
 	}
 	

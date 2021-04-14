@@ -36,7 +36,7 @@
             <c:out value="${free.content}" escapeXml="false"/>
         </div>
         <div class="heartBtn">
-            <a class='btn heart'><i class="fa fa-heart fa-3x" aria-hidden="true"></i><br>좋아요</a>
+            <a class='btn heart'><i class="fa fa-heart fa-3x" aria-hidden="true"></i><br>좋아요 <c:out value='${free.thumb}' /></a>
         </div>
         <button data-oper="list" class="lstBtn">목록</button>
         <button data-oper="modify" class="modBtn">수정</button>
@@ -93,28 +93,20 @@
 	<%@include file="../include/footer.jsp" %>
 
 <script type="text/javascript" src="/resources/js/freeReply.js"></script>
+<script type="text/javascript" src="/resources/js/freeThumb.js"></script>
 
 <!-- 게시물 -->
 <script type="text/javascript">
 	$(document).ready(function() {
 		
-		// 게시물 좋아요
-		// View
-		// 1. 하트버튼 클릭했는지 여부를 DB(테이블명 : THUMBED)를 통해 확인
-		// 2. 있을 경우, 하트는 꽉찬 분홍색으로 처리
-		// 3. 없을 경우, 하트는 꽉찬 검은색으로 처리
-		
-		// Back
-		// 1. 하트버튼 클릭했을 경우,
+		var fnoValue = '<c:out value="${free.fno}"/>';
+
+		// 좋아요 클릭
 		$(".heart").on("click", function(e) {
 		    e.preventDefault();
-		    // 2. 게시물 좋아요 + 1
-		    // 3. DB(테이블명:THUMBED)에 좋아요 누른 것 기록
-		    
-		    // 4. 좋아요 누른 적이 있다면
-		    // 5. 하트 눌렀을 때 좋아요 -1
-		    // 6. THUMBED 테이블에서 기록 삭제
-           	console.log($(this));
+		    freeService.thumbUp({id:"asdf", fno: fnoValue}, function(result) {
+		    	alert(result);
+		    });
         });
 
 	});
@@ -260,8 +252,8 @@
 	
 	function hide_box(id) {
 		let rp = $(".write-rp");
-		
 		rp[0].outerHTML = "";
+/* 		$(".reply").val() = ""; */
 		cnt = 0;
 	}
 </script>

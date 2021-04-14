@@ -1,10 +1,12 @@
 package com.honeybee.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -12,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.honeybee.domain.Criteria;
 import com.honeybee.domain.FreeVO;
 import com.honeybee.domain.PageDTO;
+import com.honeybee.domain.ThumbVO;
 import com.honeybee.service.FreeService;
 
 import lombok.AllArgsConstructor;
@@ -74,6 +77,13 @@ public class FreeController {
 		
 		return "redirect:/free/list" + cri.getListLink();
 	}
-
+		
+	@PostMapping(value = "/{fno}", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
+	public void thumbUp(@RequestBody ThumbVO vo) {
+		log.info("ThumbVO : " + vo);
+		int heartCnt = service.check(vo.getId(), vo.getFno()) ? service.thumbUp(vo) : service.cancelThumbUp(vo);
+		log.info("INSERT COUNT : " + heartCnt);
+	}
+	
 
 }
