@@ -78,7 +78,7 @@
 		select img from user_info where id=#{id}
 	</select>
 	
-	<update id="infoupdate"> <!--회원정보 수정 -->
+	<update id="infomodify"> <!--회원정보 수정 -->
 		update USER_INFO
 		set
 		BIRTH=#{birth},
@@ -87,12 +87,16 @@
 		where ID = #{id}
 	</update>
 
-	<update id="nickupdate"> <!--회원정보 수정 -->
+	<update id="nickmodify"> <!--회원정보 수정 -->
 		update USER_INFO
 		set
 		NICK=#{nick},
 		UPDDT=sysdate
 		where ID = #{id}
 	</update>
+	
+	<select id="nickChk" resultType="int">
+	select count(*) from user_info where nick=#{nick}
+	</select>
 	
 </mapper>

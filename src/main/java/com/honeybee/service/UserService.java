@@ -27,5 +27,7 @@ public interface UserService {
 	public void infomodify(UserVO uvo);
 	
 	public void nickmodify(UserVO uvo);
+	
+	public int nickChk(String nick);
 
 }

@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -203,7 +204,8 @@ public class MypageController {
 	}
 
 	@GetMapping("/modify")
-	public void modify() {
+	public void modify(Model model) {
+		model.addAttribute("user", service.getMyList("HOHO995@naver.com"));
 
 	}
 
@@ -358,29 +360,35 @@ public class MypageController {
 		}
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
-	
-	
-	@PostMapping("/myinfomodify") //내 정보 수정
+
+	@PostMapping("/myinfomodify") // 내 정보 수정
 	public String myinfomodify(HttpServletRequest request, Model model, UserVO uvo) {
-		int gender = Integer.parseInt(request.getParameter("gender"));	
-		String year = request.getParameter("year");	
-		String month = request.getParameter("month");	
-		String day = request.getParameter("day");	
+		int gender = Integer.parseInt(request.getParameter("gender"));
+		String year = request.getParameter("year");
+		String month = request.getParameter("month");
+		String day = request.getParameter("day");
 		uvo.setSex(gender);
-		uvo.setBirth(year+month+day);
+		uvo.setBirth(year + month + day);
+		uvo.setId("HOHO995@naver.com");
 		service.infomodify(uvo);
 		return "redirect:/mypage/modify";
-		//관심지역 관심분야 추가 
-		
+		// 관심지역 관심분야 추가
 	}
-	
-	@PostMapping("nickmodify") //닉네임 수정
+
+	@PostMapping("/nickmodify") // 닉네임 수정
 	public String nickmodify(HttpServletRequest request, Model model, UserVO uvo) {
 		String nick = request.getParameter("nick");
 		uvo.setNick(nick);
+		uvo.setId("HOHO995@naver.com");
 		service.nickmodify(uvo);
-		return "redirect:/mypage/modify";
+		String afternick = service.getMyList("HOHO995@naver.com").getNick();
+		return afternick;
 	}
 
-	
+	@ResponseBody
+	@RequestMapping(value = "/nickChk", method = RequestMethod.POST)
+	public int nickChk(String nick) {
+		log.info(service.nickChk(nick));
+		return service.nickChk(nick);
+	}
 }

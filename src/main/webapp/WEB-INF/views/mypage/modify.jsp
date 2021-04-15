@@ -64,7 +64,6 @@ li {
 }
 
 .thumbnail {
-	position: absolute;
 	height: 200px;
 	left: 230px;
 	top: 40px;
@@ -82,11 +81,14 @@ li {
 .mypage-top {
 	position: relative;
 	height: 400px;
+	display: flex;
+	justify-content: space-around;
+	align-item: center;
 }
 
 .user_info {
 	position: absolute;
-	top: 300px;
+	/* 	margin-top: 10px; */
 }
 
 .user_info_name, .pwd_msg {
@@ -146,7 +148,7 @@ a:hover {
 }
 
 .status {
-	magin-left: 1000px;
+	
 }
 </style>
 
@@ -182,149 +184,158 @@ a:hover {
 				</p>
 			</span>
 		</div>
-		<table id="status" border="1" width="50%" height="200" cellspacing="5">
-			<thead>
+		<form action="nickmodify" method="post">
+			<table id="status" border="1" width="50%" height="200"
+				cellspacing="5">
+				<%-- 	<thead>
 				<tr>
 					<th colspan="2">${user.nick}</th>
 				</tr>
 			</thead>
-
-			<tbody>
-				<tr align="center" bgcolor="white">
-					<td>이메일</td>
-					<td><c:out value="${user.email}" /></td>
-				</tr>
-				<tr align="center" bgcolor="white">
-					<td>휴대전화</td>
-					<td><c:out value="${user.telno}" /></td>
-				</tr>
-				<tr align="center" bgcolor="white">
-					<td>가입일</td>
-					<td><c:out value="${user.regdt}" /></td>
-				</tr>
-				<tr align="center" bgcolor="white">
-					<td>기타</td>
-					<td><input type="radio"></td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="user_status"></div>
-		<form action="myinfomodify" method="post">
-			<div class="user_info">
-				<div class="user_info_name">회원정보</div>
-				<div class="user_gender">
-					<span>성별</span> <input type="radio" class="user_gender_male"
-						name="gender" value=1> 남 <input type="radio"
-						class="user_gender_female" name="gender" value=2> 여
-				</div>
-				<div class="user_birth">
-					<span>생년월일</span> <select id="user_birth_year" name="year">
-						<option>년도</option>
-						<option>1986</option>
-						<option>1987</option>
-						<option>1988</option>
-						<option>1989</option>
-						<option>1990</option>
-						<option>1991</option>
-						<option>1992</option>
-						<option>1993</option>
-						<option>1994</option>
-						<option>1995</option>
-						<option>1996</option>
-						<option>1997</option>
-						<option>1998</option>
-						<option>1999</option>
-						<option>2000</option>
-						<option>2001</option>
-						<option>2002</option>
-						<option>2003</option>
-						<option>2004</option>
-						<option>2005</option>
-						<option>2006</option>
-						<option>2007</option>
-						<option>2008</option>
-						<option>2009</option>
-						<option>2010</option>
-
-					</select> <select id="user_birth_month" name="month">
-						<option>월</option>
-						<option>12</option>
-						<option>11</option>
-						<option>10</option>
-						<option>9</option>
-						<option>8</option>
-						<option>7</option>
-						<option>6</option>
-						<option>5</option>
-						<option>4</option>
-						<option>3</option>
-						<option>2</option>
-						<option>1</option>
-					</select> <select id="user_birth_day" name="day">
-						<option>일</option>
-						<option>12</option>
-						<option>11</option>
-						<option>10</option>
-						<option>9</option>
-						<option>8</option>
-						<option>7</option>
-						<option>6</option>
-						<option>5</option>
-						<option>4</option>
-						<option>3</option>
-						<option>2</option>
-						<option>1</option>
-					</select>
-				</div>
-				<div class="user_region">
-					<span>관심지역</span> <select id="user_region_select" name="region">
-						<option>관심지역</option>
-						<option>마포구</option>
-						<option>강서구</option>
-						<option>중랑구</option>
-						<option>노원구</option>
-						<option>중구</option>
-						<option>서초구</option>
-						<option>도봉구</option>
-						<option>용산구</option>
-						<option>강남구</option>
-						<option>강북구</option>
-						<option>이정도면</option>
-						<option>됐다</option>
-					</select>
-
-
-				</div>
-
-
-
-				<div class="user_category">
-					<span>관심분야</span> <select id="user_category_select" name="category">
-						<option>관심분야</option>
-						<option>12</option>
-						<option>11</option>
-						<option>10</option>
-						<option>9</option>
-						<option>8</option>
-						<option>7</option>
-						<option>6</option>
-						<option>5</option>
-						<option>4</option>
-						<option>3</option>
-						<option>2</option>
-						<option>1</option>
-					</select><br>
-					<div class="pwd_change_button">
-						<button
-							style="width: 200px; height: 40px; background-color: yellow; color: black; border: none;">적용</button>
-					</div>
-				</div>
+ --%>
+				<tbody>
+					<tr align="center" bgcolor="white">
+						<td>${user.nick}</td>
+						<div id="ex2" class="modal">
+							<input type="text" id="isnick" maxlength="10" />
+							<button id="duplicatecheck">중복체크</button>
+							<a href="#" rel="modal:close">닫기</a>
+						</div>
+						<td><a href="#ex2" rel="modal:open">닉네임변경</a></td>
+					</tr>
+					<tr align="center" bgcolor="white">
+						<td>이메일</td>
+						<td><c:out value="${user.email}" /></td>
+					</tr>
+					<tr align="center" bgcolor="white">
+						<td>휴대전화</td>
+						<td><c:out value="${user.telno}" /></td>
+					</tr>
+					<tr align="center" bgcolor="white">
+						<td>가입일</td>
+						<td><c:out value="${user.regdt}" /></td>
+					</tr>
+				</tbody>
+			</table>
 		</form>
-
-
-		<br> <br>
-		<div style="width: 1000px; border-bottom: 1px solid black"></div>
 	</div>
+	<div class="user_status"></div>
+	<form action="myinfomodify" method="post">
+		<div class="user_info">
+			<div class="user_info_name">회원정보</div>
+			<div class="user_gender">
+				<span>성별</span> <input type="radio" class="user_gender_male"
+					name="gender" value=1> 남 <input type="radio"
+					class="user_gender_female" name="gender" value=2> 여
+			</div>
+			<div class="user_birth">
+				<span>생년월일</span> <select id="user_birth_year" name="year">
+					<option>년도</option>
+					<option>1986</option>
+					<option>1987</option>
+					<option>1988</option>
+					<option>1989</option>
+					<option>1990</option>
+					<option>1991</option>
+					<option>1992</option>
+					<option>1993</option>
+					<option>1994</option>
+					<option>1995</option>
+					<option>1996</option>
+					<option>1997</option>
+					<option>1998</option>
+					<option>1999</option>
+					<option>2000</option>
+					<option>2001</option>
+					<option>2002</option>
+					<option>2003</option>
+					<option>2004</option>
+					<option>2005</option>
+					<option>2006</option>
+					<option>2007</option>
+					<option>2008</option>
+					<option>2009</option>
+					<option>2010</option>
+
+				</select> <select id="user_birth_month" name="month">
+					<option>월</option>
+					<option>12</option>
+					<option>11</option>
+					<option>10</option>
+					<option>9</option>
+					<option>8</option>
+					<option>7</option>
+					<option>6</option>
+					<option>5</option>
+					<option>4</option>
+					<option>3</option>
+					<option>2</option>
+					<option>1</option>
+				</select> <select id="user_birth_day" name="day">
+					<option>일</option>
+					<option>12</option>
+					<option>11</option>
+					<option>10</option>
+					<option>9</option>
+					<option>8</option>
+					<option>7</option>
+					<option>6</option>
+					<option>5</option>
+					<option>4</option>
+					<option>3</option>
+					<option>2</option>
+					<option>1</option>
+				</select>
+			</div>
+			<div class="user_region">
+				<span>관심지역</span> <select id="user_region_select" name="region">
+					<option>관심지역</option>
+					<option>마포구</option>
+					<option>강서구</option>
+					<option>중랑구</option>
+					<option>노원구</option>
+					<option>중구</option>
+					<option>서초구</option>
+					<option>도봉구</option>
+					<option>용산구</option>
+					<option>강남구</option>
+					<option>강북구</option>
+					<option>이정도면</option>
+					<option>됐다</option>
+				</select>
+
+
+			</div>
+
+
+
+			<div class="user_category">
+				<span>관심분야</span> <select id="user_category_select" name="category">
+					<option>관심분야</option>
+					<option>12</option>
+					<option>11</option>
+					<option>10</option>
+					<option>9</option>
+					<option>8</option>
+					<option>7</option>
+					<option>6</option>
+					<option>5</option>
+					<option>4</option>
+					<option>3</option>
+					<option>2</option>
+					<option>1</option>
+				</select><br>
+				<div class="pwd_change_button">
+					<button
+						style="width: 200px; height: 40px; background-color: yellow; color: black; border: none;">적용</button>
+				</div>
+			</div>
+	</form>
+
+
+	<br>
+	<br>
+	<div style="width: 1000px; border-bottom: 1px solid black"></div>
 
 
 
@@ -418,6 +429,48 @@ a:hover {
 
 		$('#user_category_select').on('change', function() {
 			alert("hi!");
+		});
+
+		$('#duplicatecheck').on('click', function fn_nickChk() {
+			var str = $('#isnick').val();
+			var special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+			if (str.search(/\s/gi) != -1) {
+				alert("닉네임에 공백은 사용할 수 없습니다.");
+				return false;
+			} 
+			
+			if (special_pattern.test(str) == true) {
+				alert("닉네임에 특수문자는 사용하실 수 없습니다.");
+				return false;
+			}
+			$.ajax({
+				url : "/mypage/nickChk",
+				type : "post",
+				dataType : "json",
+				data : {
+					"nick" : $('#isnick').val()
+				},
+				success : function(data) {
+					if (data == 1) {
+						alert("중복된 닉네임입니다.");
+					} else if (data == 0) {
+						if(confirm("사용 가능한 닉네임입니다. 변경하시겠습니까?")){
+							$.ajax({
+								url : "/mypage/nickmodify",
+								type : "post",
+								dataType : "json",
+								data : {
+									"nick" : $('#isnick').val()
+								},
+								success : function(afternick) {
+									$('#isnick').val()=afternick;
+									alert("닉네임이 변경됐습니다.");
+								}
+						})
+					}
+				}
+			}
+		});
 		});
 	</script>
 </body>

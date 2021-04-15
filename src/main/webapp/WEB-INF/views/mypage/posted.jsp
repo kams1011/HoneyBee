@@ -181,8 +181,9 @@ li {
 
 <body>
 	<div class="select">
-		<a class="selectpost"> 내가 쓴 글 | </a> <a class="selectreply"
-			href="/mypage/freply"> 내가 쓴 댓글 </a>
+		<a class="selectpost" href="posted"> 내가 쓴 글 | </a> <a
+				class="selectreply" href="mreply"> 내가 쓴 모임게시물 댓글 |</a> <a
+				class="selectreply" href="freply"> 내가 쓴 자유게시물 댓글 </a>
 
 	</div>
 

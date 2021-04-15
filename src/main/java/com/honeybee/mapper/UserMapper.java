@@ -28,5 +28,6 @@ public interface UserMapper {
 	
 	public void nickmodify(UserVO uvo);
 	
+	public int nickChk(String nick);
 	
 }
