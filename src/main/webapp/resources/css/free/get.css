@@ -155,13 +155,13 @@ a {
     margin-right: 10px;
 }
 
-.modBtn, .delBtn, #repRegBtn, #regBtn {
+.modBtn, .delBtn, #repRegBtn, #regBtn, .reportBtn {
 	margin-top: 20px;
 	outline: none;
 	border: none;
 }
 
-.modBtn:hover, #repRegBtn:hover, #regBtn:hover {
+.modBtn:hover, #repRegBtn:hover, #regBtn:hover, .reportBtn:hover {
 	cursor: pointer;
 	background-color: rgb(246, 218, 66);
 }
@@ -201,7 +201,7 @@ li.clearfix > i.re {
 	margin-bottom: 20px;
 }
 
-.repl, .modRep, .delRep {
+.repl, .modRep, .delRep, .reportRep {
     position: absolute;
     border: none;
 	background-color: transparent;
@@ -213,7 +213,7 @@ li.clearfix > i.re {
 	right: 10px;
 }
 
-.repl:hover, .modRep:hover, .delRep:hover {
+.repl:hover, .modRep:hover, .delRep:hover, .reportRep:hover {
 	cursor: pointer;
 	color: #3498db;
 }
@@ -224,6 +224,10 @@ li.clearfix > i.re {
 
 .delRep {
 	right: 80px;
+}
+
+.reportRep {
+	right : 115px;
 }
 
 button:focus {

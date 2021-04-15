@@ -41,4 +41,7 @@ public interface FreeReplyMapper {
 	public ThumbVO checkThumbed(@Param("id") String id, @Param("frno") long frno);
 	
 	public void updateThumbCnt(@Param("frno") long frno, @Param("amount") int amount);
+	
+	// 답글이 달려있는지 여부 체크
+	public FreeReplyVO checkReply(long frno);
 }

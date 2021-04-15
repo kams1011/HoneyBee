@@ -13,7 +13,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/resources/css/free/get.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     
 </head>
 <body>
@@ -39,6 +41,7 @@
             <a class='btn heart'><i class="fa fa-heart fa-3x" aria-hidden="true"></i><br>좋아요 <c:out value='${free.thumb}' /></a>
         </div>
         <button data-oper="list" class="lstBtn">목록</button>
+        <button data-oper="report" class="reportBtn">신고</button>
         <button data-oper="modify" class="modBtn">수정</button>
         <button data-oper="delete" class="delBtn">삭제</button>
         <form id='operForm' action="/free/modify" method="get">
@@ -92,8 +95,47 @@
     </div>
 	<%@include file="../include/footer.jsp" %>
 	
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">신고하기</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+            	<!-- 신고하는 대상(게시물, 댓글) 번호 -->
+            	<div class="form-group" id="badFno">
+            		<label>신고 게시물 번호</label>
+            		<input type="text" class="form-control" name="badFno" value="<c:out value='${free.fno}'/>" readonly >
+           		</div>
+            	<div class="form-group" id="badFrno">
+            		<label>신고 댓글 번호</label>
+            		<input type="text" class="form-control" name="badFrno" value="" readonly >
+           		</div>
+            	<div class="form-group">
+            		<label>제목</label>
+            		<input class="form-control" name='reportTitle'>
+            	</div>
+            	<div class="form-group">
+            		<label>신고 내용</label>
+            		<textarea class="form-control" rows="3" name='reportContent'></textarea>
+            	</div>
+            </div>
+            <div class="modal-footer">
+                <button id="closeBtn" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="sendBtn" type="button" class="btn btn-primary">신고하기</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>	
+
+	
 <script type="text/javascript" src="/resources/js/freeReply.js"></script>
 <script type="text/javascript" src="/resources/js/freeThumb.js"></script>
+<script type="text/javascript" src="/resources/js/freeReport.js"></script>
 
 <!-- 게시물 -->
 <script type="text/javascript">
@@ -110,7 +152,62 @@
 		    	alert(result);
 		    });
         });
+		
+		// 신고 기능 구현
+		let modal = $(".modal");
+		let reportTitle = modal.find("input[name='reportTitle']");
+		let reportContent = modal.find("textarea[name='reportContent']");
+		let badFno = modal.find("input[name='badFno']");
+		let badFrno = modal.find("input[name='badFrno']");
+		
+		let sendBtn = $("#sendBtn");
+		
+		// 게시물 신고창 띄우기
+		$(".reportBtn").on("click", function(e) {
+			reportTitle.val("");
+			reportContent.val("");
+			$("#badFrno").hide();
+			
+			$('#myModal').modal('show');
+		});
+		
+		// 신고 등록
+		sendBtn.on("click", function() {
+			console.log("REPORT REPORT REPORT");
+			
+			if (reportTitle.val().trim() === "" || reportTitle.val().trim() === null) {
+				alert("신고 제목을 입력해주세요.");
+				return;
+			} else if (reportContent.val().trim() === "" || reportContent.val().trim() === null) {
+				alert("신고 내용을 입력해주세요.");
+				return;
+			}
 
+			let inquiry = { id : "asdf", title : reportTitle.val(), content : reportContent.val() };
+			let badValue = badFrno.val();
+			(badValue === "" || badValue === null) ? inquiry.fno = fnoValue : inquiry.frno = badValue;
+			
+			
+			reportService.reportObj(inquiry, function(result) {
+				alert(result);
+				modal.modal("hide");
+				modal.find("div[class='form-group']").show();
+			})
+		});
+		
+		// 댓글 신고창 띄우기
+		$(document).on("click", ".reportRep", function(e) {
+			e.preventDefault();
+			let frnoValue = $(this).parent().parent().data("frno");
+			
+			reportTitle.val("");
+			reportContent.val("");
+			$("#badFno").hide();
+			badFrno.val(frnoValue);
+			
+			$('#myModal').modal('show');
+		});
+		
 	});
 </script>
 
@@ -140,7 +237,8 @@
 					str += "	<div class='post-comments'><p class='meta'><a href='#'>" + list[i].id + "</a>";
 					str += "	<small class='float-right'>" + freeReplyService.displayTime(list[i].regdt) + "</small>";
  					str += "	<a class='btn thumb float-right' data-frno='" + list[i].frno + "'><i class='fa fa-thumbs-up'></i>" + list[i].thumb + "</a></p>"
-					str += "	<span>" + list[i].reply + "</span><button class='modRep'>수정</button><button class='delRep'>삭제</button><button class='repl' onclick='comm(" + list[i].frno + ")'>답글</button></div>"
+					str += "	<span>" + list[i].reply + "</span><button class='modRep'>수정</button><button class='delRep'>삭제</button>"
+					str += "	<button class='repl' onclick='comm(" + list[i].frno + ")'>답글</button><button class='reportRep'>신고</button></div>"
 					str += "	<input type='hidden' data-last=''>";
 					str += "	<input type='hidden' data-bundle='" + list[i].bundle + "'>";
 					str += "	<input type='hidden' data-order='" + list[i].bunorder + "'>";
@@ -230,7 +328,6 @@
 				alert(result);
 				showList(1);
 			});
-   			
   		});
 		
 		
@@ -258,7 +355,7 @@
 	function hide_box(id) {
 		let rp = $(".write-rp");
 		rp[0].outerHTML = "";
-/* 		$(".reply").val() = ""; */
+ 		$(".reply").val("");
 		cnt = 0;
 	}
 </script>
