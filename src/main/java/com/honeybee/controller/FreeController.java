@@ -1,6 +1,8 @@
 package com.honeybee.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -78,11 +81,13 @@ public class FreeController {
 		return "redirect:/free/list" + cri.getListLink();
 	}
 		
-	@PostMapping(value = "/{fno}", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
-	public void thumbUp(@RequestBody ThumbVO vo) {
+	@RequestMapping(method = { RequestMethod.POST }, value = "/{fno}", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
+	public ResponseEntity<String> thumbUp(@RequestBody ThumbVO vo) {
 		log.info("ThumbVO : " + vo);
 		int heartCnt = service.check(vo.getId(), vo.getFno()) ? service.thumbUp(vo) : service.cancelThumbUp(vo);
-		log.info("INSERT COUNT : " + heartCnt);
+		log.info("HEART COUNT : " + heartCnt);
+		
+		return heartCnt == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 

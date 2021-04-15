@@ -72,6 +72,7 @@ public class FreeServiceImpl implements FreeService {
 		return mapper.thumbUp(vo.getId(), vo.getFno());
 	}
 	
+	@Transactional
 	@Override
 	public int cancelThumbUp(ThumbVO vo) {
 		mapper.updateThumbCnt(vo.getFno(), -1);
@@ -80,7 +81,6 @@ public class FreeServiceImpl implements FreeService {
 
 	@Override
 	public boolean check(String id, long fno) {
-		
 		return mapper.checkThumbed(id, fno) == null;
 	}
 
