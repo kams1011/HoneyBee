@@ -9,12 +9,12 @@
 		insert into FREE_REPLY (FRNO, FNO, ID, REPLY, BUNDLE)
 		values (#{frno}, #{fno}, #{id}, #{reply}, #{frno})
 	</insert>
-	
+
 	<insert id="insertAnswer">
 		<selectKey keyProperty="frno" order="BEFORE" resultType="long">
 			select SEQ_FREE_REPLY.nextval from dual
 		</selectKey>
-		
+
 		insert into FREE_REPLY (FRNO, FNO, ID, REPLY, LAYER, BUNDLE, BUNORDER)
 		values (${frno}, #{fno}, #{id}, #{reply}, #{layer}, #{bundle}, #{bunorder})
 	</insert>
@@ -36,7 +36,7 @@
 		set DELDT = sysdate
 		where FRNO = #{frno}
 	</delete>
-	
+
 	<select id="getList" resultType="com.honeybee.domain.FreeReplyVO">
 		select
 			FRNO, FNO, ID, REPLY, LAYER, BUNDLE, BUNORDER, NICK, THUMB, REGDT, UPTDT
@@ -46,7 +46,7 @@
 		connect by prior frno = bunorder
 		<!-- order by BUNDLE, BUNORDER, LAYER, REGDT asc -->
 	</select>
-	
+
 	<select id="readmyfreereply"
 		resultType="com.honeybee.domain.FreeReplyVO">   <!--김세훈 내가 쓴 자유게시물 댓글 가져오는 SQL -->
 		select

@@ -85,7 +85,6 @@ public class MeetReplyController {
 		vo.setMrno(mrno);
 		
 		log.info("mno  : " + mrno);
-		
 		log.info("modify : " + vo);
 		
 		return service.modify(vo) == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

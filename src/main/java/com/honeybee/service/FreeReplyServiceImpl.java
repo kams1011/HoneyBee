@@ -35,7 +35,7 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 	}
 
 	@Override
-	public FreeReplyVO get(long frno) {
+	public FreeReplyVO get(Long frno) {
 		log.info("get..........");
 		return mapper.read(frno);
 	}
@@ -48,7 +48,7 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 
 	@Transactional
 	@Override
-	public boolean remove(long frno) {
+	public boolean remove(Long frno) {
 		log.info("remove.........." + frno);
 
 		FreeReplyVO vo = mapper.read(frno);
@@ -70,14 +70,14 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 	}
 
 	@Override
-	public List<FreeReplyVO> getList(Criteria cri, long fno) {
+	public List<FreeReplyVO> getList(Criteria cri, Long fno) {
 		return mapper.getList(cri, fno);
 	}
 
 	@Transactional
 	@Override
 	public int registerAnswer(FreeReplyVO vo) {
-		
+
 		freeMapper.updateReplyCnt(vo.getFno(), 1);
 		return mapper.insertAnswer(vo);
 	}
@@ -100,6 +100,9 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 	public boolean check(String id, Long frno) {
 		return mapper.checkThumbed(id, frno) == null;
 	}
-	
 
+	@Override
+	public void freplyremove(Long mrno) { // 내가 자유게시물에 쓴 댓글 삭제
+		mapper.freplyremove(mrno);
+	}
 }

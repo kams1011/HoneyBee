@@ -41,7 +41,7 @@
                 </tr>
             </c:forEach>
         </table>
-        
+
         <div class="bottom-line">
             <form id="searchForm" action="/free/list" method="get">
                 <select name='type'>
@@ -115,6 +115,6 @@
 			e.preventDefault();
 			searchForm.submit();
 		});
-						
+
 	});
 </script>

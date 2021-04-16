@@ -190,7 +190,7 @@ body {
 
 
 		<div class="mypost">
-			<form action="replydelete" method="post">
+			<form action="mreplydelete" method="post">
 				<table class="post">
 					<thead>
 						<tr class="posttitle">
@@ -203,12 +203,11 @@ body {
 					<tbody>
 						<c:forEach items="${replylist}" var="replylist" varStatus="status">
 							<tr>
-								<td class="innerposttitle"><c:out
-										value="${replylist.reply}" /></td>
-								<td class="poststatus"><c:out
-										value="${replystatus[status.index]}" /></td>
+								<td class="innerposttitle"><c:out value="${replylist.reply}" /></td>
+								<td class="poststatus"><a href="#"><c:out
+										value="${replystatus[status.index]}" /></a></td>
 								<td class="check"><input type="checkbox"
-									name="myreplycheck" value=1></td>
+									name="myreplycheck" value="${replylist.mrno}"></td>
 							</tr>
 						</c:forEach>
 
@@ -226,7 +225,16 @@ body {
 			for (let i = 0; i < checkbox.length; i++) {
 				checkbox[i].checked = !checkbox[i].checked;
 			}
-		}
+		}	
+		
+		$(".poststatus").on(
+				"click",
+				function(e) {
+					if ($(this).attr("name") == "원글 보기▶") {
+						location.href = "http://localhost:8080/meet/get?mno="
+								+ $(this).attr("value");}
+				});
+	
 	</script>
 
 </body>
