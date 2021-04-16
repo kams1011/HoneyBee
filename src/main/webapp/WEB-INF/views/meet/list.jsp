@@ -73,7 +73,7 @@
       <option>하이룽</option>
     </select>
     
-    <select>
+    <select class="cat" >
       <option>구</option>
       <option>스터디</option>
       <option>취미</option>
@@ -85,13 +85,13 @@
       <option>하이룽</option>
     </select>
 
-    <select>
+    <select class="cat" >
       <option>비용</option>
       <option>유료</option>
       <option>무료</option>
     </select>
 
-    <select>
+    <select class="cat" >
       <option>시간</option>
       <option>스터디</option>
       <option>취미</option>
@@ -104,7 +104,7 @@
      </select>
 
      <div class="checkedBox"> <input type="checkbox">마감된 모임 포함</div>
-   
+    
      <input type="submit" value="검색">
      </form>
      </div>
@@ -164,13 +164,13 @@
               <option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'? 'selected' : ''}" />>제목+작성자 아이디</option>
               <option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC'? 'selected' : ''}" />>제목+내용+작성자 아이디</option>
           </select>
-          
+
           <input type="text" name="keyword" value='<c:out value="${pageMaker.cri.keyword}"/>'/>
           <input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
           <input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
           <input type='hidden' name='cid' value='${pageMaker.cri.cid}'>
 
-          
+
           <button>Search</button>
       </form>
       <button class="meet_reg">모임 개설</button>
@@ -201,7 +201,7 @@
      	   	<input type='hidden' name='order' value='<c:out value="${pageMaker.cri.order}"/>'>
      	   </form>
   </div>
-  
+
 
 			<!-- Modal  추가 -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -229,7 +229,7 @@
 
  <script type="text/javascript">
 	 $(document).ready(function(){
-		 //게시물 수정, 삭제, 작성 시 게시물 번호 
+		 //게시물 수정, 삭제, 작성 시 게시물 번호
 		 var result = '<c:out value="${result}"/>';
 		 
 		 checkModal(result);
@@ -269,42 +269,42 @@
 			 actionForm.attr("action", "/meet/get");
 			 actionForm.submit();
 		 });
-		 
+
 		 /* 검색 버튼의 이벤트 처리 */
 		 var searchForm = $("#searchForm");
-		 
+
 		 /* 브라우저에서 검색조건을 선택하지 않고 검색하면 알림 설정 */
 		 $("#searchForm button").on("click", function(e){
 			 if(!searchForm.find("option:selected").val()){
 				 alert("검색 종류를 선택하세요.");
 				 return false;
 			 }
-			 
+
 			 if(!searchForm.find("input[name='keyword']").val()){
 				 alert("키워드를 입력하세요.");
 				 return false;
 			 }
-			 
+
 			 /* 검색조건 선택 후 키워드 검색이 없으면 1페이지로 이동 */
 			 searchForm.find("input[name='pageNum']").val("1");
 			 e.preventDefault();
-			 
+
 			 searchForm.submit();
 		 });
-		 
-				 
+
+
 		/* 카테코리 선택 검색 후 카테고리 유지 */
-		 
+
 		 console.log("카테고리 : " + "${pageMaker.cri.cid}");
 		 var pickCat = "${pageMaker.cri.cid}";
-		 
+
 		 $("#cat").val(pickCat).prop("selected",true);
 
 
 
 		 //최신순 인기순
 	 });
-	 
-	 
+
+
  </script>
  

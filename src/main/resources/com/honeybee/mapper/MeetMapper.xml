@@ -66,7 +66,7 @@
 			#{cid},
 			#{cid2},
 			(select cname from code_table where cid = #{cid}),
-			#{id}, 
+			#{id},
 			#{title},
 			#{smry},
 			#{content},
@@ -276,14 +276,14 @@
 	      REGDT,
 	      UPDDT,
 	      DELDT
-	      
+
 
 	      from( select ]]>
-	      
+
 	      <if test='order == "latest"'>
 	      /*+index_desc(meet meet_pk)*/
 	      </if>
-	      
+
 	      <![CDATA[
 	      rownum rn,
 	      MNO,
@@ -311,9 +311,9 @@
 	      REGDT,
 	      UPDDT,
 	      DELDT
-	      from ]]> 
-	      
-	      
+	      from ]]>
+
+
 	       <trim prefix="(" suffix=")">
 	       <choose>
 	       	<when test='order == "popul"'>
@@ -350,7 +350,7 @@
 	       </choose>
 		   </trim>
 
-	      
+
 	      <![CDATA[ where (DELDT is null) and ]]>
 
 	      <include refid="criteria"></include>
@@ -469,7 +469,7 @@
       UPDDT,
       DELDT
       from MEET
-      where id = #{id}
+      where id = #{id} and deldt is null
   ]]>
 </select>
 
@@ -480,6 +480,10 @@
 
 <select id="getCategoryName" resultType="String">
 	select c.cname from meet m, code_table c where (m.cid = c.cid) and mno= #{mno}
+</select>
+
+<select id="getListWithCategory" resultType="com.honeybee.domain.MeetVO">
+select * from meet where cid=#{cid}
 </select>
 
 <update id="countViews">

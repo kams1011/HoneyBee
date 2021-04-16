@@ -66,6 +66,9 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 	public int registerAnswer(FreeReplyVO vo) {
 		return mapper.insertAnswer(vo);
 	}
-	
 
+	@Override
+	public void freplyremove(Long mrno) { // 내가 자유게시물에 쓴 댓글 삭제
+		mapper.freplyremove(mrno);
+	}
 }

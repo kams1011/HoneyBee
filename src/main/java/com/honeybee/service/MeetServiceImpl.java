@@ -108,7 +108,7 @@ public class MeetServiceImpl implements MeetService {
 	public List<MeetVO> getListWithCategory(String cid){
 		log.info("getListWithCategory...............");
 		return mapper.getListWithCategory(cid);
-	}
+	}//내가 개설한 모임을 카테고리별로 가져오기
 
 	@Override
 	public boolean views(Long mno) {

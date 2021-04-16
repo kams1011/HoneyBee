@@ -36,7 +36,7 @@
 		set DELDT = sysdate
 		where FRNO = #{frno}
 	</delete>
-	
+
 	<select id="getList" resultType="com.honeybee.domain.FreeReplyVO">
 		select FRNO, FNO, ID, FRNO2, REPLY, LAYER, BUNDLE, BUNORDER, NICK, THUMB, REGDT, UPTDT
 		from FREE_REPLY

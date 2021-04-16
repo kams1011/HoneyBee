@@ -30,7 +30,7 @@ public interface FreeReplyMapper {
 	// 내가 댓글 달았던 자유 게시물의 스테이터스 가져오기
 	public List<FreeReplyVO> getfreereplystatus(String id);
 	
-
-	
+	// 자유게시물에 내가 단 댓글 삭제
+	public void freplyremove(Long mrno);
 	
 }
