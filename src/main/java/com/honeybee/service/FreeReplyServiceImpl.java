@@ -97,7 +97,7 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 	}
 
 	@Override
-	public boolean check(String id, long frno) {
+	public boolean check(String id, Long frno) {
 		return mapper.checkThumbed(id, frno) == null;
 	}
 	

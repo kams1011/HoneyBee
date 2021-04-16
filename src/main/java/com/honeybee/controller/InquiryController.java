@@ -24,11 +24,11 @@ public class InquiryController {
 	private InquiryService service;
 
 	@PostMapping(value = "/report/{objno}", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
-	public ResponseEntity<String> report(@RequestBody InquiryVO vo, @PathVariable("objno") long objno) {
+	public ResponseEntity<String> report(@RequestBody InquiryVO vo, @PathVariable("objno") Long objno) {
 
 		log.info("INQUIRY VO: " + vo);
 
-		int reportCnt = vo.getFno() != 0 ? service.reportFno(vo) : service.reportFrno(vo);
+		int reportCnt = vo.getFno() != null ? service.reportFno(vo) : service.reportFrno(vo);
 
 		return reportCnt == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}

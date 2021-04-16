@@ -187,6 +187,8 @@
 			let badValue = badFrno.val();
 			(badValue === "" || badValue === null) ? inquiry.fno = fnoValue : inquiry.frno = badValue;
 			
+			console.log("FNO : " + inquiry.fno);
+			console.log("FRNO : " + inquiry.frno);
 			
 			reportService.reportObj(inquiry, function(result) {
 				alert(result);

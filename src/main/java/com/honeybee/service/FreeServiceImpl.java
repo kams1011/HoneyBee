@@ -80,7 +80,7 @@ public class FreeServiceImpl implements FreeService {
 	}
 
 	@Override
-	public boolean check(String id, long fno) {
+	public boolean check(String id, Long fno) {
 		return mapper.checkThumbed(id, fno) == null;
 	}
 

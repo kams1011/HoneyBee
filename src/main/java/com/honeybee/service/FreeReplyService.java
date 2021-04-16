@@ -28,6 +28,6 @@ public interface FreeReplyService {
 	
 	public int cancelThumbUp(ThumbVO vo);
 	
-	public boolean check(String id, long frno);
+	public boolean check(String id, Long frno);
 	
 }
