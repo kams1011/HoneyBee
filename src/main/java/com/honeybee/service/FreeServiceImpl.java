@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.honeybee.domain.Criteria;
 import com.honeybee.domain.FreeVO;
+import com.honeybee.domain.MeetVO;
 import com.honeybee.mapper.FreeMapper;
 
 import lombok.AllArgsConstructor;

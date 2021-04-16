@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.honeybee.domain.Criteria;
 import com.honeybee.domain.FreeReplyVO;
 import com.honeybee.mapper.FreeReplyMapper;
 
@@ -55,5 +56,18 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 	}
 	
 
+	@Override
+	public List<FreeReplyVO> getList(Criteria cri, Long fno) {
+		return mapper.getList(cri, fno);
+	}
 
+	@Override
+	public int registerAnswer(FreeReplyVO vo) {
+		return mapper.insertAnswer(vo);
+	}
+	
+	@Override
+	public void freplyremove(Long mrno) { // 내가 자유게시물에 쓴 댓글 삭제
+		mapper.freplyremove(mrno);
+	}
 }
