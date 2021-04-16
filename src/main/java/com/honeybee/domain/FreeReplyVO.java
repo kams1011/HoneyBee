@@ -18,7 +18,7 @@ public class FreeReplyVO { // 자유게시물 댓글
 	private int thumb; // 댓글 좋아요 수
 	private int layer; // 댓글 깊이
 	private int bundle; // 댓글 묶음
-	private int bunorder; // 댓글 묶음 순서
+	private double bunorder; // 댓글 묶음 순서
 	
 	private Date regdt; // 작성일자
 	private Date uptdt; // 수정일자

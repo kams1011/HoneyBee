@@ -17,7 +17,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class MeetReplyServiceImpl implements MeetReplyService {
 
-	@Setter(onMethod_ = @Autowired)
+	@Setter(onMethod_ =@Autowired)
 	private ReplyMapper mapper;
 
 	@Override

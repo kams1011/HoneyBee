@@ -4,7 +4,7 @@
 
 <select id="getList" resultType="com.honeybee.domain.MeetVO">
 	<![CDATA[
-		select 
+		select
 			MNO,
 			CID,
 			CID2,
@@ -12,7 +12,7 @@
 			ID,
 			TITLE,
 			SMRY,
-			to_char(CONTENT) AS CONTENT,
+			to_char(SUBSTR(CONTENT,1,2000)) AS CONTENT,
 			STARTDT,
 			ENDDT,
 			RECSDT,
@@ -31,10 +31,9 @@
 			UPDDT,
 			DELDT
 			from MEET
-			where mno >0
+			where mno >0 order by regdt desc
 	]]>
 </select>
-
 
 
 <insert id="insert">
@@ -61,13 +60,13 @@
 			PLACE,
 			LINK,
 			IMG)
-			values 
+			values
 			(
 			SEQ_meet.nextval,
 			#{cid},
 			#{cid2},
 			(select cname from code_table where cid = #{cid}),
-			#{id}, 
+			#{id},
 			#{title},
 			#{smry},
 			#{content},
@@ -92,7 +91,7 @@
 	<selectKey keyProperty="mno" order="BEFORE" resultType="long">
 		select seq_meet.nextval from dual
 	</selectKey>
-	
+
 	insert into meet(MNO,
 			CID,
 			CID2,
@@ -148,7 +147,7 @@
 			ID,
 			TITLE,
 			SMRY,
-			to_char(CONTENT) AS CONTENT,
+			to_char(SUBSTR(CONTENT,1,2000)) AS CONTENT,
 			STARTDT,
 			ENDDT,
 			RECSDT,
@@ -180,6 +179,7 @@
 			TITLE = #{title},
 			SMRY = #{smry},
 			CID = #{cid},
+			CID3 = (select cname from code_table where cid = #{cid}),
 			CONTENT = #{content},
 			STARTDT = #{startDt},
 			ENDDT = #{endDt},
@@ -194,17 +194,17 @@
 			updDt = sysdate
 	where mno = #{mno}
 </update>
-  
+
 <select id="getMyList" resultType="com.honeybee.domain.MeetVO">
   <![CDATA[
-    select 
+    select
       MNO,
       CID,
       CID2,
       CID3,
       TITLE,
       SMRY,
-      to_char(CONTENT) AS CONTENT,
+      to_char(SUBSTR(CONTENT,1,2000)) AS CONTENT,
       STARTDT,
       ENDDT,
       RECSDT,
@@ -246,6 +246,8 @@
       	</foreach>
       </trim>
 </sql>
+
+
 <select id="getListWithPaging" resultType="com.honeybee.domain.MeetVO">
 	<![CDATA[
 		select
@@ -256,7 +258,7 @@
 	      ID,
 	      TITLE,
 	      SMRY,
-	      to_char(CONTENT) AS CONTENT,
+	      to_char(SUBSTR(CONTENT,1,2000)) AS CONTENT,
 	      STARTDT,
 	      ENDDT,
 	      RECSDT,
@@ -275,8 +277,14 @@
 	      UPDDT,
 	      DELDT
 
-	      from(
-	      select /*+index_desc(meet meet_pk)*/
+
+	      from( select ]]>
+
+	      <if test='order == "latest"'>
+	      /*+index_desc(meet meet_pk)*/
+	      </if>
+
+	      <![CDATA[
 	      rownum rn,
 	      MNO,
 	      CID,
@@ -285,7 +293,7 @@
 	      ID,
 	      TITLE,
 	      SMRY,
-	      to_char(CONTENT) AS CONTENT,
+	      to_char(SUBSTR(CONTENT,1,2000)) AS CONTENT,
 	      STARTDT,
 	      ENDDT,
 	      RECSDT,
@@ -303,17 +311,58 @@
 	      REGDT,
 	      UPDDT,
 	      DELDT
-	      from meet where (DELDT is null) and ]]>
+	      from ]]>
+
+
+	       <trim prefix="(" suffix=")">
+	       <choose>
+	       	<when test='order == "popul"'>
+	        select
+			  MNO,
+		      CID,
+		      CID2,
+		      CID3,
+		      ID,
+		      TITLE,
+		      SMRY,
+		      to_char(SUBSTR(CONTENT,1,2000)) AS CONTENT,
+		      STARTDT,
+		      ENDDT,
+		      RECSDT,
+		      RECEDT,
+		      RECNO,
+		      CURRNO,
+		      CNCLNO,
+		      HIT,
+		      THUMB,
+		      CHARGE,
+		      ONOFF,
+		      PLACE,
+		      LINK,
+		      IMG,
+		      REGDT,
+		      UPDDT,
+		      DELDT from meet where DELDT is null order by thumb desc, hit desc, regdt desc
+	       	</when>
+	       	<when test='order == "latest"'>
+	       	 meet
+	       	</when>
+	       </choose>
+		   </trim>
+
+
+	      <![CDATA[ where (DELDT is null) and ]]>
 
 	      <include refid="criteria"></include>
 
 	      <![CDATA[
-	      rownum <= #{pageNum} * #{amount}
+	       rownum <= #{pageNum} * #{amount}
 	      )
 
 	      where rn > (#{pageNum}-1) * #{amount}
 		  ]]>
 </select>
+
 
 <select id="getListWithPagingAndCat" resultType="com.honeybee.domain.MeetVO">
 	<![CDATA[
@@ -325,7 +374,7 @@
 	      ID,
 	      TITLE,
 	      SMRY,
-	      to_char(CONTENT) AS CONTENT,
+	      to_char(SUBSTR(CONTENT,1,2000)) AS CONTENT,
 	      STARTDT,
 	      ENDDT,
 	      RECSDT,
@@ -354,7 +403,7 @@
 	      ID,
 	      TITLE,
 	      SMRY,
-	      to_char(CONTENT) AS CONTENT,
+	      to_char(SUBSTR(CONTENT,1,2000)) AS CONTENT,
 	      STARTDT,
 	      ENDDT,
 	      RECSDT,
@@ -401,7 +450,7 @@
       CID3,
       TITLE,
       SMRY,
-      to_char(CONTENT) AS CONTENT,
+      to_char(SUBSTR(CONTENT,1,2000)) AS CONTENT,
       STARTDT,
       ENDDT,
       RECSDT,
@@ -424,6 +473,7 @@
   ]]>
 </select>
 
+
 <select id="getNick" resultType="com.honeybee.domain.CodeTableVO">
 	select code_table.cname from code_table, meet where (meet.cid=code_table.cid) and (id=#{id})
 </select>
@@ -436,5 +486,31 @@
 select * from meet where cid=#{cid}
 </select>
 
+<update id="countViews">
+	update meet set hit = hit + 1 where mno = #{mno}
+</update>
 
+<update id="countThumbs">
+	update meet set THUMB = (select count(*) from thumb_list where mno = #{mno}) where mno = #{mno}
+</update>
+
+<insert id="insertThumbList">
+	insert into THUMB_LIST(THUMBNO,ID,MNO) values(#{id}||#{mno}, #{id}, #{mno})
+</insert>
+
+<delete id="deleteThumbList">
+	delete from THUMB_LIST where THUMBNO = #{id}||#{mno}
+</delete>
+
+<select id="checkThumbList" resultType ="com.honeybee.domain.ThumbVO">
+	select * from THUMB_LIST where THUMBNO = #{thumbno}
+</select>
+
+<update id="applyUpdate">
+	update meet set currno = currno+1 where mno = #{mno}
+</update>
+
+<update id="deleteUpdate">
+	update meet set (currno, CNCLNO) = (select currno-1,CNCLNO+1 from meet where mno = #{mno}) where mno = #{mno}
+</update>
 </mapper>
