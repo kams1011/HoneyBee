@@ -28,5 +28,5 @@ public interface FreeService {
 	
 	public int cancelThumbUp(ThumbVO vo);
 	
-	public boolean check(String id, long fno);
+	public boolean check(String id, Long fno);
 }

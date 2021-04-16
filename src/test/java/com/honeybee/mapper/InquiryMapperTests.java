@@ -28,7 +28,7 @@ public class InquiryMapperTests {
 		vo.setId("asdf");
 		vo.setTitle("이 게시물 너무 저질이에요");
 		vo.setContent("이 게시물은 매우 저질스럽고, 커뮤니티 규정을 위반한 내용을 담고 있습니다. 따라서 이 게시물을 신고합니다. 강력한 처벌 부탁드립니다.");
-		vo.setFno(4993);
+		vo.setFno(4993L);
 		
 		log.info(vo);
 		assertTrue(mapper.reportBadFno(vo) == 1 && vo.getIno() != 0);
@@ -41,7 +41,7 @@ public class InquiryMapperTests {
 		vo.setId("asdf");
 		vo.setTitle("This comment is spam");
 		vo.setContent("This comment is about illegal advertisement. Please erase it.");
-		vo.setFrno(37);
+		vo.setFrno(37L);
 		
 		log.info(vo);
 		assertTrue(mapper.reportBadFrno(vo) == 1 && vo.getIno() != 0);

@@ -33,14 +33,14 @@ public class InquiryServiceImpl implements InquiryService {
 	}
 
 	@Override
-	public InquiryVO get(long ino) {
+	public InquiryVO get(Long ino) {
 		log.info("GET INQUIRY...");
 		
 		return mapper.read(ino);
 	}
 
 	@Override
-	public boolean remove(long ino) {
+	public boolean remove(Long ino) {
 		log.info("REMOVE INQUIRY...");
 		
 		return mapper.delete(ino) == 1;

@@ -12,9 +12,9 @@ public interface InquiryService {
 	// 자유게시물 댓글 신고
 	public int reportFrno(InquiryVO vo);
 	
-	public InquiryVO get(long ino);
+	public InquiryVO get(Long ino);
 	
-	public boolean remove(long ino);
+	public boolean remove(Long ino);
 	
 	public List<InquiryVO> getReportList();
 	
