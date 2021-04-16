@@ -12,13 +12,13 @@ public interface FreeReplyService {
 	
 	public int registerAnswer(FreeReplyVO vo);
 	
-	public FreeReplyVO get(Long frno);
+	public FreeReplyVO get(long frno);
 	
 	public boolean modify(FreeReplyVO vo);
 	
-	public boolean remove(Long frno);
+	public boolean remove(long frno);
 	
-	public List<FreeReplyVO> getList(Criteria cri, Long fno);
+	public List<FreeReplyVO> getList(Criteria cri, long fno);
 	
 	public List<FreeReplyVO> readmyfreereply(String id); //내가 자유게시물에 쓴 댓글 목록 가져오기
 	

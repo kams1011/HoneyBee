@@ -35,7 +35,7 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 	}
 
 	@Override
-	public FreeReplyVO get(Long frno) {
+	public FreeReplyVO get(long frno) {
 		log.info("get..........");
 		return mapper.read(frno);
 	}
@@ -48,7 +48,7 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 
 	@Transactional
 	@Override
-	public boolean remove(Long frno) {
+	public boolean remove(long frno) {
 		log.info("remove.........." + frno);
 
 		FreeReplyVO vo = mapper.read(frno);
@@ -70,7 +70,7 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 	}
 
 	@Override
-	public List<FreeReplyVO> getList(Criteria cri, Long fno) {
+	public List<FreeReplyVO> getList(Criteria cri, long fno) {
 		return mapper.getList(cri, fno);
 	}
 
