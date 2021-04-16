@@ -71,7 +71,7 @@
                 <button type="submit" data-oper='modify'>모임 수정</button>
                 <button type="reset" data-oper='remove'>모임 삭제</button>
                 <button type="submit" data-oper='list'>목록으로 가기</button>
-                
+
                 <!-- 추가 -->
                 <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
                 <input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
@@ -152,7 +152,7 @@
 		  console.log("${meet.cid}");
 		  console.log("${cri.cid}");
 		  console.log($("#cat option:selected").val());
-		  var pickedCat = "${meet.cid3}";
+		  var pickedCat = "${cri.cid3}";
 
 		 $(".cat").val(pickedCat).prop("selected",true);
 
