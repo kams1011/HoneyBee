@@ -23,6 +23,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honeybee.domain.AttachFileDTO;
+import com.honeybee.domain.CodeTableVO;
 import com.honeybee.domain.FreeReplyVO;
 import com.honeybee.domain.FreeVO;
 import com.honeybee.domain.MeetVO;
@@ -202,11 +204,14 @@ public class MypageController {
 		msgservice.sendmsg(msg);
 		return "redirect:/mypage/sendmsg";
 	}
-
+	
+//	@ResponseBody
+//	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	@GetMapping("/modify")
 	public void modify(Model model) {
 		model.addAttribute("user", service.getMyList("HOHO995@naver.com"));
-
+		model.addAttribute("cat", cservice.getCatList());
+		model.addAttribute("upper", cservice.upperregion());
 	}
 
 	@GetMapping("/readcontent")
@@ -391,4 +396,14 @@ public class MypageController {
 		log.info(service.nickChk(nick));
 		return service.nickChk(nick);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/detailregion", method = RequestMethod.POST)
+	public List<CodeTableVO> detailregion(@RequestBody String cid) {
+		log.info("세부지역 cid체크입니다~~" + cservice.detailregion(cid));
+		return cservice.detailregion(cid);
+	}
+	
+	
+
 }

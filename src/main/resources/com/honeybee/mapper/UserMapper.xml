@@ -87,7 +87,7 @@
 		where ID = #{id}
 	</update>
 
-	<update id="nickmodify"> <!--회원정보 수정 -->
+	<update id="nickmodify"> <!--회원닉네임 수정 -->
 		update USER_INFO
 		set
 		NICK=#{nick},
@@ -95,7 +95,7 @@
 		where ID = #{id}
 	</update>
 	
-	<select id="nickChk" resultType="int">
+	<select id="nickChk" resultType="int"> <!-- 회원 닉네임 중복 체크  -->
 	select count(*) from user_info where nick=#{nick}
 	</select>
 	

@@ -290,21 +290,12 @@ a:hover {
 			<div class="user_region">
 				<span>관심지역</span> <select id="user_region_select" name="region">
 					<option>관심지역</option>
-					<option>마포구</option>
-					<option>강서구</option>
-					<option>중랑구</option>
-					<option>노원구</option>
-					<option>중구</option>
-					<option>서초구</option>
-					<option>도봉구</option>
-					<option>용산구</option>
-					<option>강남구</option>
-					<option>강북구</option>
-					<option>이정도면</option>
-					<option>됐다</option>
+					<c:forEach items="${upper}" var="upper">
+						<option value="${upper.CId}">${upper.CName}</option>
+					</c:forEach>
+				</select> <select id="user_detailregion_select">
+					<option>관심지역</option>
 				</select>
-
-
 			</div>
 
 
@@ -312,19 +303,10 @@ a:hover {
 			<div class="user_category">
 				<span>관심분야</span> <select id="user_category_select" name="category">
 					<option>관심분야</option>
-					<option>12</option>
-					<option>11</option>
-					<option>10</option>
-					<option>9</option>
-					<option>8</option>
-					<option>7</option>
-					<option>6</option>
-					<option>5</option>
-					<option>4</option>
-					<option>3</option>
-					<option>2</option>
-					<option>1</option>
-				</select><br>
+					<c:forEach items="${cat}" var="cat">
+						<option value="${cat.CId}">${cat.CName}</option>
+					</c:forEach>
+				</select> <br>
 				<div class="pwd_change_button">
 					<button
 						style="width: 200px; height: 40px; background-color: yellow; color: black; border: none;">적용</button>
@@ -411,25 +393,47 @@ a:hover {
 
 
 	<script type="text/javascript">
-		$('#user_region_select').on('change', function() {
-			alert("hi!");
-		});
+		$('#user_region_select').on(
+				'change',
+				function() {
+					$.ajax({
+						url : "/mypage/detailregion",
+						type : "post", //get으로 바꾸세요
+						dataType : "json",
+						data : {
+							"cid" : $('#user_region_select').val()
+						},
+						success : function(data) {
+							$("#user_detailregion_select").children('option:not(:first)').remove();
+							for (let i = 0; i < data.length; i++) {
+								$("#user_detailregion_select").append(
+										'<option>' + data[i].cname
+												+ '</option>');
+							}
+						}
+					})
+				});
 
-		$('#user_birth_year').on('change', function() {
-			alert("hi!");
-		});
-
-		$('#user_birth_month').on('change', function() {
-			alert("hi!");
-		});
-
-		$('#user_birth_day').on('change', function() {
-			alert("hi!");
+		$('#user_detailregion_select').on('change', function() {
+			alert($('#user_region_select').val());
 		});
 
 		$('#user_category_select').on('change', function() {
-			alert("hi!");
+			alert($('#user_category_select').val());
 		});
+
+		/* 
+		 $('#user_birth_year').on('change', function() {
+		 alert("hi!");
+		 });
+
+		 $('#user_birth_month').on('change', function() {
+		 alert("hi!");
+		 });
+
+		 $('#user_birth_day').on('change', function() {
+		 alert("hi!");
+		 }); */
 
 		$('#duplicatecheck').on('click', function fn_nickChk() {
 			var str = $('#isnick').val();
@@ -437,8 +441,8 @@ a:hover {
 			if (str.search(/\s/gi) != -1) {
 				alert("닉네임에 공백은 사용할 수 없습니다.");
 				return false;
-			} 
-			
+			}
+
 			if (special_pattern.test(str) == true) {
 				alert("닉네임에 특수문자는 사용하실 수 없습니다.");
 				return false;
@@ -454,7 +458,7 @@ a:hover {
 					if (data == 1) {
 						alert("중복된 닉네임입니다.");
 					} else if (data == 0) {
-						if(confirm("사용 가능한 닉네임입니다. 변경하시겠습니까?")){
+						if (confirm("사용 가능한 닉네임입니다. 변경하시겠습니까?")) {
 							$.ajax({
 								url : "/mypage/nickmodify",
 								type : "post",
@@ -463,15 +467,17 @@ a:hover {
 									"nick" : $('#isnick').val()
 								},
 								success : function(afternick) {
-									$('#isnick').val()=afternick;
+									$('#isnick').val() = afternick;
 									alert("닉네임이 변경됐습니다.");
 								}
-						})
+							})
+						}
 					}
 				}
-			}
+			});
 		});
-		});
+
+		/* 여기까지 닉네임 변경  */
 	</script>
 </body>
 </html>
