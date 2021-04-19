@@ -207,7 +207,7 @@ public class MypageController {
 		msgservice.sendmsg(msg);
 		return "redirect:/mypage/sendmsg";
 	}
-	
+
 //	@ResponseBody
 //	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	@GetMapping("/modify")
@@ -416,13 +416,13 @@ public class MypageController {
 		log.info(service.nickChk(nick));
 		return service.nickChk(nick);
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/detailregion", method = RequestMethod.POST)
 	public List<CodeTableVO> detailregion(String cid) {
 		return cservice.detailregion(cid);
 	}
-	
-	
+
+
 
 }

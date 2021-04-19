@@ -2,6 +2,8 @@ package com.honeybee.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.honeybee.domain.Criteria;
 import com.honeybee.domain.MeetVO;
 import com.honeybee.domain.ThumbVO;
@@ -10,9 +12,9 @@ public interface MeetMapper {
 
 	public List<MeetVO> getList();
 
-	public void insert(MeetVO meet); //PK값 없는거
+	public int insert(MeetVO meet); //PK값 없는거
 
-	public void insertSelectKey(MeetVO meet); //PK값 있는거
+	public int insertSelectKey(MeetVO meet); //PK값 있는거
 
 	public MeetVO read(Long mno); //게시물 읽기
 
@@ -49,4 +51,10 @@ public interface MeetMapper {
 	public int applyUpdate(Long mno); //모임게시판에서 신청하기 누르면 신청인원 +
 	
 	public int deleteUpdate(Long mno); //모임게시판에서 신청취소 누르면 신청인원- 취소인원+
+	
+	public int updateImg(@Param("mno") Long mno, @Param("img") String img); //이미지 업데이트
+	
+	public MeetVO getImg(Long mno); //이미지 가져오기
+	
+	public String getCid(@Param("mno") Long mno, @Param("cid3") String cid3); //카테고리 이름에 따른 코드 가져오기
 }

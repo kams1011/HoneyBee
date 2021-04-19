@@ -14,7 +14,7 @@ public interface FreeService {
 	
 	public boolean modify(FreeVO vo);
 
-	public boolean remove(FreeVO vo);
+	public boolean remove(Long fno);
 	
 	public List<FreeVO> getList(Criteria cri);
 

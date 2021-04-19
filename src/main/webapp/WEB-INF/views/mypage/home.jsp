@@ -11,10 +11,8 @@
 <head>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <script src="https://code.jquery.com/jquery-3.6.0.js"
 	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
 	crossorigin="anonymous"></script>
@@ -401,7 +399,7 @@ a:hover {
 					formData.append("uploadFile", files[i]);
 				}
 				$.ajax({
-					url : '/mypage/uploadAjaxAction',
+					url : '/meet/uploadAjaxAction',
 					processData : false,
 					contentType : false,
 					data : formData,
@@ -434,7 +432,7 @@ a:hover {
 							+ $(this).attr("value");
 				});
 
-		/* 	let today = new Date();   
+		/* 	let today = new Date();
 			let year = today.getFullYear(); // 년도
 			let month = ("0" + (1 + date.getMonth())).slice(-2);
 		    let day = ("0" + date.getDate()).slice(-2);

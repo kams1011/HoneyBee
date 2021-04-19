@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <%@include file="../include/header.jsp" %>
 <!DOCTYPE html>
@@ -13,7 +14,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
     <style>
 
         .navbar>.container, .navbar>.container-fluid, .navbar>.container-lg, .navbar>.container-md, .navbar>.container-sm, .navbar>.container-xl, .navbar>.container-xxl{
@@ -61,28 +61,16 @@
     </select>
 
 
-    <select>
-      <option>서울특별시</option>
-      <option>스터디</option>
-      <option>취미</option>
-      <option>사랑</option>
-      <option>김자바</option>
-      <option>이자바</option>
-      <option>어쩌구</option>
-      <option>저쩌구</option>
-      <option>하이룽</option>
+    <select id="user_region_select">
+      <option>지역분류</option>
+      <c:forEach items="${upper}" var="upper">
+		<option value="${upper.CId}">${upper.CName}</option>
+	  </c:forEach>
     </select>
-    
-    <select class="cat" >
+
+    <select id="user_detailregion_select">
       <option>구</option>
-      <option>스터디</option>
-      <option>취미</option>
-      <option>사랑</option>
-      <option>김자바</option>
-      <option>이자바</option>
-      <option>어쩌구</option>
-      <option>저쩌구</option>
-      <option>하이룽</option>
+
     </select>
 
     <select class="cat" >
@@ -104,12 +92,12 @@
      </select>
 
      <div class="checkedBox"> <input type="checkbox">마감된 모임 포함</div>
-    
+
      <input type="submit" value="검색">
      </form>
      </div>
-     
-     
+
+
 
     <div class="board_list_wrap">
       <div class="box"><a class="latest" href="/meet/list">최신순</a></div>
@@ -137,7 +125,15 @@
               <tr>
               	  <td><c:out value="${meet.cid3}" /></td>
                   <td class="freeBno"><c:out value="${meet.mno}" /></td>
-                  <td><img src="/resources/img/logo.png"></td>
+                  <c:choose>
+                  <c:when test="${meet.img == null}">
+                  <td><img src='/resources/img/logo.png'></td>
+                  </c:when>
+                  <c:when test="${meet.img != null}">
+                  <td><img src='display?fileName=<c:out value="${meet.img}" />'></td>
+                  </c:when>
+                  </c:choose>
+
                   <td class="title">
                       <a class='move' href='<c:out value="${meet.mno}"/>'>
                       <c:out value="${meet.title}" /></a>
@@ -174,24 +170,24 @@
           <button>Search</button>
       </form>
       <button class="meet_reg">모임 개설</button>
-      
-       
+
+
            <div class="paging">
 	           <c:if test="${pageMaker.prev}">
 	           	<a href="${pageMaker.startPage-1}" class="btn">&lt;</a>
 	           </c:if>
-	           
+
 	           <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 	           	<a href="${num}" class="num ${pageMaker.cri.pageNum == num ? 'on' : ''}">${num}</a>
 	           </c:forEach>
-	           
+
 	           <!-- on 빼면 노란색 css빠짐 -->
-	           
+
 		       <c:if test="${pageMaker.next}">
 		       <a href="${pageMaker.endPage + 1}" class="btn">&gt;</a>
 		       </c:if>
      	   </div>
-     	   
+
      	   <form id='actionForm' action="/meet/list" method="get">
      	   	<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
      	   	<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
@@ -231,38 +227,38 @@
 	 $(document).ready(function(){
 		 //게시물 수정, 삭제, 작성 시 게시물 번호
 		 var result = '<c:out value="${result}"/>';
-		 
+
 		 checkModal(result);
-		 
+
 		 history.replaceState({}, null, null);
-		 
+
 		 function checkModal(result){
 			 if(result === '' || history.state){
 				 return;
 			 }
-			 
+
 			 if(parseInt(result) > 0){
 				 $(".modal-body").html("게시글 " + parseInt(result) + " 번이 등록되었습니다.");
 			 }
-			 
+
 			 $("#myModal").modal("show");
 		 }
-		 
+
 		 $(".meet_reg").on("click", function(){
 			 self.location = "/meet/reg";
 		 });
-		 
+
 		 var actionForm = $("#actionForm");
-		 
+
 		 $(".paging a").on("click", function(e){
 			 e.preventDefault();
-			 
+
 			 console.log('click');
-			 
+
 			 actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 			 actionForm.submit();
 		 });
-		 
+
 		 $(".move").on("click", function(e){
 			 e.preventDefault();
 			 actionForm.append("<input type='hidden' name='mno' value='" +$(this).attr("href")+"'>");
@@ -303,8 +299,31 @@
 
 
 		 //최신순 인기순
+
+
 	 });
-
-
  </script>
- 
+ <script>
+	$('#user_region_select').on('change',function() {
+			$.ajax({
+				url : "/meet/detailregion",
+				type : "post", //get으로 바꾸세요
+				dataType : "json",
+				data : {
+					"cid" : $('#user_region_select').val()
+				},
+				success : function(data) {
+					console.log(data);
+					$("#user_detailregion_select").children('option:not(:first)').remove();
+					for (let i = 0; i < data.length; i++) {
+						$("#user_detailregion_select").append('<option>' + data[i].cname + '</option>');
+					}
+				}
+			});
+		});
+
+	 //세부지역 긁어오기
+ </script>
+ <script>
+ //document.getElementById('profile').src = "display?fileName=" + "2021/04/18/HOHO995@naver.com3087c0b5-cd9f-44ad-8159-f76d16ae4f7d.JPG";
+ </script>
