@@ -11,10 +11,8 @@
 <head>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <script src="https://code.jquery.com/jquery-3.6.0.js"
 	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
 	crossorigin="anonymous"></script>
@@ -233,9 +231,10 @@ a:hover {
 
 	<div class="mypage-top" style="margin-bottom: 10px">
 		<div class="uploadResult">
-			<span> 썸네일
+			<img id="profile" src="" width="200px" height="200px"> <span>
+				썸네일
 				<div id="uploadDiv" class="modal">
-					<input type="file" name="uploadFile" multiple>
+					<input type="file" name="uploadFile">
 					<button id='uploadBtn'>업로드 하기</button>
 				</div>
 
@@ -283,7 +282,6 @@ a:hover {
 
 
 	<div class="mypage-bottom">
-
 		<div class="user-enroll-list-name">모임신청목록</div>
 		<div class="user-enroll-list">
 			<table>
@@ -293,7 +291,7 @@ a:hover {
 						<td><c:out value="${enrollStatus.CName}" /></td>
 						<td><fmt:formatDate pattern="yyyy-MM-dd"
 								value="${meet[status.index].regDt}" /></td>
-						<tr>
+					<tr>
 						<td colspan="3"><a href=# value="${meet[status.index].mno}"
 							class="testofmeet"><c:out value="${meet[status.index].title}" /></a></td>
 					</tr>
@@ -371,76 +369,49 @@ a:hover {
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+			var regex = new RegExp("(.*?)\.(jpg|png|JPG|PNG)$");
 			var maxSize = 5242880;
 
 			function checkExtension(fileName, fileSize) {
+
 				if (fileSize >= maxSize) {
 					alert("파일 사이즈 초과");
 					return false;
 				}
-				if (regex.test(fileName)) {
-					alert("해당 종류의 파일은 업로드 할 수 없습니다.");
+				if (!regex.test(fileName)) {
+					alert("해당 종류의 파일은 업로드 할 수 없습니다.")
 					return false;
 				}
 				return true;
-			}
-			
-			function showUploadedFile(uploadResultArr){
-				
-				var str = "";
-				
-				$(uploadResultArr).each(function(i, obj){
-					
-					if(!obj.image){
-						str += "<li><img src='/resources/img/attach.png'>"+obj.fileName+"</li>";
-					}else{
-						//str += "<li>"+ obj.fileName+"</li>";
-						
-						var fileCallPath = encodeURIComponent(obj.uploadPath+"/s_" +obj.uuid+"_"+obj.fileName);
-						
-						str += "<li><img src='/display?fileName="+fileCallPath+"'><li>";
-					}
-				});
-					uploadResult.append(str);
 			}
 
 			var cloneObj = $(".uploadDiv").clone();
 
 			$("#uploadBtn").on("click", function(e) {
-
 				var formData = new FormData();
-
 				var inputFile = $("input[name='uploadFile']");
-
 				var files = inputFile[0].files;
-
 				console.log(files);
-
 				for (var i = 0; i < files.length; i++) {
-
 					if (!checkExtension(files[i].name, files[i].size)) {
 						return false;
 					}
-
 					formData.append("uploadFile", files[i]);
 				}
-
 				$.ajax({
-					url : '/mypage/uploadAjaxAction',
+					url : '/meet/uploadAjaxAction',
 					processData : false,
 					contentType : false,
 					data : formData,
 					type : 'POST',
 					dataType : 'json',
 					success : function(result) {
-
 						console.log(result);
-						
-					$(".uploadDiv").html(cloneObj.html());
 
+						$(".uploadDiv").html(cloneObj.html());
 					}
 				});
+
 			});
 		});
 
@@ -449,7 +420,7 @@ a:hover {
 				"a",
 				function(e) {
 					e.preventDefault();
-					location.href = "http://localhost/meet/get?mno="
+					location.href = "http://localhost:8080/meet/get?mno="
 							+ $(this).attr("value");
 				});
 
@@ -458,15 +429,27 @@ a:hover {
 				"a",
 				function(e) {
 					e.preventDefault();
-					location.href = "http://localhost/mypage/posted?id="
+					location.href = "http://localhost:8080/mypage/posted?id="
 							+ $(this).attr("value");
 				});
+
+		/* 	let today = new Date();   
+			let year = today.getFullYear(); // 년도
+			let month = ("0" + (1 + date.getMonth())).slice(-2);
+		    let day = ("0" + date.getDate()).slice(-2);
+			let filepath = year + '/' + month + '/' + day + '/' */
+
+		var date = new Date();
+		var year = date.getFullYear();
+		var month = ("0" + (1 + date.getMonth())).slice(-2);
+		var day = ("0" + date.getDate()).slice(-2);
+
+		document.getElementById('profile').src = "display?fileName=/" + year + "/" + month + "/" + day + "/" + "${getimg.img}"
 	</script>
-					
-					
-					
-					
-					
+
+
+
+
 
 
 

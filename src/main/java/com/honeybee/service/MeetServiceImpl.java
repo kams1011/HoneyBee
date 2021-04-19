@@ -108,7 +108,7 @@ public class MeetServiceImpl implements MeetService {
 	public List<MeetVO> getListWithCategory(String cid){
 		log.info("getListWithCategory...............");
 		return mapper.getListWithCategory(cid);
-	}
+	}//내가 개설한 모임을 카테고리별로 가져오기
 
 	@Override
 	public boolean views(Long mno) {
@@ -131,6 +131,7 @@ public class MeetServiceImpl implements MeetService {
 		mapper.insertThumbList(vo);
 	}
 
+
 	@Transactional
 	@Override
 	public boolean deleteThumbList(ThumbVO vo) {
@@ -145,6 +146,7 @@ public class MeetServiceImpl implements MeetService {
 		return mapper.checkThumbList(thumbno);
 	}
 
+
 	@Override
 	public int applyUpdate(Long mno) {
 		log.info("updaet meet CURRNO...........");
@@ -156,5 +158,22 @@ public class MeetServiceImpl implements MeetService {
 		log.info("update meet currRno-1 and CNCLNO+1..........");
 		return mapper.deleteUpdate(vo.getMno());
 	}
-	
+
+	@Override
+	public int updateImg(MeetVO vo) {
+		log.info("update meet Img.................");
+		return mapper.updateImg(vo.getMno(), vo.getImg());
+	}
+
+	@Override
+	public MeetVO getImg(Long mno) {
+		log.info("get Img from meet............");
+		return mapper.getImg(mno);
+	}
+
+	@Override
+	public String getCid(Long mno, String cid3) {
+		log.info("get Cid from meet.............");
+		return mapper.getCid(mno, cid3);
+	}
 }
