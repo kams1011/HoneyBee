@@ -176,8 +176,8 @@
 			<artifactId>thumbnailator</artifactId>
 			<version>0.4.8</version>
 		</dependency>
-
-		<!-- Spring Security -->
+		
+			<!-- Spring Security -->
 		<dependency>
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-web</artifactId>
@@ -198,6 +198,8 @@
 		    <artifactId>spring-security-taglibs</artifactId>
 		    <version>${org.springframework-version}</version>
 		</dependency>
+
+	
 
 
 	</dependencies>

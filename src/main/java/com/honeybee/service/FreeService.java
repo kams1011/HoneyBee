@@ -24,8 +24,6 @@ public interface FreeService {
 
 	public void mypostremove(String fno);  //김세훈 테스트
 
-	public boolean hitup(FreeVO vo); // 조회수 +1
-
 	public int thumbUp(ThumbVO vo);
 
 	public int cancelThumbUp(ThumbVO vo);

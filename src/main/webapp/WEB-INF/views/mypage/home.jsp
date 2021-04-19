@@ -422,7 +422,7 @@ a:hover {
 				"a",
 				function(e) {
 					e.preventDefault();
-					location.href = "http://localhost/meet/get?mno="
+					location.href = "http://localhost:8080/meet/get?mno="
 							+ $(this).attr("value");
 				});
 
@@ -431,7 +431,7 @@ a:hover {
 				"a",
 				function(e) {
 					e.preventDefault();
-					location.href = "http://localhost/mypage/posted?id="
+					location.href = "http://localhost:8080/mypage/posted?id="
 							+ $(this).attr("value");
 				});
 

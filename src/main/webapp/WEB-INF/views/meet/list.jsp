@@ -38,7 +38,7 @@
         }
 
     </style>
-    <link rel="stylesheet" href="/resources/css/meet/board.css">
+    <link rel="stylesheet" href="/resources/css/meet_board.css">
 </head>
 <body>
 
