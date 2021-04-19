@@ -157,8 +157,8 @@
 
 
   console.log("test : " + eno);
-  
-  
+
+
   function autoApplyCheck(){
 	  meetApply.applyGet(eno, function(data){
 		  console.log( "신청 되어있는 데이터 : " + data);

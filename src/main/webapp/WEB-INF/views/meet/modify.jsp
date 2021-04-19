@@ -109,8 +109,8 @@
 
                 <div class="map" id="map" style="width:100%;height:500px;"></div>
                 
-                <button type="submit" data-oper='modify'>모임 수정</button>
-                <button type="reset" data-oper='remove'>모임 삭제</button>
+                <button type="submit" data-oper='modfy'>모임 수정</button>
+                <button type="reset" data-oper='delete'>모임 삭제</button>
                 <button type="submit" data-oper='list'>목록으로 가기</button>
 
                 <!-- 추가 -->
