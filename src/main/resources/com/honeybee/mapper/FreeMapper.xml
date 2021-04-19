@@ -83,7 +83,7 @@
 				select /*+INDEX_DESC(FREE pk_free) */
 					rownum rn, FNO, ID, TITLE, TO_CHAR(CONTENT) AS CONTENT, HIT, THUMB, REGDT, UPDDT, REPLYCNT
 				from FREE
-				where 
+				where
 		]]>
 
 		<include refid="criteria"></include>

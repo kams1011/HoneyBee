@@ -61,9 +61,9 @@
                     <div class="blog-comment">
                         <h3 class="text-success">댓글</h3>
                         <ul class="comments">
-	                        
+
                        	</ul>
-                       	
+
                        	<!-- 댓글 입력창 -->
 	                    <div class="write-cm">
                        		<hr class="solid">
@@ -87,7 +87,7 @@
 		                        </ul>
 	                        </form>
                         </div> -->
-                        
+
                     </div>
                 </div>
             </div>
@@ -153,7 +153,7 @@
 		    	location.reload(); // 새로고침 안해도 되게 수정할 것!
 		    });
         });
-		
+
 		// 신고 기능 구현
 		let modal = $(".modal");
 		let reportTitle = modal.find("input[name='reportTitle']");
@@ -218,12 +218,12 @@
 <!-- 댓글 -->
 <script type="text/javascript">
 	$(document).ready(function() {
-		
+
 		var fnoValue = '<c:out value="${free.fno}"/>';
 		var replyUL = $(".comments");
-		
+
     	showList(1);
-		
+
 		function showList(page) {
 			freeReplyService.getList({fno:fnoValue, page: page || 1}, function(list) {
 				let str = "";
@@ -231,11 +231,11 @@
 					replyUL.html("");
 					return;
 				}
-				
+
  				for (let i = 0, len = list.length || 0; i < len; i++) {
  					let showHide = list[i].layer === 0 ? 'none' : 'flex';
- 					
-					str += "<li class='clearfix' id='" + list[i].frno + "' style='margin-left:" + list[i].layer * 4 + "%' data-frno='" + list[i].frno + "'>"; 
+
+					str += "<li class='clearfix' id='" + list[i].frno + "' style='margin-left:" + list[i].layer * 4 + "%' data-frno='" + list[i].frno + "'>";
 					str += "	<i class='fa fa-share fa-flip-vertical re' style='display:" + showHide + "'></i>"
 					str += "	<img src='https://bootdey.com/img/Content/user_1.jpg' class='avatar' alt=''>";
 					str += "	<div class='post-comments'><p class='meta'><a href='#'>" + list[i].id + "</a>";
@@ -248,7 +248,7 @@
 					str += "	<input type='hidden' data-order='" + list[i].bunorder + "'>";
 					str += "	<input type='hidden' data-layer='" + list[i].layer + "'></li>"
 				}
- 				
+
 				replyUL.html(str);
 			}); // end function
 		} // end showList
@@ -373,7 +373,7 @@
 
 <!-- TEST -->
 <script type="text/javascript">
-		
+
 	/* var fnoValue = '<c:out value="${free.fno}"/>'; */
 
 	// for freeReplyService add test
