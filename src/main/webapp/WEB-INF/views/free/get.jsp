@@ -71,7 +71,7 @@
 		                        <ul class="comment">
 		                        	<li>
 				                        <h6>댓글 입력</h6>
-				                        <input type="text" class="reply" name="o-reply" />
+				                        <input type="text" class="o-reply" name="o-reply" />
 				                        <button id='regBtn' class="regBtn" type='button'>입력</button>
 			                        </li>
 		                        </ul>
@@ -94,7 +94,7 @@
         </div>
     </div>
 	<%@include file="../include/footer.jsp" %>
-	
+
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -130,9 +130,9 @@
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
-</div>	
+</div>
 
-	
+
 <script type="text/javascript" src="/resources/js/freeReply.js"></script>
 <script type="text/javascript" src="/resources/js/freeThumb.js"></script>
 <script type="text/javascript" src="/resources/js/freeReport.js"></script>
@@ -140,9 +140,9 @@
 <!-- 게시물 -->
 <script type="text/javascript">
 	$(document).ready(function() {
-		
+
 		let fnoValue = '<c:out value="${free.fno}"/>';
-				
+
 		// 좋아요 클릭
 		// * 남은 과제 : 1) 이미 좋아요 한 상태면 분홍색 하트, 아니면 검은색 하트
 		//			   2) 좋아요 누르면 실시간으로 좋아요 개수 바뀌게
@@ -150,6 +150,7 @@
 		    e.preventDefault();
 		    freeService.thumbUp({id:"asdf", fno: fnoValue}, function(result) {
 		    	alert(result);
+		    	location.reload(); // 새로고침 안해도 되게 수정할 것!
 		    });
         });
 		
@@ -159,22 +160,22 @@
 		let reportContent = modal.find("textarea[name='reportContent']");
 		let badFno = modal.find("input[name='badFno']");
 		let badFrno = modal.find("input[name='badFrno']");
-		
+
 		let sendBtn = $("#sendBtn");
-		
+
 		// 게시물 신고창 띄우기
 		$(".reportBtn").on("click", function(e) {
 			reportTitle.val("");
 			reportContent.val("");
 			$("#badFrno").hide();
-			
+
 			$('#myModal').modal('show');
 		});
-		
+
 		// 신고 등록
 		sendBtn.on("click", function() {
 			console.log("REPORT REPORT REPORT");
-			
+
 			if (reportTitle.val().trim() === "" || reportTitle.val().trim() === null) {
 				alert("신고 제목을 입력해주세요.");
 				return;
@@ -186,58 +187,33 @@
 			let inquiry = { id : "asdf", title : reportTitle.val(), content : reportContent.val() };
 			let badValue = badFrno.val();
 			(badValue === "" || badValue === null) ? inquiry.fno = fnoValue : inquiry.frno = badValue;
-			
+
 			console.log("FNO : " + inquiry.fno);
 			console.log("FRNO : " + inquiry.frno);
-			
+
 			reportService.reportObj(inquiry, function(result) {
 				alert(result);
 				modal.modal("hide");
 				modal.find("div[class='form-group']").show();
 			})
 		});
-		
+
 		// 댓글 신고창 띄우기
 		$(document).on("click", ".reportRep", function(e) {
 			e.preventDefault();
 			let frnoValue = $(this).parent().parent().data("frno");
-			
+
 			reportTitle.val("");
 			reportContent.val("");
 			$("#badFno").hide();
 			badFrno.val(frnoValue);
-			
+
 			$('#myModal').modal('show');
 		});
-		
-	});
-</script>
-
-<!-- 게시물 -->
-<script type="text/javascript">
-	$(document).ready(function() {
-		
-		// 게시물 좋아요
-		// View
-		// 1. 하트버튼 클릭했는지 여부를 DB(테이블명 : THUMBED)를 통해 확인
-		// 2. 있을 경우, 하트는 꽉찬 분홍색으로 처리
-		// 3. 없을 경우, 하트는 꽉찬 검은색으로 처리
-		
-		// Back
-		// 1. 하트버튼 클릭했을 경우,
-		$(".heart").on("click", function(e) {
-		    e.preventDefault();
-		    // 2. 게시물 좋아요 + 1
-		    // 3. DB(테이블명:THUMBED)에 좋아요 누른 것 기록
-		    
-		    // 4. 좋아요 누른 적이 있다면
-		    // 5. 하트 눌렀을 때 좋아요 -1
-		    // 6. THUMBED 테이블에서 기록 삭제
-           	console.log($(this));
-        });
 
 	});
 </script>
+
 
 <!-- 댓글 -->
 <script type="text/javascript">
@@ -276,17 +252,17 @@
 				replyUL.html(str);
 			}); // end function
 		} // end showList
-  	
+
 		// 댓글 입력
 		let cmt = $(".write-cm");
 		let repInput = cmt.find("input[name='o-reply']");
-		
+
 		$("#regBtn").on("click", function(e) {
 			if (repInput.val() === null || repInput.val().trim() === "") {
 				alert("댓글을 입력해주세요.");
 				return;
 			}
-			
+
 			freeReplyService.add({fno: fnoValue, id:"asdf", reply: repInput.val()},
 				function(result) {
 					alert(result);
@@ -295,41 +271,42 @@
 					location.reload();
 			});
 		});
-		
+
 		// 댓글 수정창 띄우기
 		$(document).on("click", ".modRep", function(e) {
 			let thisEl = $(this)[0];
 			let div = thisEl.parentNode.parentNode;
 			comm(div.id);
-			$(".reply")[0].value = thisEl.previousSibling.innerText;
+			$(".reply").val(thisEl.previousSibling.innerText);
 			$(".write-rp").data("frno", div.id);
  		});
-		
+
 		// 댓글 수정 or 답글 입력
+
 		$(document).on("click", "#repRegBtn", function(e) {
 			let writeRp = $(".write-rp");
 			let check = writeRp.data("frno");
 			let prev = writeRp.prev();
 			let layer = prev.data("layer");
 			let order = prev.prev().data("order");
-			
+
 			if (!(check === null || check === "")) { // 댓글 수정
 				let reply = {frno: check, reply: $(".reply").val()};
-				
+
 				freeReplyService.update(reply, function(result) {
 					alert(result);
-					/* showList(1); */
-					location.reload();
+					cnt = 0;
+					showList(1);
 				});
 			} else { // 답글 입력
 				let bundle = prev.prev().prev().data("bundle");
-				let bunorder = writeRp.parent().attr("id"); // order + (0.1 * (Math.pow(0.1, layer)));
+				let bunorder = writeRp.parent().attr("id");
  				let reply = {fno: fnoValue, id: "asdf", reply: $(".reply").val(), layer: layer + 1, bundle: bundle, bunorder: bunorder};
- 				
+
  				freeReplyService.add(reply, function(result) {
 					alert(result);
-					/* showList(1); */
- 					location.reload();
+					cnt = 0;
+					showList(1);
  				});
  			}
 		});
@@ -338,52 +315,57 @@
 		$(document).on("click", ".delRep", function(e) {
 			let frno = $(this).parent().parent().data("frno");
 			console.log(frno);
-			
+
 			freeReplyService.remove(frno, function(result) {
 				alert(result);
 				showList(1);
 			});
 		});
-		
-		
+
+
 		// 댓글 좋아요
 		$(document).on("click", ".thumb", function(e) {
 			e.preventDefault();
 			let frnoValue = $(this).data("frno");
 			let reply = {id:"asdf", frno: frnoValue};
-			
+
 			freeService.replyThumbUp(reply, function(result) {
 				alert(result);
 				showList(1);
 			});
   		});
-		
-		
+
+
 	}); // end of $(document).ready()
-	
+
 	// 답글 창 띄우기
 	let cnt = 0;
 	const reply = "<div class='write-rp' data-frno=''><form><ul class='re-comment'><h6>댓글 쓰기</h6>"
 					+ "<input type='text' class='reply' value=''>"
 					+ "<button id='repRegBtn' type='button'>입력</button>"
 					+ "<input type='hidden' value='' /></ul></form></div>";
-	
+
 	function comm(id) {
 		cnt == 0 ? show_box(id) : hide_box(id);
 	}
-	
+
 	function show_box(id) {
 		const comment = $("#" + id);
-		
+
 		comment[0].innerHTML += reply;
 		$(".re-comment > input[type='hidden']").val(id);
  		cnt++;
 	}
-	
+
 	function hide_box(id) {
 		let rp = $(".write-rp");
+		
+		console.log(rp[0].outerHTML);
+		console.log("=================");
+		console.log(rp.clone().wrapAll("<div/>").parent().html());
+
 		rp[0].outerHTML = "";
- 		$(".reply").val("");
+ 		$("input[type='text']").val("");
 		cnt = 0;
 	}
 </script>
@@ -393,7 +375,7 @@
 <script type="text/javascript">
 		
 	/* var fnoValue = '<c:out value="${free.fno}"/>'; */
-	
+
 	// for freeReplyService add test
 	/* freeReplyService.add(
 		{reply: "TEST", id: "tester", fno: fnoValue},
@@ -401,13 +383,13 @@
 			alert("RESULT: " + result);
 		}
 	) */
-	
+
 	// getList test
 	/* freeReplyService.getList({ fno:fnoValue, page:1 }, function(list) {
 		for (var i = 0, len = list.length || 0; i < len; i++)
 			console.log(list[i]);
 	}); */
-	
+
 	// delete Test
 	/* freeReplyService.remove(23, function(count) {
 		if (count === "success")
@@ -415,7 +397,7 @@
 	}, function(err) {
 		alert("ERROR...");
 	}); */
-	
+
 	// update Test
 	/* freeReplyService.update({
 		frno : 24,
@@ -424,12 +406,12 @@
 	}, function(result) {
 		alert("수정 완료!");
 	}); */
-	
+
 	// get Test
 	/* freeReplyService.get(27, function(data) {
 		console.log(data);
 	}); */
-	
+
 </script>
 
 <!-- 수정, 삭제, 목록으로 버튼 -->

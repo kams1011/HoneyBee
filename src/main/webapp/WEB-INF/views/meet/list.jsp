@@ -13,7 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    
+
     <style>
 
         .navbar>.container, .navbar>.container-fluid, .navbar>.container-lg, .navbar>.container-md, .navbar>.container-sm, .navbar>.container-xl, .navbar>.container-xxl{
@@ -38,7 +38,7 @@
         }
 
     </style>
-    <link rel="stylesheet" href="/resources/css/meet_board.css">
+    <link rel="stylesheet" href="/resources/css/meet/board.css">
 </head>
 <body>
 
@@ -73,7 +73,7 @@
       <option>하이룽</option>
     </select>
     
-    <select>
+    <select class="cat" >
       <option>구</option>
       <option>스터디</option>
       <option>취미</option>
@@ -85,13 +85,13 @@
       <option>하이룽</option>
     </select>
 
-    <select>
+    <select class="cat" >
       <option>비용</option>
       <option>유료</option>
       <option>무료</option>
     </select>
 
-    <select>
+    <select class="cat" >
       <option>시간</option>
       <option>스터디</option>
       <option>취미</option>
@@ -104,7 +104,7 @@
      </select>
 
      <div class="checkedBox"> <input type="checkbox">마감된 모임 포함</div>
-   
+    
      <input type="submit" value="검색">
      </form>
      </div>
@@ -112,18 +112,19 @@
      
 
     <div class="board_list_wrap">
-      <div class="box"><a href="#">최신순</a></div>
-      <div class="box"><a href="#">인기순</a></div>
+      <div class="box"><a class="latest" href="/meet/list">최신순</a></div>
+      <div class="box"><a class="Popularity" href="/meet/list?order=popul" >인기순</a></div>
       <table class="board_list">
           <caption>게시판 목록</caption>
           <thead>
               <tr>
+              	  <th>카테고리</th>
                   <th>번호</th>
                   <th id="thumb">썸네일</th>
                   <th id="title">모임명</th>
                   <th>모집기간</th>
                   <th>모임일</th>
-                  <th>작성자</th>
+                  <th>작성자아이디</th>
                   <th>마감인원</th>
                   <th>작성일</th>
                   <th>조회수</th>
@@ -134,17 +135,18 @@
               <c:forEach items="${list}" var="meet">
               <c:if test="${meet.delDt == null}">
               <tr>
+              	  <td><c:out value="${meet.cid3}" /></td>
                   <td class="freeBno"><c:out value="${meet.mno}" /></td>
                   <td><img src="/resources/img/logo.png"></td>
                   <td class="title">
-                      <a href='/meet/get?mno=<c:out value="${meet.mno}"/>'>
+                      <a class='move' href='<c:out value="${meet.mno}"/>'>
                       <c:out value="${meet.title}" /></a>
                   </td>
                   <td><c:out value="${meet.recsDt}" /> ~ <c:out value="${meet.receDt}" /></td>
                   <td><c:out value="${meet.startDt}" /></td>
                   <td><c:out value="${meet.id}" /></td>
                   <td><c:out value="${meet.recNo}" /></td>
-                  <td><fmt:formatDate pattern="yyyy-MM-dd" value="${meet.regDt}" /></td>
+                  <td><fmt:formatDate pattern="yyyy-MM-dd[E] a hh:mm:ss" value="${meet.regDt}" /></td>
                   <td><c:out value="${meet.hit}" /></td>
                   <td><c:out value="${meet.thumb}" /></td>
               </tr>
@@ -162,13 +164,13 @@
               <option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'? 'selected' : ''}" />>제목+작성자 아이디</option>
               <option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC'? 'selected' : ''}" />>제목+내용+작성자 아이디</option>
           </select>
-          
+
           <input type="text" name="keyword" value='<c:out value="${pageMaker.cri.keyword}"/>'/>
           <input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
           <input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
           <input type='hidden' name='cid' value='${pageMaker.cri.cid}'>
 
-          
+
           <button>Search</button>
       </form>
       <button class="meet_reg">모임 개설</button>
@@ -196,10 +198,10 @@
      	   	<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>'>
      	   	<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
      	   	<input type='hidden' name='cid' value='<c:out value="${pageMaker.cri.cid}"/>'>
-     	   	
+     	   	<input type='hidden' name='order' value='<c:out value="${pageMaker.cri.order}"/>'>
      	   </form>
   </div>
-  
+
 
 			<!-- Modal  추가 -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -227,7 +229,7 @@
 
  <script type="text/javascript">
 	 $(document).ready(function(){
-		 //게시물 수정, 삭제, 작성 시 게시물 번호 
+		 //게시물 수정, 삭제, 작성 시 게시물 번호
 		 var result = '<c:out value="${result}"/>';
 		 
 		 checkModal(result);
@@ -267,38 +269,42 @@
 			 actionForm.attr("action", "/meet/get");
 			 actionForm.submit();
 		 });
-		 
+
 		 /* 검색 버튼의 이벤트 처리 */
 		 var searchForm = $("#searchForm");
-		 
+
 		 /* 브라우저에서 검색조건을 선택하지 않고 검색하면 알림 설정 */
 		 $("#searchForm button").on("click", function(e){
 			 if(!searchForm.find("option:selected").val()){
 				 alert("검색 종류를 선택하세요.");
 				 return false;
 			 }
-			 
+
 			 if(!searchForm.find("input[name='keyword']").val()){
 				 alert("키워드를 입력하세요.");
 				 return false;
 			 }
-			 
+
 			 /* 검색조건 선택 후 키워드 검색이 없으면 1페이지로 이동 */
 			 searchForm.find("input[name='pageNum']").val("1");
 			 e.preventDefault();
-			 
+
 			 searchForm.submit();
 		 });
-		 
-				 
+
+
 		/* 카테코리 선택 검색 후 카테고리 유지 */
-		 
-		 console.log("${pickCat}");
-		 var pickCat = "${pickCat}";
-		 
+
+		 console.log("카테고리 : " + "${pageMaker.cri.cid}");
+		 var pickCat = "${pageMaker.cri.cid}";
+
 		 $("#cat").val(pickCat).prop("selected",true);
+
+
+
+		 //최신순 인기순
 	 });
-	 
-	 
+
+
  </script>
  
