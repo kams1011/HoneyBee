@@ -85,10 +85,16 @@ public class UserServiceImpl implements UserService {
 		log.info("nickmodify...............");
 		mapper.nickmodify(uvo);
 	}
-	
+
 	@Override
 	public int nickChk(String nick){
 		return mapper.nickChk(nick);
+	}
+
+	@Override
+	public boolean checkId(String id) {
+
+		return mapper.checkId(id) != null;
 	}
 
 }

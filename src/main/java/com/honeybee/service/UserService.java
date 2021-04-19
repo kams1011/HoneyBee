@@ -21,13 +21,15 @@ public interface UserService {
 	public UserVO getMyList(String id);
 	
 	public void updateimg(UserVO uvo);
-	
+
 	public UserVO getimg(String ID);
-	
+
 	public void infomodify(UserVO uvo);
-	
+
 	public void nickmodify(UserVO uvo);
-	
+
 	public int nickChk(String nick);
+
+	public boolean checkId(String id);
 
 }
