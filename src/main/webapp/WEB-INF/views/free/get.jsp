@@ -153,7 +153,7 @@
 		    	location.reload(); // 새로고침 안해도 되게 수정할 것!
 		    });
         });
-
+		
 		// 신고 기능 구현
 		let modal = $(".modal");
 		let reportTitle = modal.find("input[name='reportTitle']");
@@ -359,6 +359,10 @@
 
 	function hide_box(id) {
 		let rp = $(".write-rp");
+		
+		console.log(rp[0].outerHTML);
+		console.log("=================");
+		console.log(rp.clone().wrapAll("<div/>").parent().html());
 
 		console.log(rp[0].outerHTML);
 		console.log("=================");
